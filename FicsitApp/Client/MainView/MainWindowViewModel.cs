@@ -1,4 +1,6 @@
-﻿namespace Client.ViewModels;
+﻿using Client.Shared.View;
+
+namespace Client.MainView;
 
 public class MainWindowViewModel : ViewModelBase
 {

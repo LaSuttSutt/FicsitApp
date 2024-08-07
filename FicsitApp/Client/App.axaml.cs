@@ -1,8 +1,7 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using Client.ViewModels;
-using Client.Views;
+using Client.MainView;
 
 namespace Client;
 
