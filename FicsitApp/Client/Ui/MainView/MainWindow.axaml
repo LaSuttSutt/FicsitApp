@@ -1,0 +1,34 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Client.Ui.MainView"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Client.Ui.MainView.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/Icon.ico"
+        Title="Ficsit App"
+        Width="1024"
+        Height="768"
+        WindowStartupLocation="CenterScreen"
+        TransparencyLevelHint="AcrylicBlur"
+        Background="Transparent"
+        ExtendClientAreaToDecorationsHint="True"
+        x:Name="MyWindow">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+    <Grid RowDefinitions="Auto, Auto, *">
+        <Border Grid.Row="0" Height="30" Background="Orange" IsHitTestVisible="False">
+            <Image Source="/Assets/Satisfactory.png" HorizontalAlignment="Left" Margin="5" />
+        </Border>
+        <StackPanel Grid.Row="1">
+            <Button Command="{Binding OpenDatabaseWindow}"
+                    CommandParameter="{ReflectionBinding ElementName=MyWindow}"
+                    Content="Database" />
+        </StackPanel>
+        <TextBlock Grid.Row="2" Text="Welcome to Avalonia!" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    </Grid>
+</Window>

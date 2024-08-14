@@ -30,4 +30,9 @@
         <SubType>Code</SubType>
       </Compile>
     </ItemGroup>
+
+
+    <ItemGroup>
+      <AdditionalFiles Include="Ui\MainView\MainWindow.axaml" />
+    </ItemGroup>
 </Project>
