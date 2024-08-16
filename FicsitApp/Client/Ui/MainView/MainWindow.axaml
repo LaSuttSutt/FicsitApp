@@ -22,7 +22,7 @@
 
     <Grid RowDefinitions="Auto, Auto, *">
         <Border Grid.Row="0" Height="30" Background="Orange" IsHitTestVisible="False">
-            <Image Source="/Assets/Satisfactory.png" HorizontalAlignment="Left" Margin="5" />
+            <Image Source="/Assets/Satisfactory2.png" HorizontalAlignment="Left" Margin="5" />
         </Border>
         <StackPanel Grid.Row="1">
             <Button Command="{Binding OpenDatabaseWindow}"

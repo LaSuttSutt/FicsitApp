@@ -18,19 +18,46 @@
     <Design.DataContext>
         <vm:DatabaseWindowViewModel />
     </Design.DataContext>
+    
+    <Window.Resources>
+        <SolidColorBrush x:Key="SelectionColor" Color="Orange" Opacity=".8" />
+    </Window.Resources>
 
-    <Grid RowDefinitions="Auto, *">
-        <Border Grid.Row="0" Height="30" Background="Orange" IsHitTestVisible="False">
-            <Image Source="/Assets/Satisfactory.png" HorizontalAlignment="Left" Margin="5" />
-        </Border>
-        <ListBox Grid.Row="1" ItemsSource="{Binding Items}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Grid ColumnDefinitions="Auto, *">
-                        <Image Grid.Column="0" Source="{Binding Item1}" />
-                    </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-    </Grid>
+    <Panel>
+        <ExperimentalAcrylicBorder IsHitTestVisible="False">
+            <ExperimentalAcrylicBorder.Material>
+                <ExperimentalAcrylicMaterial
+                    BackgroundSource="Digger"
+                    TintColor="DimGray"
+                    TintOpacity="1"
+                    MaterialOpacity="0.85" />
+            </ExperimentalAcrylicBorder.Material>
+        </ExperimentalAcrylicBorder>
+        
+        <Grid RowDefinitions="Auto, *">
+            <Border Grid.Row="0" Height="30" Background="Orange" IsHitTestVisible="False">
+                <Image Source="/Assets/Satisfactory2.png" HorizontalAlignment="Left" Margin="5" />
+            </Border>
+            <ListBox Grid.Row="1" ItemsSource="{Binding Images}" 
+                     Background="Transparent">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="Auto, *">
+                            <Image Grid.Column="0" Source="{Binding}" Margin="-8"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <ListBox.Styles>
+                    <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+                        <Setter Property="Background" Value="{DynamicResource SelectionColor}" />
+                    </Style>
+                </ListBox.Styles>
+            </ListBox>
+        </Grid>
+    </Panel>
 </Window>

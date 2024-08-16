@@ -1,9 +1,6 @@
-﻿using System;
-using System.Reflection;
-using System.Windows.Input;
-using Avalonia;
+﻿using System.Windows.Input;
 using Avalonia.Controls;
-using Avalonia.Platform;
+using Client.Helper;
 using Client.Shared.View;
 using Client.Ui.Database;
 using ReactiveUI;
@@ -22,6 +19,7 @@ public class MainWindowViewModel : ViewModelBase
 
     public MainWindowViewModel()
     {
+        ImageHelper.Initialize();
         OpenDatabaseWindow = ReactiveCommand.Create<Window>(OnOpenDatabaseWindow);
     }
 
