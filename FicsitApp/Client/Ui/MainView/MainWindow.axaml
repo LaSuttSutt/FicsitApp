@@ -22,7 +22,10 @@
 
     <Grid RowDefinitions="Auto, Auto, *">
         <Border Grid.Row="0" Height="30" Background="Orange" IsHitTestVisible="False">
-            <Image Source="/Assets/Satisfactory2.png" HorizontalAlignment="Left" Margin="5" />
+            <StackPanel Orientation="Horizontal">
+                <Border Width="65" IsVisible="{OnPlatform false, macOS=true}"/>
+                <Image Source="/Assets/Satisfactory2.png" HorizontalAlignment="Left" Margin="5" />
+            </StackPanel>
         </Border>
         <StackPanel Grid.Row="1">
             <Button Command="{Binding OpenDatabaseWindow}"
