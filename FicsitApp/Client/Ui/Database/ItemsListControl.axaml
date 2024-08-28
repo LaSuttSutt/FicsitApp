@@ -1,21 +1,19 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:controls="using:Client.Ui.Database"
-        xmlns:domainModel="using:Client.Shared.DomainModel"
-        d:DesignWidth="200"
-        d:DesignHeight="400">
-
+        xmlns:controls="using:Client.Ui.Database">
+    
     <Design.PreviewWith>
-        <controls:ItemsListControl />
+        <StackPanel Background="Beige" Margin="10" MinWidth="220" MinHeight="200">
+            <controls:ItemsListControl>
+            </controls:ItemsListControl>
+        </StackPanel>
     </Design.PreviewWith>
-
+    
     <Styles.Resources>
         <SolidColorBrush x:Key="SelectionColor" Color="Orange" Opacity=".8" />
     </Styles.Resources>
 
     <Style Selector="controls|ItemsListControl">
-        <!-- Set Defaults -->
         <Setter Property="Template">
             <ControlTemplate>
                 <ListBox
@@ -23,16 +21,10 @@
                     SelectedValue="{Binding RelativeSource={RelativeSource AncestorType=controls:ItemsListControl}, Path=SelectedItem}"
                     Background="LightGray" MinWidth="200">
                     <ListBox.ItemTemplate>
-                        <DataTemplate x:DataType="domainModel:ItemViewModel">
-                            <Border BorderBrush="DimGray" BorderThickness="0 0 0 1"
-                                    Padding="0" Margin="-12 -9 -12 -12">
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="{Binding Image}" Width="32"
-                                           Margin="7 3 10 3" />
-                                    <TextBlock Text="{Binding Name}"
-                                               VerticalAlignment="Center" />
-                                </StackPanel>
-                            </Border>
+                        <DataTemplate x:DataType="controls:DbItemListEntryViewModel">
+                            <Panel Margin="-12 -9 -12 -12">
+                                <controls:DbItemListEntry />
+                            </Panel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                     <ListBox.Styles>

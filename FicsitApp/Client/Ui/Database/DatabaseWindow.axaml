@@ -15,10 +15,6 @@
         Background="Transparent"
         ExtendClientAreaToDecorationsHint="True">
     
-    <Design.DataContext>
-        <vm:DatabaseWindowViewModel />
-    </Design.DataContext>
-    
     <Window.Styles>
         <StyleInclude Source="avares://Client/Ui/Database/ItemsListControl.axaml" />
     </Window.Styles>
@@ -42,14 +38,14 @@
             <Grid RowDefinitions="Auto, Auto, Auto, *" ColumnDefinitions="Auto, *">
                 <Image Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" ZIndex="-1"
                        Source="avares://Client/Assets/Metal_Dirt3.jpg" Height="70" Stretch="UniformToFill" />
-                <Image Grid.Row="0" Grid.Column="0" Source="{Binding SelectedItem.Image}"
+                <Image Grid.Row="0" Grid.Column="0" Source="{Binding SelectedItem.Item.Image}"
                        Margin="10 0 10 3">
                     <Image.Effect>
                         <DropShadowEffect OffsetX="1" OffsetY="5" BlurRadius="10"></DropShadowEffect>
                     </Image.Effect>
                 </Image>
                 <TextBlock Grid.Row="0" Grid.Column="1" FontSize="32" Foreground="White"
-                           VerticalAlignment="Center" Margin="10" Text="{Binding SelectedItem.Name}"
+                           VerticalAlignment="Center" Margin="10" Text="{Binding SelectedItem.Item.Name}"
                            FontFamily="{DynamicResource Poppins}">
                     <TextBlock.Effect>
                         <DropShadowEffect />
@@ -57,20 +53,20 @@
                 </TextBlock>
                 
                 <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
-                        IsVisible="{Binding !SelectedItem.IsResource}"
+                        IsVisible="{Binding !SelectedItem.Item.IsResource}"
                         BorderThickness="0 1" BorderBrush="Black" Background="Orange">
                     <TextBlock Text="Recipes" Margin="5 4" FontFamily="{DynamicResource Poppins}"/>
                 </Border>
                 <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
-                        IsVisible="{Binding SelectedItem.IsResource}"
+                        IsVisible="{Binding SelectedItem.Item.IsResource}"
                         BorderThickness="0 1" BorderBrush="Black" Background="Orange">
                     <TextBlock Text="Resource Node" Margin="5 4" FontFamily="{DynamicResource Poppins}"/>
                 </Border>
                 
                 <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" 
-                        IsVisible="{Binding !SelectedItem.IsResource}"
+                        IsVisible="{Binding !SelectedItem.Item.IsResource}"
                         BorderThickness="0 0 0 1" BorderBrush="Black">
-                    <ItemsControl ItemsSource="{Binding SelectedItem.Recipes}">
+                    <ItemsControl ItemsSource="{Binding SelectedItem.Item.Recipes}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Name}" />

@@ -13,15 +13,15 @@ namespace Client.Ui.Database;
 
 public class DatabaseWindowViewModel : ViewModelBase
 {
-    private ItemViewModel _selectedItem = null!;
+    private DbItemListEntryViewModel _selectedItem = null!;
 
-    public ItemViewModel SelectedItem 
+    public DbItemListEntryViewModel SelectedItem 
     { 
         get => _selectedItem;
         set => this.RaiseAndSetIfChanged(ref _selectedItem, value);   
     }
     
-    public ObservableCollection<ItemViewModel> ItemsViewModels { get; } = [];
+    public ObservableCollection<DbItemListEntryViewModel> ItemsViewModels { get; } = [];
     
     public DatabaseWindowViewModel()
     {
@@ -29,7 +29,8 @@ public class DatabaseWindowViewModel : ViewModelBase
 
         foreach (var item in testData.Items)
         {
-            ItemsViewModels.Add(item.ViewModel());
+            var viewModel = item.ViewModel();
+            ItemsViewModels.Add(new() { Item = viewModel });
         }
 
         SelectedItem = ItemsViewModels[0];

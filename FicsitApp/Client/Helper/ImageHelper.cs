@@ -10,6 +10,9 @@ public static class ImageHelper
 {
     #region Declaration -------------------------
 
+    public static Bitmap DefaultImage { get; set; } = 
+        new(AssetLoader.Open(new Uri("avares://Client/Assets/ImageDb/A01_default_64.png")));
+    
     public static Dictionary<string, Bitmap> Images { get; } = [];
 
     #endregion
@@ -20,7 +23,7 @@ public static class ImageHelper
     {
         var imageUris =
             AssetLoader.GetAssets(new Uri("avares://Client/Assets/ImageDb/"), new Uri("avares://Client/")).ToList();
-
+        
         foreach (var uri in imageUris)
         {
             Images.Add(uri.OriginalString, new Bitmap(AssetLoader.Open(new Uri(uri.OriginalString))));
