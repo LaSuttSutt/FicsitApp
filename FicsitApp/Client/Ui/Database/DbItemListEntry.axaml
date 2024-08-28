@@ -1,0 +1,24 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:Client.Ui.Database"
+             mc:Ignorable="d" d:DesignWidth="200" d:DesignHeight="250"
+             x:Class="Client.Ui.Database.DbItemListEntry"
+             x:DataType="vm:DbItemListEntryViewModel">
+    
+    <Design.PreviewWith>
+        <vm:DbItemListEntryViewModel Name="Test" />
+    </Design.PreviewWith>
+    
+    <Border BorderBrush="DimGray" BorderThickness="0 0 0 1"
+            Padding="0" Margin="-12 -9 -12 -12">
+        <StackPanel Orientation="Horizontal">
+            <Image Source="{Binding Image}" Width="32"
+                   Margin="7 3 10 3" />
+            <TextBlock Text="{Binding Name, FallbackValue=Test-Item}"
+                       VerticalAlignment="Center" />
+        </StackPanel>
+    </Border>
+    
+</UserControl>

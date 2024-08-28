@@ -10,4 +10,6 @@ public class Item
     public string Name { get; init; } = "New item";
     public string ImageName { get; init; } = "avares://Assets/ImageDb/_default_65.png";
     public bool IsResource { get; init; }
+
+    [NotMapped] public List<Recipe> Recipes { get; init; } = [];
 }
