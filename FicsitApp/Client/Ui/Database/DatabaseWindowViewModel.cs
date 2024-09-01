@@ -1,38 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using Avalonia.Media.Imaging;
-using Client.Helper;
-using Client.Shared.DomainModel;
-using Client.Shared.View;
-using ReactiveUI;
-using Shared.DomainModel;
-using Shared.TestData;
+﻿using Client.Shared.View;
 
 namespace Client.Ui.Database;
 
 public class DatabaseWindowViewModel : ViewModelBase
 {
-    private DbItemListEntryViewModel _selectedItem = null!;
-
-    public DbItemListEntryViewModel SelectedItem 
-    { 
-        get => _selectedItem;
-        set => this.RaiseAndSetIfChanged(ref _selectedItem, value);   
-    }
-    
-    public ObservableCollection<DbItemListEntryViewModel> ItemsViewModels { get; } = [];
+    public DbItemListUserControlViewModel ItemListViewModel { get; set; } = new();
+    public ItemDetailUserControlViewModel ItemDetailViewModel { get; set; } = new();
     
     public DatabaseWindowViewModel()
     {
-        var testData = new ItemDatabase();
+        ItemListViewModel.SelectedItemChanged += ItemListViewModelOnSelectedItemChanged;
+    }
 
-        foreach (var item in testData.Items)
-        {
-            var viewModel = item.ViewModel();
-            ItemsViewModels.Add(new() { Item = viewModel });
-        }
-
-        SelectedItem = ItemsViewModels[0];
+    private void ItemListViewModelOnSelectedItemChanged(object? sender, DbItemListEntryViewModel? e)
+    {
+        ItemDetailViewModel.Item = e?.Item ?? null!;
     }
 }

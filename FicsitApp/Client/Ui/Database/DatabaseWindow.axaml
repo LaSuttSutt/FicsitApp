@@ -1,7 +1,6 @@
 ﻿<Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:Client.Ui.Database"
-        xmlns:helper="using:Client.Helper"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="using:Client.Ui.Shared.Controls"
@@ -16,20 +15,18 @@
         TransparencyLevelHint="AcrylicBlur"
         Background="Transparent"
         ExtendClientAreaToDecorationsHint="True">
-    
-    <Window.Styles>
-        <StyleInclude Source="avares://Client/Ui/Database/ItemsListControl.axaml" />
-    </Window.Styles>
 
     <Grid RowDefinitions="Auto, *" ColumnDefinitions="Auto, *">
         
+        <!-- Window header ´Satisfactory´ -->
         <controls:FicsitHeaderControl Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" />
         
-        <vm:ItemsListControl Grid.Row="1" Grid.Column="0" 
-                             Items="{Binding ItemsViewModels}"
-                             SelectedItem="{Binding SelectedItem, Mode=TwoWay}"/>
+        <!-- List of items on the left -->
+        <vm:DbItemListUserControl Grid.Row="1" Grid.Column="0" 
+                                  DataContext="{Binding ItemListViewModel}" />
         
-        <vm:ItemDetailsUserControl Grid.Row="1" Grid.Column="1" 
-                                   Item="{Binding SelectedItem.Item}" />
+        <!-- Item Details View on the right -->
+        <vm:ItemDetailsUserControl Grid.Row="1" Grid.Column="1"
+                                   DataContext="{Binding ItemDetailViewModel}" />
     </Grid>
 </Window>

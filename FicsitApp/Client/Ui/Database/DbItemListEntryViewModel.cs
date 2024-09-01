@@ -5,5 +5,5 @@ namespace Client.Ui.Database;
 
 public class DbItemListEntryViewModel : ViewModelBase
 {
-    public ItemViewModel Item { get; set; } = new();
+    public ItemViewModel Item { get; init; } = new();
 }

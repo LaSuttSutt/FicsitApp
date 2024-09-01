@@ -3,9 +3,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:Client.Ui.Database"
+             xmlns:dm="using:Shared.DomainModel"
              xmlns:helper="using:Client.Helper"
-             mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="200"
-             x:Class="Client.Ui.Database.ItemDetailsUserControl">
+             mc:Ignorable="d" d:DesignWidth="700"
+             x:Class="Client.Ui.Database.ItemDetailsUserControl"
+             x:DataType="vm:ItemDetailUserControlViewModel">
 
     <Border BorderThickness="1 0 0 0" BorderBrush="Black" Background="DarkGray">
         <Grid RowDefinitions="Auto, Auto, Auto, *" ColumnDefinitions="Auto, *">
@@ -13,7 +15,7 @@
             <Image Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" ZIndex="-1"
                    Source="avares://Client/Assets/Concrete01.jpg" Height="70" Stretch="UniformToFill" />
             <Image Grid.Row="0" Grid.Column="0" Margin="10 0 10 3"
-                   Source="{Binding RelativeSource={RelativeSource AncestorType=vm:ItemDetailsUserControl}, Path=Item.Image,
+                   Source="{Binding Item.Image,
                    FallbackValue={x:Static helper:ImageHelper.DefaultImage}}">
                 <Image.Effect>
                     <DropShadowEffect OffsetX="1" OffsetY="5" BlurRadius="10"></DropShadowEffect>
@@ -21,8 +23,7 @@
             </Image>
             <TextBlock Grid.Row="0" Grid.Column="1" FontSize="32" Foreground="White" Margin="10"
                        VerticalAlignment="Center" FontFamily="{DynamicResource Poppins}"
-                       Text="{Binding RelativeSource={RelativeSource AncestorType=vm:ItemDetailsUserControl}, Path=Item.Name, 
-                       FallbackValue=Iron Ore}">
+                       Text="{Binding Item.Name, FallbackValue=Iron Ore}">
                 <TextBlock.Effect>
                     <DropShadowEffect />
                 </TextBlock.Effect>
@@ -30,30 +31,29 @@
 
             <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
                 <Border
-                    IsVisible="{Binding RelativeSource={RelativeSource AncestorType=vm:ItemDetailsUserControl}, 
-                    Path=!Item.IsResource, FallbackValue=true}"
+                    IsVisible="{Binding !Item.IsResource, FallbackValue=true}"
                     BorderThickness="0 1" BorderBrush="Black" Background="Orange">
                     <TextBlock Text="Recipes" Margin="5 4" FontFamily="{DynamicResource Poppins}" />
                 </Border>
                 <Border
-                    IsVisible="{Binding RelativeSource={RelativeSource AncestorType=vm:ItemDetailsUserControl},
-                    Path= Item.IsResource, FallbackValue=true}"
+                    IsVisible="{Binding Item.IsResource, FallbackValue=true}"
                     BorderThickness="0 1" BorderBrush="Black" Background="Orange">
                     <TextBlock Text="Resource Node" Margin="5 4" FontFamily="{DynamicResource Poppins}" />
                 </Border>
             </StackPanel>
-            <!--
-                <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" 
-                        IsVisible="{Binding !SelectedItem.Item.IsResource}"
-                        BorderThickness="0 0 0 1" BorderBrush="Black">
-                    <ItemsControl ItemsSource="{Binding SelectedItem.Item.Recipes}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Name}" />
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </Border>-->
+
+            <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                    IsVisible="{Binding !Item.IsResource, FallbackValue=true}"
+                    BorderThickness="0 0 0 1" BorderBrush="Black">
+                <ItemsControl ItemsSource="{Binding Item.Recipes, 
+                    FallbackValue={x:Static vm:ItemDetailUserControlViewModel.TestRecipes}}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="dm:Recipe">
+                            <TextBlock Text="{Binding Name}" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Border>
         </Grid>
     </Border>
 

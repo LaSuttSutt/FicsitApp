@@ -1,0 +1,31 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:Client.Ui.Database"
+             mc:Ignorable="d" d:DesignHeight="200"
+             x:Class="Client.Ui.Database.DbItemListUserControl"
+             x:DataType="vm:DbItemListUserControlViewModel">
+
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="SelectionColor" Color="Orange" Opacity=".8" />
+    </UserControl.Resources>
+    
+    <ListBox
+        ItemsSource="{Binding Items, FallbackValue=AAA}"
+        SelectedValue="{Binding SelectedItem}"
+        Background="LightGray" MinWidth="200">
+        <ListBox.ItemTemplate>
+            <DataTemplate>
+                <Panel Margin="-12 -9 -12 -12">
+                    <vm:DbItemListEntry />
+                </Panel>
+            </DataTemplate>
+        </ListBox.ItemTemplate>
+        <ListBox.Styles>
+            <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+                <Setter Property="Background" Value="{DynamicResource SelectionColor}" />
+            </Style>
+        </ListBox.Styles>
+    </ListBox>
+</UserControl>
