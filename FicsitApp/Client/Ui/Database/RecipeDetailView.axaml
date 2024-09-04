@@ -1,0 +1,86 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:Client.Ui.Database"
+             xmlns:helper="using:Client.Helper"
+             mc:Ignorable="d"
+             x:Class="Client.Ui.Database.RecipeDetailView"
+             x:DataType="vm:RecipeDetailViewModel">
+
+    <Border BorderBrush="DimGray" BorderThickness="0 0 0 1" Background="LightGray">
+        <StackPanel Margin="5">
+            
+            <!-- Header -->
+            <TextBlock Text="{Binding RecipeName, FallbackValue=Standard-Rezept}"
+                       FontFamily="{DynamicResource Poppins}" FontSize="20" />
+            
+            <!-- Product -->
+            <TextBlock Text="Product:" FontSize="14" FontWeight="SemiBold" />
+            <StackPanel Orientation="Horizontal" Margin="15 5 0 0">
+                <Image Width="24" Source="{Binding Image, FallbackValue=
+                       {x:Static helper:ImageHelper.DefaultImage}}" />
+                <TextBlock VerticalAlignment="Center" Margin="10 0 0 0"
+                           Text="{Binding Name, FallbackValue=Iron Ore}"
+                           FontFamily="{DynamicResource Poppins}" FontSize="16" />
+                <TextBlock VerticalAlignment="Center" Margin="10 0 0 0"
+                           FontFamily="{DynamicResource Poppins}" FontSize="16"
+                           Text="{Binding AmountPerMinute, FallbackValue=30}" />
+                <TextBlock VerticalAlignment="Center" Margin="0 0 0 0"
+                           FontFamily="{DynamicResource Poppins}" FontSize="16"
+                           Text="/min" />
+            </StackPanel>
+            
+            <!-- Ingredients -->
+            <TextBlock Text="Ingredients:" FontSize="14" FontWeight="SemiBold" Margin="0 10 0 0" />
+            <ItemsControl Margin="15 0 0 0"
+                          ItemsSource="{Binding Ingredients, 
+                          FallbackValue=xx}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Margin="0 5 0 0">
+                            <Image Width="24" Source="{Binding Image, FallbackValue=
+                                   {x:Static helper:ImageHelper.DefaultImage}}" />
+                            <TextBlock VerticalAlignment="Center" Margin="10 0 0 0"
+                                       Text="{Binding ItemName, FallbackValue=Iron Ingot}"
+                                       FontFamily="{DynamicResource Poppins}" FontSize="16" />
+                            <TextBlock VerticalAlignment="Center" Margin="10 0 0 0"
+                                       FontFamily="{DynamicResource Poppins}" FontSize="16"
+                                       Text="{Binding AmountPerMinute, FallbackValue=20}" />
+                            <TextBlock VerticalAlignment="Center" Margin="0 0 0 0"
+                                       FontFamily="{DynamicResource Poppins}" FontSize="16"
+                                       Text="/min" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            
+            <!-- ByProducts -->
+            <TextBlock Text="By-Products:" FontSize="14" FontWeight="SemiBold" Margin="0 10 0 0"
+                       IsVisible="{Binding HasByProducts}"/>
+            <ItemsControl Margin="15 0 0 0"
+                          IsVisible="{Binding HasByProducts}"
+                          ItemsSource="{Binding ByProducts, 
+                          FallbackValue=xx}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Margin="0 5 0 0">
+                            <Image Width="24" Source="{Binding Image, FallbackValue=
+                                   {x:Static helper:ImageHelper.DefaultImage}}" />
+                            <TextBlock VerticalAlignment="Center" Margin="10 0 0 0"
+                                       Text="{Binding ItemName, FallbackValue=Iron Ingot}"
+                                       FontFamily="{DynamicResource Poppins}" FontSize="16" />
+                            <TextBlock VerticalAlignment="Center" Margin="10 0 0 0"
+                                       FontFamily="{DynamicResource Poppins}" FontSize="16"
+                                       Text="{Binding AmountPerMinute, FallbackValue=20}" />
+                            <TextBlock VerticalAlignment="Center" Margin="0 0 0 0"
+                                       FontFamily="{DynamicResource Poppins}" FontSize="16"
+                                       Text="/min" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+    </Border>
+
+</UserControl>

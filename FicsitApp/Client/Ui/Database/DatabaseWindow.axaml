@@ -17,16 +17,16 @@
         ExtendClientAreaToDecorationsHint="True">
 
     <Grid RowDefinitions="Auto, *" ColumnDefinitions="Auto, *">
-        
+
         <!-- Window header ´Satisfactory´ -->
         <controls:FicsitHeaderControl Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" />
-        
+
         <!-- List of items on the left -->
-        <vm:DbItemListUserControl Grid.Row="1" Grid.Column="0" 
-                                  DataContext="{Binding ItemListViewModel}" />
-        
+        <vm:DbItemListView Grid.Row="1" Grid.Column="0"
+                           DataContext="{Binding ItemListViewModel}" />
+
         <!-- Item Details View on the right -->
-        <vm:ItemDetailsUserControl Grid.Row="1" Grid.Column="1"
-                                   DataContext="{Binding ItemDetailViewModel}" />
+        <vm:ItemDetailsView Grid.Row="1" Grid.Column="1"
+                            DataContext="{Binding ItemDetailsViewModel}" />
     </Grid>
 </Window>

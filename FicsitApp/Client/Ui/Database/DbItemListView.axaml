@@ -4,8 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:Client.Ui.Database"
              mc:Ignorable="d" d:DesignHeight="200"
-             x:Class="Client.Ui.Database.DbItemListUserControl"
-             x:DataType="vm:DbItemListUserControlViewModel">
+             x:Class="Client.Ui.Database.DbItemListView"
+             x:DataType="vm:DbItemListViewModel">
 
     <UserControl.Resources>
         <SolidColorBrush x:Key="SelectionColor" Color="Orange" Opacity=".8" />

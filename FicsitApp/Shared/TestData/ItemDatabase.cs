@@ -2,23 +2,23 @@ using Shared.DomainModel;
 
 namespace Shared.TestData;
 
-public class ItemDatabase
+public static class ItemDatabase
 {
-    public List<Item> Items { get; } = [];
-    public List<Ingredient> Ingredients { get; } = [];
-    public List<Recipe> Recipes { get; } = [];
+    public static List<Item> Items { get; } = [];
+    public static List<Ingredient> Ingredients { get; } = [];
+    public static List<Recipe> Recipes { get; } = [];
 
-    public ItemDatabase()
+    public static void Initialize()
     {
         BuildTestData();
     }
-
-    private void BuildTestData()
+    
+    private static void BuildTestData()
     {
         CreateIronItems();
     }
 
-    private void CreateIronItems()
+    private static void CreateIronItems()
     {
         var ironOre = new Item
         {
@@ -45,7 +45,6 @@ public class ItemDatabase
             Amount = 15.0m,
             ItemId = ironIngot.Id
         };
-        ironIngot.Recipes.Add(ironIngotRecipe);
         Recipes.Add(ironIngotRecipe);
 
         var ingredient1 = new Ingredient
@@ -55,7 +54,6 @@ public class ItemDatabase
             Amount = 30.0m,
             ItemId = ironOre.Id
         };
-        ironIngotRecipe.Ingredients.Add(ingredient1);
         Ingredients.Add(ingredient1);
 
         var ironPlate = new Item
@@ -73,7 +71,6 @@ public class ItemDatabase
             Amount = 30.0m,
             ItemId = ironPlate.Id
         };
-        ironPlate.Recipes.Add(ironPlateRecipe);
         Recipes.Add(ironPlateRecipe);
 
         ingredient1 = new Ingredient
@@ -83,7 +80,6 @@ public class ItemDatabase
             Amount = 30.0m,
             ItemId = ironIngot.Id
         };
-        ironIngotRecipe.Ingredients.Add(ingredient1);
         Ingredients.Add(ingredient1);
 
         var ironRod = new Item()
@@ -101,7 +97,6 @@ public class ItemDatabase
             Amount = 45.0m,
             ItemId = ironRod.Id
         };
-        ironRod.Recipes.Add(ironRodRecipe);
         Recipes.Add(ironRodRecipe);
 
         ingredient1 = new Ingredient()
@@ -111,7 +106,16 @@ public class ItemDatabase
             Amount = 15.0m,
             ItemId = ironIngot.Id
         };
-        ironIngotRecipe.Ingredients.Add(ingredient1);
+        Ingredients.Add(ingredient1);
+
+        ingredient1 = new Ingredient()
+        {
+            Id = Guid.NewGuid(),
+            RecipeId = ironRodRecipe.Id,
+            Amount = 5.0m,
+            ItemId = ironOre.Id,
+            IsByProduct = true
+        };
         Ingredients.Add(ingredient1);
     }
 }

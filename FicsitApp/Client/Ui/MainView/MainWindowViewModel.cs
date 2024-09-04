@@ -4,6 +4,7 @@ using Client.Helper;
 using Client.Shared.View;
 using Client.Ui.Database;
 using ReactiveUI;
+using Shared.TestData;
 
 namespace Client.Ui.MainView;
 
@@ -20,6 +21,7 @@ public class MainWindowViewModel : ViewModelBase
     public MainWindowViewModel()
     {
         ImageHelper.Initialize();
+        ItemDatabase.Initialize();
         OpenDatabaseWindow = ReactiveCommand.Create<Window>(OnOpenDatabaseWindow);
     }
 

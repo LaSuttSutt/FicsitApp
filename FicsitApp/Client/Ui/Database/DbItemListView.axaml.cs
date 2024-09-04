@@ -2,9 +2,9 @@ using Avalonia.Controls;
 
 namespace Client.Ui.Database;
 
-public partial class DbItemListUserControl : UserControl
+public partial class DbItemListView : UserControl
 {
-    public DbItemListUserControl()
+    public DbItemListView()
     {
         InitializeComponent();
     }
