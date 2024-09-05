@@ -6,11 +6,11 @@ using Client.Shared.DomainModel;
 using Client.Shared.View;
 using Shared.TestData;
 
-namespace Client.Ui.Database;
+namespace Client.Ui.Database.ItemList;
 
 public class DbItemListEntryViewModel : ViewModelBase
 {
-    public Guid ItemId { get; set; }
+    public Guid ItemId { get; }
     public string Name { get; init; }
     public Bitmap Image { get; init; }
 

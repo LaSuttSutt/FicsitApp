@@ -1,0 +1,38 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:Client.Ui.Database.ItemList"
+             mc:Ignorable="d" d:DesignHeight="200"
+             x:Class="Client.Ui.Database.ItemList.DbItemListView"
+             x:DataType="vm:DbItemListViewModel">
+
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="SelectionColor" Color="Orange" Opacity=".8" />
+    </UserControl.Resources>
+
+    <Grid RowDefinitions="*, Auto">
+        <ListBox Grid.Row="0"
+            ItemsSource="{Binding Items, FallbackValue=AAA}"
+            SelectedValue="{Binding SelectedItem}"
+            Background="LightGray" MinWidth="200">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Panel Margin="-12 -9 -12 -12">
+                        <vm:DbItemListEntry />
+                    </Panel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <ListBox.Styles>
+                <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+                    <Setter Property="Background" Value="{DynamicResource SelectionColor}" />
+                </Style>
+            </ListBox.Styles>
+        </ListBox>
+
+        <Border Grid.Row="1" BorderBrush="Black" BorderThickness="0 1 0 0">
+            <Button Command="{Binding AddItemCommand}">New Item</Button>
+        </Border>
+    </Grid>
+
+</UserControl>

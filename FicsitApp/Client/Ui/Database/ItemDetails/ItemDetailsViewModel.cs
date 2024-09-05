@@ -10,7 +10,7 @@ using ReactiveUI;
 using Shared.DomainModel;
 using Shared.TestData;
 
-namespace Client.Ui.Database;
+namespace Client.Ui.Database.ItemDetails;
 
 public class ItemDetailsViewModel : ViewModelBase
 {

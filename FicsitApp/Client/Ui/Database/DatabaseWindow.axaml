@@ -1,6 +1,9 @@
-﻿<Window xmlns="https://github.com/avaloniaui"
+﻿<Window Name="DbWindow"
+        xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:Client.Ui.Database"
+        xmlns:details="using:Client.Ui.Database.ItemDetails"
+        xmlns:list="using:Client.Ui.Database.ItemList"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="using:Client.Ui.Shared.Controls"
@@ -22,11 +25,11 @@
         <controls:FicsitHeaderControl Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" />
 
         <!-- List of items on the left -->
-        <vm:DbItemListView Grid.Row="1" Grid.Column="0"
-                           DataContext="{Binding ItemListViewModel}" />
+        <list:DbItemListView Grid.Row="1" Grid.Column="0" DbWindow="{Binding #DbWindow}"
+                             DataContext="{Binding ItemListViewModel}" />
 
         <!-- Item Details View on the right -->
-        <vm:ItemDetailsView Grid.Row="1" Grid.Column="1"
-                            DataContext="{Binding ItemDetailsViewModel}" />
+        <details:ItemDetailsView Grid.Row="1" Grid.Column="1"
+                                 DataContext="{Binding ItemDetailsViewModel}" />
     </Grid>
 </Window>

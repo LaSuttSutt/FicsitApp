@@ -1,5 +1,7 @@
 ﻿using System;
 using Client.Shared.View;
+using Client.Ui.Database.ItemDetails;
+using Client.Ui.Database.ItemList;
 
 namespace Client.Ui.Database;
 

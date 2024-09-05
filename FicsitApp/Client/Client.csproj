@@ -29,6 +29,22 @@
         <DependentUpon>MainWindow.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
+      <Compile Update="Ui\Database\ItemList\DbItemListEntry.axaml.cs">
+        <DependentUpon>DbItemListEntry.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Ui\Database\ItemList\DbItemListView.axaml.cs">
+        <DependentUpon>DbItemListView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Ui\Database\ItemDetails\ItemDetailsView.axaml.cs">
+        <DependentUpon>ItemDetailsView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Ui\Database\ItemDetails\RecipeDetailView.axaml.cs">
+        <DependentUpon>RecipeDetailView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
 
 
