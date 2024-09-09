@@ -1,0 +1,35 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:Client.Ui.Database.Creation.Pages"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="250"
+             x:Class="Client.Ui.Database.Creation.Pages.ImagesView"
+             x:DataType="vm:ImagesViewModel">
+    
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="SelectionColor" Color="Orange" Opacity=".9" />
+    </UserControl.Resources>
+    
+    <ListBox Margin="5" ItemsSource="{Binding Images}" Background="Transparent">
+        <ListBox.ItemsPanel>
+            <ItemsPanelTemplate>
+                <WrapPanel />
+            </ItemsPanelTemplate>
+        </ListBox.ItemsPanel>
+        <ListBox.ItemTemplate>
+            <DataTemplate>
+                <Image Source="{Binding Image}" Width="64" Margin="-7 -5 -7 -7">
+                    <Image.Effect>
+                        <DropShadowEffect OffsetX="1" OffsetY="1" BlurRadius="7"></DropShadowEffect>
+                    </Image.Effect>
+                </Image>
+            </DataTemplate>
+        </ListBox.ItemTemplate>
+        <ListBox.Styles>
+            <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+                <Setter Property="Background" Value="{DynamicResource SelectionColor}" />
+            </Style>
+        </ListBox.Styles>
+    </ListBox>
+</UserControl>
