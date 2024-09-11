@@ -3,7 +3,7 @@ using Avalonia.Controls;
 using Avalonia.ReactiveUI;
 using ReactiveUI;
 
-namespace Client.Ui.Database.Creation;
+namespace Client.Ui.Database.Items.Creation;
 
 public partial class CreateItemView : ReactiveWindow<CreateItemViewModel>
 {

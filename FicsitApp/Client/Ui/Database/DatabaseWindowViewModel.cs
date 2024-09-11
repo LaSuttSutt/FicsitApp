@@ -1,22 +1,22 @@
 ﻿using System;
+using System.Windows.Input;
 using Client.Shared.View;
-using Client.Ui.Database.ItemDetails;
-using Client.Ui.Database.ItemList;
+using Client.Ui.Database.Items;
+using ReactiveUI;
 
 namespace Client.Ui.Database;
 
 public class DatabaseWindowViewModel : ViewModelBase
 {
-    public DbItemListViewModel ItemListViewModel { get; set; } = new();
-    public ItemDetailsViewModel ItemDetailsViewModel { get; set; } = new();
+    public ItemsViewModel ItemsViewModel { get; } = new();
     
+    public ICommand HomeCommand { get; set; }
+
     public DatabaseWindowViewModel()
     {
-        ItemListViewModel.SelectedItemChanged += ItemListViewModelOnSelectedItemChanged;
-    }
-
-    private void ItemListViewModelOnSelectedItemChanged(object? sender, Guid e)
-    {
-        ItemDetailsViewModel.ItemId = e;
+        HomeCommand = ReactiveCommand.Create(() =>
+        {
+            Console.WriteLine("Home clicked ;)");
+        });
     }
 }

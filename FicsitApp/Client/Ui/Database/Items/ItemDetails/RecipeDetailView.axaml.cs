@@ -1,6 +1,6 @@
 ﻿using Avalonia.Controls;
 
-namespace Client.Ui.Database.ItemDetails;
+namespace Client.Ui.Database.Items.ItemDetails;
 
 public partial class RecipeDetailView : UserControl
 {

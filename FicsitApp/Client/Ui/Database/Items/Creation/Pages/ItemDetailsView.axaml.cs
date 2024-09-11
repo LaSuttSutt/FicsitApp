@@ -1,6 +1,6 @@
 ﻿using Avalonia.Controls;
 
-namespace Client.Ui.Database.Creation.Pages;
+namespace Client.Ui.Database.Items.Creation.Pages;
 
 public partial class ItemDetailsView : UserControl
 {

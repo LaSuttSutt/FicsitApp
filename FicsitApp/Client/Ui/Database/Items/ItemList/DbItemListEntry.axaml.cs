@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace Client.Ui.Database.ItemList;
+namespace Client.Ui.Database.Items.ItemList;
 
 public partial class DbItemListEntry : UserControl
 {

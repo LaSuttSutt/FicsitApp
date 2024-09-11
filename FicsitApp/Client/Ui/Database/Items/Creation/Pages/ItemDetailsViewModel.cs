@@ -1,6 +1,6 @@
 ﻿using Client.Ui.Shared;
 
-namespace Client.Ui.Database.Creation.Pages;
+namespace Client.Ui.Database.Items.Creation.Pages;
 
 public class ItemDetailsViewModel : WizardViewModel
 {

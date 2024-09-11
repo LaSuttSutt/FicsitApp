@@ -1,8 +1,6 @@
-﻿using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
+﻿using Avalonia.Controls;
 
-namespace Client.Ui.Database.Creation.Pages;
+namespace Client.Ui.Database.Items.Creation.Pages;
 
 public partial class ImagesView : UserControl
 {

@@ -6,7 +6,7 @@ using Client.Shared.DomainModel;
 using Client.Shared.View;
 using Shared.TestData;
 
-namespace Client.Ui.Database.ItemList;
+namespace Client.Ui.Database.Items.ItemList;
 
 public class DbItemListEntryViewModel : ViewModelBase
 {

@@ -1,5 +1,5 @@
-﻿using System.Windows.Input;
-using Avalonia.Controls;
+﻿using System.Reactive.Linq;
+using System.Windows.Input;
 using Client.Helper;
 using Client.Shared.View;
 using Client.Ui.Database;
@@ -13,6 +13,7 @@ public class MainWindowViewModel : ViewModelBase
     #region View Properties ---------------------
 
     public ICommand OpenDatabaseWindow { get; }
+    public Interaction<DatabaseWindowViewModel, bool> ShowDialog { get; }
 
     #endregion
 
@@ -22,20 +23,12 @@ public class MainWindowViewModel : ViewModelBase
     {
         ImageHelper.Initialize();
         ItemDatabase.Initialize();
-        OpenDatabaseWindow = ReactiveCommand.Create<Window>(OnOpenDatabaseWindow);
-    }
-
-    #endregion
-
-    #region Private Methods ---------------------
-
-    private void OnOpenDatabaseWindow(Window owner)
-    {
-        var dialog = new DatabaseWindow
+        ShowDialog = new Interaction<DatabaseWindowViewModel, bool>();
+        OpenDatabaseWindow = ReactiveCommand.CreateFromTask(async () =>
         {
-            DataContext = new DatabaseWindowViewModel()
-        };
-        dialog.ShowDialog(owner);
+            var viewModel = new DatabaseWindowViewModel();
+            return await ShowDialog.Handle(viewModel);
+        });
     }
 
     #endregion

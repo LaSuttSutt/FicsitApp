@@ -14,22 +14,17 @@
         WindowStartupLocation="CenterScreen"
         TransparencyLevelHint="AcrylicBlur"
         Background="Transparent"
-        ExtendClientAreaToDecorationsHint="True"
-        x:Name="MyWindow">
+        ExtendClientAreaToDecorationsHint="True">
 
     <Design.DataContext>
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <Grid RowDefinitions="Auto, Auto, *">
-        
-        <controls:FicsitHeaderControl Grid.Row="0" />
-        
-        <StackPanel Grid.Row="1">
-            <Button Command="{Binding OpenDatabaseWindow}"
-                    CommandParameter="{ReflectionBinding ElementName=MyWindow}"
-                    Content="Database" />
-        </StackPanel>
-        <TextBlock Grid.Row="2" Text="Welcome to Avalonia!" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-    </Grid>
+    <controls:FicsitHeaderControl>
+        <Grid ColumnDefinitions="Auto, *">
+            <StackPanel Grid.Column="0" Background="{DynamicResource BrushGroupBox}" Margin="10" Width="200">
+                <Button Margin="10" Command="{Binding OpenDatabaseWindow}" Content="Database" />
+            </StackPanel>
+        </Grid>
+    </controls:FicsitHeaderControl>
 </Window>

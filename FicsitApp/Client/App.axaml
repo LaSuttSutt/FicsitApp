@@ -11,10 +11,18 @@
   
     <Application.Styles>
         <FluentTheme />
-        <StyleInclude Source="avares://Client/Styles/Icons.axaml"></StyleInclude>
+        <StyleInclude Source="avares://Client/Styles/Icons.axaml" />
+        <StyleInclude Source="avares://Client/Ui/Shared/Controls/FicsitHeaderControl.axaml" />
     </Application.Styles>
              
     <Application.Resources>
+        <Color x:Key="ColStandardOrange">#F27F00</Color>
+        <SolidColorBrush x:Key="BrushStandardOrange" Color="#F27F00" />
+        <Color x:Key="ColBackground">#404040</Color>
+        <SolidColorBrush x:Key="BrushBackground" Color="#404040" />
+        <Color x:Key="ColGroupBox">#BFBFBF</Color>
+        <SolidColorBrush x:Key="BrushGroupBox" Color="#BFBFBF" />
+        
         <FontFamily x:Key="Poppins">avares://Client/Assets/Fonts/Poppins#Poppins</FontFamily>
     </Application.Resources>
 </Application>

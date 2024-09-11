@@ -2,10 +2,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="using:Client.Ui.Database.ItemList"
+             xmlns:vm="using:Client.Ui.Database.Items.ItemList"
              xmlns:helper="using:Client.Helper"
              mc:Ignorable="d"
-             x:Class="Client.Ui.Database.ItemList.DbItemListEntry"
+             x:Class="Client.Ui.Database.Items.ItemList.DbItemListEntry"
              x:DataType="vm:DbItemListEntryViewModel">
 
     <Border BorderBrush="DimGray" BorderThickness="0 0 0 1">

@@ -3,11 +3,11 @@ using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.ReactiveUI;
-using Client.Ui.Database.Creation;
+using Client.Ui.Database.Items.Creation;
 using ReactiveUI;
 using Shared.DomainModel;
 
-namespace Client.Ui.Database.ItemList;
+namespace Client.Ui.Database.Items.ItemList;
 
 public partial class DbItemListView : ReactiveUserControl<DbItemListViewModel>
 {
@@ -30,7 +30,7 @@ public partial class DbItemListView : ReactiveUserControl<DbItemListViewModel>
         this.WhenActivated(action => action(ViewModel!.ShowDialog.RegisterHandler(DoShowDialogAsync)));
     }
 
-    private async Task DoShowDialogAsync(InteractionContext<CreateItemViewModel, List<Item>> interaction)
+    private async Task DoShowDialogAsync(InteractionContext<CreateItemViewModel, List<Item>?> interaction)
     {
         var dialog = new CreateItemView
         {

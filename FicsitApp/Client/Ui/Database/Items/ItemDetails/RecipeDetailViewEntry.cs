@@ -1,7 +1,7 @@
 ﻿using Avalonia.Media.Imaging;
 using Client.Helper;
 
-namespace Client.Ui.Database.ItemDetails;
+namespace Client.Ui.Database.Items.ItemDetails;
 
 public class RecipeDetailViewEntry
 {

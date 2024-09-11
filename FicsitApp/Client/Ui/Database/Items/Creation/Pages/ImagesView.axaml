@@ -2,16 +2,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="using:Client.Ui.Database.Creation.Pages"
+             xmlns:vm="using:Client.Ui.Database.Items.Creation.Pages"
+             xmlns:helper="using:Client.Helper"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="250"
-             x:Class="Client.Ui.Database.Creation.Pages.ImagesView"
+             x:Class="Client.Ui.Database.Items.Creation.Pages.ImagesView"
              x:DataType="vm:ImagesViewModel">
-    
+
     <UserControl.Resources>
         <SolidColorBrush x:Key="SelectionColor" Color="Orange" Opacity=".9" />
     </UserControl.Resources>
-    
-    <ListBox Margin="5" ItemsSource="{Binding Images}" Background="Transparent">
+
+    <ListBox Margin="5" ItemsSource="{Binding Images, FallbackValue=xxxxxxx}" 
+             SelectedItem="{Binding SelectedImage}"
+             Background="Transparent">
         <ListBox.ItemsPanel>
             <ItemsPanelTemplate>
                 <WrapPanel />
@@ -19,9 +22,12 @@
         </ListBox.ItemsPanel>
         <ListBox.ItemTemplate>
             <DataTemplate>
-                <Image Source="{Binding Image}" Width="64" Margin="-7 -5 -7 -7">
+                <Image
+                    Source="{Binding Image, 
+                    FallbackValue={x:Static helper:ImageHelper.DefaultImage}}"
+                    Width="64" Margin="-7 -5 -7 -7">
                     <Image.Effect>
-                        <DropShadowEffect OffsetX="1" OffsetY="1" BlurRadius="7"></DropShadowEffect>
+                        <DropShadowEffect OffsetX="1" OffsetY="1" BlurRadius="7" />
                     </Image.Effect>
                 </Image>
             </DataTemplate>

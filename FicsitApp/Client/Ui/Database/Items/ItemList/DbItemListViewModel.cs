@@ -4,12 +4,12 @@ using System.Collections.ObjectModel;
 using System.Reactive.Linq;
 using System.Windows.Input;
 using Client.Shared.View;
-using Client.Ui.Database.Creation;
+using Client.Ui.Database.Items.Creation;
 using ReactiveUI;
 using Shared.DomainModel;
 using Shared.TestData;
 
-namespace Client.Ui.Database.ItemList;
+namespace Client.Ui.Database.Items.ItemList;
 
 public class DbItemListViewModel : ViewModelBase
 {

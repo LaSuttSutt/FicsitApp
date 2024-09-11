@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Reactive;
 using System.Windows.Input;
 using Client.Shared.View;
-using Client.Ui.Database.Creation.Pages;
+using Client.Ui.Database.Items.Creation.Pages;
 using Client.Ui.Shared;
-using DynamicData;
 using ReactiveUI;
 using Shared.DomainModel;
 
-namespace Client.Ui.Database.Creation;
+namespace Client.Ui.Database.Items.Creation;
 
 public class CreateItemViewModel : ViewModelBase
 {
@@ -54,7 +52,7 @@ public class CreateItemViewModel : ViewModelBase
         this.RaisePropertyChanged(nameof(CurrentPage));
         OnCurrentPageStateChanged(this);
     }
-
+    
     private void OnCurrentPageStateChanged(object? sender, EventArgs? eventArgs = null)
     {
         var index = WizardPages.IndexOf(CurrentPage);

@@ -5,7 +5,7 @@ namespace Client.Ui.Shared;
 
 public class WizardViewModel : ViewModelBase
 {
-    public event EventHandler StateChanged;
+    public event EventHandler StateChanged = null!;
     public bool CanGoForward { get; set; }
     
     protected void RaiseOnStateChanged() => StateChanged?.Invoke(this, EventArgs.Empty);

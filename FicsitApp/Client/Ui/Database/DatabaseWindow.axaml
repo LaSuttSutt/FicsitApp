@@ -1,11 +1,9 @@
 ﻿<Window Name="DbWindow"
         xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:Client.Ui.Database"
-        xmlns:details="using:Client.Ui.Database.ItemDetails"
-        xmlns:list="using:Client.Ui.Database.ItemList"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:Client.Ui.Database"
         xmlns:controls="using:Client.Ui.Shared.Controls"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Client.Ui.Database.DatabaseWindow"
@@ -19,17 +17,7 @@
         Background="Transparent"
         ExtendClientAreaToDecorationsHint="True">
 
-    <Grid RowDefinitions="Auto, *" ColumnDefinitions="Auto, *">
-
-        <!-- Window header ´Satisfactory´ -->
-        <controls:FicsitHeaderControl Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" />
-
-        <!-- List of items on the left -->
-        <list:DbItemListView Grid.Row="1" Grid.Column="0" DbWindow="{Binding #DbWindow}"
-                             DataContext="{Binding ItemListViewModel}" />
-
-        <!-- Item Details View on the right -->
-        <details:ItemDetailsView Grid.Row="1" Grid.Column="1"
-                                 DataContext="{Binding ItemDetailsViewModel}" />
-    </Grid>
+    <controls:FicsitHeaderControl HomeCommand="{Binding HomeCommand}">
+        <Panel Margin="15" Background="{DynamicResource BrushGroupBox}"></Panel>
+    </controls:FicsitHeaderControl>
 </Window>
