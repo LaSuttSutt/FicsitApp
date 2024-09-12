@@ -1,0 +1,17 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <!-- Add Controls for Previewer Here -->
+        </Border>
+    </Design.PreviewWith>
+
+    <!-- Image original with shadow -->
+    <Style Selector="Image.Standard">
+        <Setter Property="Width" Value="64" />
+        <Setter Property="Effect">
+            <DropShadowEffect OffsetX="0" BlurRadius="10"></DropShadowEffect>
+        </Setter>
+    </Style>
+    
+</Styles>

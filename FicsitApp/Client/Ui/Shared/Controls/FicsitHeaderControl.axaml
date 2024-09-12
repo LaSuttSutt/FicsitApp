@@ -12,12 +12,14 @@
         <Setter Property="Template">
             <ControlTemplate>
                 <Grid RowDefinitions="Auto, *">
-                    <Border Grid.Row="0" Height="31" Background="{DynamicResource BrushStandardOrange}" IsHitTestVisible="False"
+                    <Border Grid.Row="0" 
+                            Height="31" 
+                            Background="{DynamicResource BrushStandardOrange}" 
+                            IsHitTestVisible="False"
                             BorderThickness="0 0 0 1" BorderBrush="Black">
                         <StackPanel Orientation="Horizontal">
                             <Border Width="65" IsVisible="{OnPlatform false, macOS=true}" />
                             <Image Source="/Assets/Satisfactory2.png" HorizontalAlignment="Left" Margin="5" />
-                            <Button Command="{TemplateBinding HomeCommand}" IsHitTestVisible="True">test</Button>
                         </StackPanel>
                     </Border>
                     

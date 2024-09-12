@@ -17,7 +17,16 @@
         Background="Transparent"
         ExtendClientAreaToDecorationsHint="True">
 
-    <controls:FicsitHeaderControl HomeCommand="{Binding HomeCommand}">
-        <Panel Margin="15" Background="{DynamicResource BrushGroupBox}"></Panel>
+    <controls:FicsitHeaderControl>
+        <Border Margin="15"
+                Background="{DynamicResource BrushGroupBox}"
+                BorderThickness="1"
+                BorderBrush="Black">
+
+            <TransitioningContentControl
+                Content="{Binding CurrentView, 
+                FallbackValue={x:Static vm:DatabaseWindowViewModel.TestViewModel}}" />
+
+        </Border>
     </controls:FicsitHeaderControl>
 </Window>

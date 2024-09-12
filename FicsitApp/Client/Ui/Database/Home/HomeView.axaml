@@ -1,0 +1,20 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:Client.Ui.Database.Home"
+             mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="350"
+             x:Class="Client.Ui.Database.Home.HomeView"
+             x:DataType="vm:HomeViewModel"
+             Background="{DynamicResource BrushGroupBox}">
+    
+    <WrapPanel>
+        <StackPanel Margin="25">
+            <Button Classes="NavBtn">
+                <Image Classes="Standard" Source="avares://Client/Assets/ImageDb/C05_screws_64.png" />
+            </Button>
+            <TextBlock Text="Items" Classes="NavBtn" />
+        </StackPanel>
+    </WrapPanel>
+    
+</UserControl>

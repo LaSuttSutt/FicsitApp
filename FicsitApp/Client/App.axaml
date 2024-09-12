@@ -12,6 +12,9 @@
     <Application.Styles>
         <FluentTheme />
         <StyleInclude Source="avares://Client/Styles/Icons.axaml" />
+        <StyleInclude Source="avares://Client/Styles/TextStyles.axaml" />
+        <StyleInclude Source="avares://Client/Styles/ButtonStyles.axaml" />
+        <StyleInclude Source="avares://Client/Styles/ImageStyles.axaml" />
         <StyleInclude Source="avares://Client/Ui/Shared/Controls/FicsitHeaderControl.axaml" />
     </Application.Styles>
              

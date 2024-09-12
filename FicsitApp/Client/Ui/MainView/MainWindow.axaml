@@ -22,9 +22,12 @@
 
     <controls:FicsitHeaderControl>
         <Grid ColumnDefinitions="Auto, *">
-            <StackPanel Grid.Column="0" Background="{DynamicResource BrushGroupBox}" Margin="10" Width="200">
-                <Button Margin="10" Command="{Binding OpenDatabaseWindow}" Content="Database" />
-            </StackPanel>
+            <Border Grid.Column="0" BorderThickness="1" BorderBrush="Black" Margin="15">
+                <StackPanel Background="{DynamicResource BrushGroupBox}" 
+                            Width="250">
+                    <Button Margin="10" Command="{Binding OpenDatabaseWindow}" Content="Database" />
+                </StackPanel>
+            </Border>
         </Grid>
     </controls:FicsitHeaderControl>
 </Window>
