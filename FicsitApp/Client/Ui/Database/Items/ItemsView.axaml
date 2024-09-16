@@ -6,22 +6,18 @@
              xmlns:vm="using:Client.Ui.Database.Items"
              xmlns:details="using:Client.Ui.Database.Items.ItemDetails"
              xmlns:list="using:Client.Ui.Database.Items.ItemList"
-             xmlns:controls="using:Client.Ui.Shared.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Client.Ui.Database.Items.ItemsView"
              x:DataType="vm:ItemsViewModel">
     
-    <Grid RowDefinitions="Auto, *" ColumnDefinitions="Auto, *">
-
-        <!-- Window header ´Satisfactory´ -->
-        <controls:FicsitHeaderControl Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" />
-
+    <Grid ColumnDefinitions="Auto, *">
+        
         <!-- List of items on the left -->
-        <list:DbItemListView Grid.Row="1" Grid.Column="0" DbWindow="{Binding #DbWindow}"
+        <list:DbItemListView Grid.Column="0" DbWindow="{Binding #DbWindow}"
                              DataContext="{Binding ItemListViewModel}" />
 
         <!-- Item Details View on the right -->
-        <details:ItemDetailsView Grid.Row="1" Grid.Column="1"
+        <details:ItemDetailsView Grid.Column="1"
                                  DataContext="{Binding ItemDetailsViewModel}" />
     </Grid>
     

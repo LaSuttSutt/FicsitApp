@@ -14,7 +14,7 @@ public static class ImageHelper
         new(AssetLoader.Open(new Uri("avares://Client/Assets/ImageDb/A01_default_64.png")));
     
     public static Dictionary<string, Bitmap> Images { get; } = [];
-
+    
     #endregion
 
     #region Static Methods ----------------------

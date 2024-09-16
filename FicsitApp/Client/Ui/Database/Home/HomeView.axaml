@@ -6,15 +6,25 @@
              mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="350"
              x:Class="Client.Ui.Database.Home.HomeView"
              x:DataType="vm:HomeViewModel"
-             Background="{DynamicResource BrushGroupBox}">
-    
-    <WrapPanel>
-        <StackPanel Margin="25">
-            <Button Classes="NavBtn">
+             Background="{DynamicResource BrushBackground}">
+
+    <WrapPanel Background="{DynamicResource BrushGroupBox}">
+        <StackPanel Margin="20">
+            <Button Classes="NavBtn" 
+                    Command="{Binding OnNavButtonClicked}" 
+                    CommandParameter="{Binding ItemsViewModel}">
                 <Image Classes="Standard" Source="avares://Client/Assets/ImageDb/C05_screws_64.png" />
             </Button>
             <TextBlock Text="Items" Classes="NavBtn" />
         </StackPanel>
+        <StackPanel Margin="0 20 20 20">
+            <Button Classes="NavBtn" 
+                    Command="{Binding OnNavButtonClicked}"
+                    CommandParameter="{Binding MachinesViewModel}">
+                <Image Classes="Standard" Source="avares://Client/Assets/ImageDb/G_Constructor_64.png" />
+            </Button>
+            <TextBlock Text="Machines" Classes="NavBtn" />
+        </StackPanel>
     </WrapPanel>
-    
+
 </UserControl>

@@ -5,13 +5,14 @@ using Client.Ui.Database.Items.ItemDetails;
 
 namespace Client.Ui.Database.Items;
 
-public class ItemsViewModel : ViewModelBase
+public class ItemsViewModel : NavigationViewModel
 {
     public DbItemListViewModel ItemListViewModel { get; set; } = new();
     public ItemDetailsViewModel ItemDetailsViewModel { get; set; } = new();
     
     public ItemsViewModel()
     {
+        Title = "Items";
         ItemListViewModel.SelectedItemChanged += ItemListViewModelOnSelectedItemChanged;
     }
 

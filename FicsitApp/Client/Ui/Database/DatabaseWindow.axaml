@@ -18,15 +18,37 @@
         ExtendClientAreaToDecorationsHint="True">
 
     <controls:FicsitHeaderControl>
-        <Border Margin="15"
-                Background="{DynamicResource BrushGroupBox}"
-                BorderThickness="1"
-                BorderBrush="Black">
+        <Grid RowDefinitions="Auto, *" Margin="20">
 
-            <TransitioningContentControl
-                Content="{Binding CurrentView, 
-                FallbackValue={x:Static vm:DatabaseWindowViewModel.TestViewModel}}" />
+            <Border Grid.Row="0" BorderThickness="1" BorderBrush="Black" Margin="0 0 0 5">
+                <StackPanel Orientation="Horizontal"
+                            Background="{DynamicResource BrushGroupBox}"
+                            Height="40">
+                    <Button Margin="4 4 10 4" Width="40"
+                            Command="{Binding OnHomeClicked}">
+                        <PathIcon Data="{StaticResource HomeRegular}"
+                                  VerticalAlignment="Center" Margin="10">
+                            <PathIcon.Effect>
+                                <DropShadowEffect OffsetX="0" OffsetY="0" Opacity=".5" BlurRadius="5"></DropShadowEffect>
+                            </PathIcon.Effect>
+                        </PathIcon>
+                    </Button>
+                    <TextBlock Text="{Binding CurrentTitle, FallbackValue=Title}"
+                               FontFamily="{DynamicResource Poppins}" FontSize="20"
+                               Margin="0 3 0 0"
+                               VerticalAlignment="Center">
+                        <TextBlock.Effect>
+                            <DropShadowEffect OffsetX="0" OffsetY="0" Opacity=".5" BlurRadius="5"></DropShadowEffect>
+                        </TextBlock.Effect>
+                    </TextBlock>
+                </StackPanel>
+            </Border>
 
-        </Border>
+            <Border Grid.Row="1" BorderThickness="1" BorderBrush="Black">
+                <TransitioningContentControl
+                    Content="{Binding CurrentView}" />
+            </Border>
+
+        </Grid>
     </controls:FicsitHeaderControl>
 </Window>
