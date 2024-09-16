@@ -2,7 +2,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Client.Ui.Database.Machines.MachinesList.MachinesListView">
-    Welcome to Avalonia!
+             xmlns:vm="using:Client.Ui.Database.Machines.MachinesList"
+             mc:Ignorable="d" d:DesignHeight="200"
+             x:Class="Client.Ui.Database.Machines.MachinesList.MachinesListView"
+             x:DataType="vm:MachinesListViewModel">
+    
+    <Border BorderBrush="Black" BorderThickness="2" Background="{DynamicResource BrushGroupBox}">
+        <ListBox ItemsSource="{Binding Machines, FallbackValue=AAA}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Panel Margin="-12 -9 -12 -12">
+                        <vm:MachinesEntryView />
+                    </Panel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <ListBox.Styles>
+                <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+                    <Setter Property="Background" Value="{DynamicResource SelectionColor}" />
+                </Style>
+            </ListBox.Styles>
+        </ListBox>
+    </Border>
+    
 </UserControl>

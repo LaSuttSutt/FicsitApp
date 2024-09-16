@@ -3,8 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Shared.DomainModel;
 
-[Table("Machine")]
-public class Machines
+[Table("Machines")]
+public class Machine
 {
     [Key] public Guid Id { get; init; }
     public string Name { get; init; } = "New machine";

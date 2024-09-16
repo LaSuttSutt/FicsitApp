@@ -3,17 +3,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:Client.Ui.Database.Machines"
+             xmlns:list="using:Client.Ui.Database.Machines.MachinesList"
              mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="300"
              x:Class="Client.Ui.Database.Machines.MachinesView"
              x:DataType="vm:MachinesViewModel"
              Background="{DynamicResource BrushBackground}">
     
-    <Grid ColumnDefinitions="Auto, *">
-        
-        <!-- List of Machines on the left -->
-        
-        
-        <!-- Detail View for the Machines -->
-        
-    </Grid>
+    <list:MachinesListView DataContext="{Binding ListViewModel}" />
 </UserControl>

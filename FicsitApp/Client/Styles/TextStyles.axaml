@@ -18,4 +18,9 @@
         </Setter>
     </Style>
     
+    <!-- MachineListEntry Text -->
+    <Style Selector="TextBlock.MachineEntryBody">
+        <Setter Property="FontFamily" Value="{DynamicResource Poppins}" />
+        <Setter Property="FontSize" Value="15" />
+    </Style>
 </Styles>

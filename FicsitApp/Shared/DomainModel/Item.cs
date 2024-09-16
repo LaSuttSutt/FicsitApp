@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Shared.DomainModel;
 
-[Table("Item")]
+[Table("Items")]
 public class Item
 {
     [Key] public Guid Id { get; init; }
