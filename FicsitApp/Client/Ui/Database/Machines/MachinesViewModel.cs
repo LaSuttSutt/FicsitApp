@@ -3,7 +3,6 @@ using System.Linq;
 using System.Reactive;
 using Client.Shared.View;
 using Client.Ui.Database.Machines.MachinesList;
-using DynamicData;
 using ReactiveUI;
 using Shared.DomainModel;
 using Shared.TestData;
