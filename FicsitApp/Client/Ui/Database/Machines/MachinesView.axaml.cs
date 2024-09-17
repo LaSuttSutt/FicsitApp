@@ -1,8 +1,8 @@
-﻿using Avalonia.Controls;
+﻿using Avalonia.ReactiveUI;
 
 namespace Client.Ui.Database.Machines;
 
-public partial class MachinesView : UserControl
+public partial class MachinesView : ReactiveUserControl<MachinesViewModel>
 {
     public MachinesView()
     {

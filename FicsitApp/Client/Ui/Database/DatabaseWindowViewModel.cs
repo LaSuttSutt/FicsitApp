@@ -1,4 +1,5 @@
 ﻿using System.Reactive;
+using Avalonia.Controls;
 using Client.Shared.Notification;
 using Client.Shared.View;
 using Client.Ui.Database.Home;
@@ -14,13 +15,17 @@ public class DatabaseWindowViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> OnHomeClicked { get; }
     private HomeViewModel HomeViewModel { get; } = new();
     
-    
     public DatabaseWindowViewModel()
     {
         CurrentView = HomeViewModel;
         CurrentTitle = HomeViewModel.Title;
         OnHomeClicked = ReactiveCommand.Create(ShowHomeView);
         NotificationService.OnShowNavigationView += NotificationServiceOnOnShowNavigationView;
+    }
+
+    public void SetWindow(Window window)
+    {
+        HomeViewModel.SetWindow(window);
     }
 
     private void ShowHomeView()

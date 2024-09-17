@@ -25,7 +25,7 @@ public class CreateItemViewModel : ViewModelBase
     public CreateItemViewModel()
     {
         SaveCommand = ReactiveCommand.Create(() => SavedItems);
-        
+
         WizardPages.Add(new ImagesViewModel());
         WizardPages.Add(new ItemDetailsViewModel());
         CurrentPage = WizardPages[0];

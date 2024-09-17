@@ -7,5 +7,7 @@ public partial class DatabaseWindow : Window
     public DatabaseWindow()
     {
         InitializeComponent();
+        
+        ((DatabaseWindowViewModel)DataContext!).SetWindow(this);
     }
 }

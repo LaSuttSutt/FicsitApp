@@ -1,5 +1,5 @@
 ﻿using System.Reactive;
-using System.Windows.Input;
+using Avalonia.Controls;
 using Client.Shared.Notification;
 using Client.Shared.View;
 using Client.Ui.Database.Items;
@@ -19,6 +19,11 @@ public class HomeViewModel : NavigationViewModel
     {
         Title = "Ficsit Database";
         OnNavButtonClicked = ReactiveCommand.Create<NavigationViewModel>(ShowSubView);
+    }
+
+    public void SetWindow(Window window)
+    {
+        MachinesViewModel.SetWindow(window);
     }
 
     private void ShowSubView(NavigationViewModel viewModel)
