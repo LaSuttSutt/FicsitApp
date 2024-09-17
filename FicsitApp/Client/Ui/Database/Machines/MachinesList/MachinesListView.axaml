@@ -5,20 +5,43 @@
              xmlns:vm="using:Client.Ui.Database.Machines.MachinesList"
              mc:Ignorable="d" d:DesignHeight="200"
              x:Class="Client.Ui.Database.Machines.MachinesList.MachinesListView"
-             x:DataType="vm:MachinesListViewModel">
+             x:DataType="vm:MachinesListViewModel"
+             Background="Transparent">
     
-    <Border BorderBrush="Black" BorderThickness="2" Background="{DynamicResource BrushGroupBox}">
-        <ListBox ItemsSource="{Binding Machines, FallbackValue=AAA}">
+    <Border BorderBrush="Black" BorderThickness="2">
+        <ListBox ItemsSource="{Binding Machines, FallbackValue=AAA}" 
+                 Background="{DynamicResource BrushGroupBox}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Panel Margin="-12 -9 -12 -12">
+                    <Panel Margin="-12 -10 -12 -12">
                         <vm:MachinesEntryView />
+                        <StackPanel Name="EditPanel" 
+                                    Orientation="Horizontal" 
+                                    HorizontalAlignment="Right" 
+                                    VerticalAlignment="Top">
+                            <Button Margin="3 5" 
+                                    Command="{Binding $parent[ListBox].((vm:MachinesListViewModel)DataContext).OnEditMachine, FallbackValue=x}"
+                                    CommandParameter="{Binding}">
+                                <PathIcon Data="{StaticResource EditRegular}" />
+                            </Button>
+                            <Button Margin="0 0 5 0"
+                                    Command="{Binding $parent[ListBox].((vm:MachinesListViewModel)DataContext).OnDeleteMachine, FallbackValue=x}"
+                                    CommandParameter="{Binding}">
+                                <PathIcon Data="{StaticResource DeleteRegular}" />
+                            </Button>
+                        </StackPanel>
                     </Panel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
             <ListBox.Styles>
                 <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
-                    <Setter Property="Background" Value="{DynamicResource SelectionColor}" />
+                    <Setter Property="Background" Value="{DynamicResource BrushStandardOrange}" />
+                </Style>
+                <Style Selector="ListBoxItem StackPanel#EditPanel">
+                    <Setter Property="IsVisible" Value="False" />
+                </Style>
+                <Style Selector="ListBoxItem:selected StackPanel#EditPanel">
+                    <Setter Property="IsVisible" Value="True" />
                 </Style>
             </ListBox.Styles>
         </ListBox>

@@ -9,5 +9,32 @@
              x:DataType="vm:MachinesViewModel"
              Background="{DynamicResource BrushBackground}">
     
-    <list:MachinesListView DataContext="{Binding ListViewModel}" />
+    <Grid RowDefinitions="*, Auto">
+        <list:MachinesListView Grid.Row="0" DataContext="{Binding ListViewModel}" />
+        <Border Grid.Row="1" 
+                BorderBrush="Black" 
+                BorderThickness="2" 
+                Margin="0 4 0 0"
+                Background="{DynamicResource BrushGroupBox}">
+            <StackPanel Orientation="Horizontal">
+                <Button Margin="4 4 10 4" Width="35" Command="{Binding AddMachineCommand}">
+                    <PathIcon Data="{StaticResource AddRegular}"
+                              VerticalAlignment="Center" Margin="0">
+                        <PathIcon.Effect>
+                            <DropShadowEffect OffsetX="0" OffsetY="0" Opacity=".5" BlurRadius="5"></DropShadowEffect>
+                        </PathIcon.Effect>
+                    </PathIcon>
+                </Button>
+                <TextBlock Text="add machine"
+                           FontFamily="{DynamicResource Poppins}" FontSize="20"
+                           Margin="0 3 0 0"
+                           VerticalAlignment="Center">
+                    <TextBlock.Effect>
+                        <DropShadowEffect OffsetX="0" OffsetY="0" Opacity=".5" BlurRadius="5"></DropShadowEffect>
+                    </TextBlock.Effect>
+                </TextBlock>
+            </StackPanel>
+        </Border>
+    </Grid>
+    
 </UserControl>

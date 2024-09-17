@@ -23,4 +23,17 @@
         <Setter Property="FontFamily" Value="{DynamicResource Poppins}" />
         <Setter Property="FontSize" Value="15" />
     </Style>
+    
+    <!-- MachineListEntry Title -->
+    <Style Selector="TextBlock.MachineEntryTitle">
+        <Setter Property="FontFamily" Value="{DynamicResource Poppins}" />
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect Color="Black" Opacity=".5" BlurRadius="5" OffsetX="3" OffsetY="3" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
 </Styles>

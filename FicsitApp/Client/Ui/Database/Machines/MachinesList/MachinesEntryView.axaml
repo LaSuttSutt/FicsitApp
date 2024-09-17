@@ -5,24 +5,23 @@
              xmlns:vm="using:Client.Ui.Database.Machines.MachinesList"
              xmlns:helper="using:Client.Helper"
              mc:Ignorable="d"
+             Background="Transparent"
              x:Class="Client.Ui.Database.Machines.MachinesList.MachinesEntryView"
              x:DataType="vm:MachinesEntryViewModel">
     
     <Border BorderBrush="DimGray" BorderThickness="0 0 0 1">
         <StackPanel Orientation="Horizontal">
-            <Image
-                Source="{Binding Image, 
-                        FallbackValue={x:Static helper:ImageHelper.DefaultImage}} "
-                Width="64" Margin="5 3">
+            <Image Source="{Binding Image, 
+                    FallbackValue={x:Static helper:ImageHelper.DefaultMachine}} "
+                   Width="64" Margin="10 10">
                 <Image.Effect>
                     <DropShadowEffect OffsetX="1" OffsetY="1" BlurRadius="7"></DropShadowEffect>
                 </Image.Effect>
             </Image>
             <StackPanel>
                 <TextBlock Text="{Binding Name, FallbackValue=Test-Item}" 
-                           FontSize="18" Margin="10 9 0 2"
-                           FontWeight="SemiBold"
-                           VerticalAlignment="Center" FontFamily="{DynamicResource Poppins}"/>
+                           Classes="MachineEntryTitle"
+                           Margin="10 16 0 0"/>
                 <StackPanel Orientation="Horizontal" Margin="12 0">
                     <TextBlock Text="Inputs: " Classes="MachineEntryBody"/>
                     <TextBlock Text="{Binding Inputs, FallbackValue=1}" 
