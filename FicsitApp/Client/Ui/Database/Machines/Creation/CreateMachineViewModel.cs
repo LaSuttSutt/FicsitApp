@@ -10,14 +10,14 @@ public class CreateMachineViewModel : ViewModelBase
 {
     public Machine Machine { get; set; }
     
-    public ReactiveCommand<Unit, ShowDialogResult> SaveMachineCommand { get; set; }
-    public ReactiveCommand<Unit, ShowDialogResult> CancelCommand { get; set; }
+    public ReactiveCommand<Unit, CreateMachineViewModel> SaveMachineCommand { get; set; }
+    public ReactiveCommand<Unit, CreateMachineViewModel> CancelCommand { get; set; }
     
     
     public CreateMachineViewModel(Machine machine)
     {
         Machine = machine;
-        SaveMachineCommand = ReactiveCommand.Create(() => new ShowDialogResult(DialogResult.Ok));
-        CancelCommand = ReactiveCommand.Create(() => new ShowDialogResult(DialogResult.Cancel));
+        SaveMachineCommand = ReactiveCommand.Create(() => this);
+        CancelCommand = ReactiveCommand.Create(() => this);
     }
 }

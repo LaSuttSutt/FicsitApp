@@ -20,12 +20,7 @@ public class HomeViewModel : NavigationViewModel
         Title = "Ficsit Database";
         OnNavButtonClicked = ReactiveCommand.Create<NavigationViewModel>(ShowSubView);
     }
-
-    public void SetWindow(Window window)
-    {
-        MachinesViewModel.SetWindow(window);
-    }
-
+    
     private void ShowSubView(NavigationViewModel viewModel)
     {
         NotificationService.RaiseOnShowNavigationView(this, viewModel);

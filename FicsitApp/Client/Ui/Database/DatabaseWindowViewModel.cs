@@ -22,12 +22,7 @@ public class DatabaseWindowViewModel : ViewModelBase
         OnHomeClicked = ReactiveCommand.Create(ShowHomeView);
         NotificationService.OnShowNavigationView += NotificationServiceOnOnShowNavigationView;
     }
-
-    public void SetWindow(Window window)
-    {
-        HomeViewModel.SetWindow(window);
-    }
-
+    
     private void ShowHomeView()
     {
         if (CurrentView is HomeViewModel)

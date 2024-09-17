@@ -1,6 +1,8 @@
-﻿namespace Client.Ui.Shared;
+﻿using Avalonia;
 
-public class ShowDialogResult(DialogResult result)
+namespace Client.Ui.Shared;
+
+public class ShowDialogResult(DialogResult result) : AvaloniaObject
 {
     public DialogResult Result { get; set; } = result;
 }
