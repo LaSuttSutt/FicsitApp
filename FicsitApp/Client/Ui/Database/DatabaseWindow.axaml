@@ -13,6 +13,7 @@
         Width="1024"
         Height="768"
         WindowStartupLocation="CenterScreen"
+        ShowInTaskbar="False"
         TransparencyLevelHint="AcrylicBlur"
         Background="Transparent"
         ExtendClientAreaToDecorationsHint="True">
@@ -20,7 +21,7 @@
     <controls:FicsitHeaderControl>
         <Grid RowDefinitions="Auto, *" Margin="20">
 
-            <Border Grid.Row="0" BorderThickness="2" BorderBrush="Black" Margin="0 0 0 5">
+            <Border Grid.Row="0" BorderThickness="2" BorderBrush="Black" Margin="0 0 0 4">
                 <StackPanel Orientation="Horizontal"
                             Background="{DynamicResource BrushGroupBox}"
                             Height="40">

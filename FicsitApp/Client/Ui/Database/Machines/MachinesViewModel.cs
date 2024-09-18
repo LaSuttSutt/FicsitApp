@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using Avalonia.Controls;
 using Client.Shared.View;
 using Client.Ui.Database.Machines.Creation;
 using Client.Ui.Database.Machines.MachinesList;
 using Client.Ui.Shared;
+using DynamicData;
 using ReactiveUI;
 using Shared.DomainModel;
 using Shared.TestData;
@@ -20,12 +18,27 @@ public class MachinesViewModel : NavigationViewModel
     public MachinesListViewModel ListViewModel { get; } = new();
     public ICommand AddMachineCommand { get; }
     
+    public Interaction<CreateMachineViewModel, ShowDialogResult> ShowDialog { get; }
+    
     public MachinesViewModel()
     {
-        AddMachineCommand = ReactiveCommand.Create(() => { });
         ListViewModel.OnEditMachineClicked += ListViewModelOnOnEditMachineClicked;
         ListViewModel.OnDeleteMachineClicked += ListViewModelOnOnDeleteMachineClicked;
         Title = "Machines";
+        
+        ShowDialog = new Interaction<CreateMachineViewModel, ShowDialogResult>();
+        AddMachineCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var machine = new Machine();
+            
+            var viewModel = new CreateMachineViewModel(machine);
+            var result = await ShowDialog.Handle(viewModel);
+            if (result?.Result == DialogResult.Ok)
+            {
+                ItemDatabase.Machines.Add(machine);
+                ListViewModel.Machines.Add(new MachinesEntryViewModel(machine.Id));
+            }
+        });
     }
     
     private void ListViewModelOnOnEditMachineClicked(object? sender, Guid e)

@@ -12,7 +12,7 @@ public partial class CreateMachineView : ReactiveWindow<CreateMachineViewModel>
         InitializeComponent();
         
         if (Design.IsDesignMode) return;
-        
+
         this.WhenActivated(action => action(ViewModel!.SaveMachineCommand.Subscribe(Close)));
         this.WhenActivated(action => action(ViewModel!.CancelCommand.Subscribe(Close)));
     }

@@ -36,4 +36,23 @@
         </Setter>
     </Style>
     
+    <!-- Input Label -->
+    <Style Selector="Label.Input">
+        <Setter Property="FontFamily" Value="{DynamicResource Poppins}" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+    </Style>
+    
+    <!-- Input TextBox -->
+    <Style Selector="TextBox.Input">
+        <Setter Property="FontFamily" Value="{DynamicResource Poppins}" />
+        <Setter Property="FontSize" Value="15" />
+    </Style>
+    
+    <!-- Input NumericUpDown -->
+    <Style Selector="NumericUpDown.Input">
+        <Setter Property="FontFamily" Value="{DynamicResource Poppins}" />
+        <Setter Property="FontSize" Value="15" />
+    </Style>
+    
 </Styles>
