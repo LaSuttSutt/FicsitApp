@@ -4,12 +4,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="using:Client.Ui.Database.Machines.Creation"
         xmlns:controls="using:Client.Ui.Shared.Controls"
+        xmlns:helper="using:Client.Helper"
         mc:Ignorable="d"
         x:Class="Client.Ui.Database.Machines.Creation.CreateMachineView"
         x:DataType="vm:CreateMachineViewModel"
         Title="Ficsit App - Machine"
         Icon="/Assets/Icon.ico"
-        Height="400"
+        Height="382"
         Width="400"
         WindowStartupLocation="CenterOwner"
         ShowInTaskbar="False"
@@ -18,14 +19,14 @@
 
     <controls:FicsitHeaderControl>
         <Grid RowDefinitions="Auto, *, Auto">
-            
+
             <!-- Machine Data -->
             <Border Grid.Row="0"
                     Margin="20 20 20 4"
                     BorderBrush="Black"
                     BorderThickness="2"
                     Background="{DynamicResource BrushGroupBox}">
-                
+
                 <Grid RowDefinitions="Auto, Auto" ColumnDefinitions="*, *">
                     <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="10 5 10 10">
                         <Label Classes="Input">Name</Label>
@@ -49,14 +50,38 @@
                     </StackPanel>
                 </Grid>
             </Border>
-            
+
             <!-- Images -->
-            <Border Grid.Row="1" 
+            <Border Grid.Row="1"
                     Margin="20 0 20 4"
-                    BorderBrush="Black" 
-                    BorderThickness="2" 
+                    BorderBrush="Black"
+                    BorderThickness="2"
                     Background="{DynamicResource BrushGroupBox}">
-                
+
+                <ListBox Margin="10"
+                         ItemsSource="{Binding MachineImages,
+                         FallbackValue=xxxxxx}"
+                         SelectedItem="{Binding SelectedMachineImage}"
+                         Background="{DynamicResource BrushGroupBox}">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal" ></WrapPanel>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Image Width="64"
+                                   Margin="-5"
+                                   Source="{Binding Image, 
+                                   FallbackValue={x:Static helper:ImageHelper.DefaultMachine}}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                    <ListBox.Styles>
+                        <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+                            <Setter Property="Background" Value="{DynamicResource BrushStandardOrange}" />
+                        </Style>
+                    </ListBox.Styles>
+                </ListBox>
             </Border>
 
             <!-- Save Cancel Buttons -->
