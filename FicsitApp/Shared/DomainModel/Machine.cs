@@ -6,7 +6,7 @@ namespace Shared.DomainModel;
 [Table("Machines")]
 public class Machine
 {
-    [Key] public Guid Id { get; init; }
+    [Key] public Guid Id { get; init; } = Guid.NewGuid();
     public string Name { get; set; } = "New machine";
     public string ImageName { get; set; } = "avares://Client/Assets/ImageDb/A01_default_64.png";
     public int ItemInputs { get; set; } = 1;

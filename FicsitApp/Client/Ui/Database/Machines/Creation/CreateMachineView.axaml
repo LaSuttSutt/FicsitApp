@@ -30,7 +30,8 @@
                 <Grid RowDefinitions="Auto, Auto" ColumnDefinitions="*, *">
                     <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="10 5 10 10">
                         <Label Classes="Input">Name</Label>
-                        <TextBox Classes="Input"
+                        <TextBox Name="TxtName" 
+                                 Classes="Input"
                                  Text="{Binding Machine.Name,
                                  FallbackValue=New machine}" />
                     </StackPanel>

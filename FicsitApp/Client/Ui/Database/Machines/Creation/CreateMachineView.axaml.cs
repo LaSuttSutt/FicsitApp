@@ -1,5 +1,6 @@
 ﻿using System;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 using Avalonia.ReactiveUI;
 using ReactiveUI;
 
@@ -15,5 +16,12 @@ public partial class CreateMachineView : ReactiveWindow<CreateMachineViewModel>
 
         this.WhenActivated(action => action(ViewModel!.SaveMachineCommand.Subscribe(Close)));
         this.WhenActivated(action => action(ViewModel!.CancelCommand.Subscribe(Close)));
+    }
+
+    protected override void OnLoaded(RoutedEventArgs e)
+    {
+        TxtName.SelectAll();
+        TxtName.Focus();
+        base.OnLoaded(e);
     }
 }

@@ -2,11 +2,11 @@
 using System.Linq;
 using System.Reactive.Linq;
 using System.Windows.Input;
+using Client.Shared.DomainModel;
 using Client.Shared.View;
 using Client.Ui.Database.Machines.Creation;
 using Client.Ui.Database.Machines.MachinesList;
 using Client.Ui.Shared;
-using DynamicData;
 using ReactiveUI;
 using Shared.DomainModel;
 using Shared.TestData;
@@ -33,7 +33,8 @@ public class MachinesViewModel : NavigationViewModel
             
             var viewModel = new CreateMachineViewModel(machine);
             var result = await ShowDialog.Handle(viewModel);
-            if (result?.Result == DialogResult.Ok)
+            
+            if (result.Result == DialogResult.Ok)
             {
                 ItemDatabase.Machines.Add(machine);
                 ListViewModel.Machines.Add(new MachinesEntryViewModel(machine.Id));
@@ -41,15 +42,30 @@ public class MachinesViewModel : NavigationViewModel
         });
     }
     
-    private void ListViewModelOnOnEditMachineClicked(object? sender, Guid e)
+    private async void ListViewModelOnOnEditMachineClicked(object? sender, Guid e)
     {
         var machine = ItemDatabase.Machines.FirstOrDefault(m => m.Id == e);
-        Console.WriteLine($"Edit machine: {machine?.Name ?? "<not found>"}");
+        if(machine == null) return;
+        
+        var machineClone = machine.Clone();
+        var viewModel = new CreateMachineViewModel(machineClone);
+        var result = await ShowDialog.Handle(viewModel);
+
+        if (result.Result != DialogResult.Ok) return;
+        machine.Update(machineClone);
+        var model = ListViewModel.Machines.FirstOrDefault(model => model.MachineId == machine.Id);
+        model?.Reload();
     }
     
     private void ListViewModelOnOnDeleteMachineClicked(object? sender, Guid e)
     {
         var machine = ItemDatabase.Machines.FirstOrDefault(m => m.Id == e);
-        Console.WriteLine($"Delete machine: {machine?.Name ?? "<not found>"}");
+        if(machine == null) return;
+        
+        var model = ListViewModel.Machines.FirstOrDefault(model => model.MachineId == machine.Id);
+        if (model == null) return;
+        
+        ListViewModel.Machines.Remove(model);
+        ItemDatabase.Machines.Remove(machine);
     }
 }

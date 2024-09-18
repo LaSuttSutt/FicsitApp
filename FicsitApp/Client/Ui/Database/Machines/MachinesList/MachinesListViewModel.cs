@@ -19,7 +19,11 @@ public class MachinesListViewModel : ViewModelBase
     {
         OnEditMachine = ReactiveCommand.Create<MachinesEntryViewModel>(EditMachine);
         OnDeleteMachine = ReactiveCommand.Create<MachinesEntryViewModel>(DeleteMachine);
-        
+    }
+
+    public void ReloadData()
+    {
+        Machines.Clear();
         foreach (var machine in ItemDatabase.Machines)
         {
             Machines.Add(new MachinesEntryViewModel(machine.Id));
