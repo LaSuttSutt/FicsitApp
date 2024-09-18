@@ -34,4 +34,9 @@
         <Setter Property="BorderBrush" Value="Black" />
     </Style>
     
+    <!-- PathIcon Buttons -->
+    <Style Selector="Button.PathIcon:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource BrushStandardOrange}" />
+    </Style>
+    
 </Styles>

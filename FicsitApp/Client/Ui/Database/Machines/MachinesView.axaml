@@ -17,7 +17,8 @@
                 Margin="0 4 0 0"
                 Background="{DynamicResource BrushGroupBox}">
             <StackPanel Orientation="Horizontal">
-                <Button Margin="4 4 10 4" Width="35" Command="{Binding AddMachineCommand}">
+                <Button Margin="4 4 10 4" Width="35" Classes="PathIcon"
+                        Command="{Binding AddMachineCommand}">
                     <PathIcon Data="{StaticResource AddRegular}"
                               VerticalAlignment="Center" Margin="0">
                         <PathIcon.Effect>
