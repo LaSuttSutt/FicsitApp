@@ -15,6 +15,7 @@
         <StyleInclude Source="avares://Client/Styles/TextStyles.axaml" />
         <StyleInclude Source="avares://Client/Styles/ButtonStyles.axaml" />
         <StyleInclude Source="avares://Client/Styles/ImageStyles.axaml" />
+        <StyleInclude Source="avares://Client/Styles/BorderStyles.axaml" />
         <StyleInclude Source="avares://Client/Ui/Shared/Controls/FicsitHeaderControl.axaml" />
     </Application.Styles>
              
@@ -25,6 +26,7 @@
         <SolidColorBrush x:Key="BrushBackground" Color="#404040" />
         <Color x:Key="ColGroupBox">#BFBFBF</Color>
         <SolidColorBrush x:Key="BrushGroupBox" Color="#BFBFBF" />
+        <SolidColorBrush x:Key="BrushGroupBoxTrans" Color="#BFBFBF" Opacity=".7" />
         
         <FontFamily x:Key="Poppins">avares://Client/Assets/Fonts/Poppins#Poppins</FontFamily>
     </Application.Resources>

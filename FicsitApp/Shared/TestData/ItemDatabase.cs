@@ -5,7 +5,6 @@ namespace Shared.TestData;
 public static class ItemDatabase
 {
     public static List<Item> Items { get; } = [];
-    public static List<Machine> Machines { get; } = [];
     public static List<Ingredient> Ingredients { get; } = [];
     public static List<Recipe> Recipes { get; } = [];
 
@@ -17,7 +16,6 @@ public static class ItemDatabase
     private static void BuildTestData()
     {
         CreateIronItems();
-        CreateMachines();
     }
 
     private static void CreateIronItems()
@@ -61,7 +59,7 @@ public static class ItemDatabase
         var ironPlate = new Item
         {
             Id = Guid.NewGuid(),
-            Name = "Iron Plate",
+            Name = "Aluminum Sheet",
             ImageName = "avares://Client/Assets/ImageDb/C03_iron-plate_64.png"
         };
         Items.Add(ironPlate);
@@ -119,24 +117,5 @@ public static class ItemDatabase
             IsByProduct = true
         };
         Ingredients.Add(ingredient1);
-    }
-
-    private static void CreateMachines()
-    {
-        Machines.Add(new Machine()
-        {
-            Id = Guid.NewGuid(),
-            Name = "Constructor",
-            ImageName = "avares://Client/Assets/ImageDb/G_Constructor_64.png",
-            ItemInputs = 1
-        });
-        
-        Machines.Add(new Machine
-        {
-            Id = Guid.NewGuid(),
-            Name = "Assembler",
-            ImageName = "avares://Client/Assets/ImageDb/G_Assembler_64.png",
-            ItemInputs = 2
-        });
     }
 }

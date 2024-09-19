@@ -3,7 +3,8 @@ using System.Collections.ObjectModel;
 using System.Reactive;
 using Client.Shared.View;
 using ReactiveUI;
-using Shared.TestData;
+using Shared.DataAccess;
+using Shared.DomainModel;
 
 namespace Client.Ui.Database.Machines.MachinesList;
 
@@ -24,7 +25,7 @@ public class MachinesListViewModel : ViewModelBase
     public void ReloadData()
     {
         Machines.Clear();
-        foreach (var machine in ItemDatabase.Machines)
+        foreach (var machine in DataAccess.GetEntities<Machine>())
         {
             Machines.Add(new MachinesEntryViewModel(machine.Id));
         }

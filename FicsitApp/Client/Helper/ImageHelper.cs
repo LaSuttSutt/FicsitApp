@@ -32,12 +32,25 @@ public static class ImageHelper
         {
             var path = uri.OriginalString;
             var image = new Bitmap(AssetLoader.Open(new Uri(uri.OriginalString)));
-            
             Images.Add(path, image);
-            
-            if (path.Contains("G_") || uri.OriginalString.Contains("A01_"))
-                MachineImages.Add(new FicsitImage(path, image));
         }
+        
+        InitMachines();
+    }
+
+    private static void InitMachines()
+    {
+        AddImageToList(MachineImages, "G_Constructor_64");
+        AddImageToList(MachineImages, "G_Assembler_64");
+        AddImageToList(MachineImages, "G_Blender_64");
+        AddImageToList(MachineImages, "G_Manufacturer_64");
+        AddImageToList(MachineImages, "A01_default_64");
+    }
+
+    private static void AddImageToList(List<FicsitImage> images, string imageName)
+    {
+        var path = "avares://Client/Assets/ImageDb/" + imageName + ".png";
+        images.Add(new FicsitImage(path, Images[path]));
     }
 
     #endregion

@@ -1,9 +1,11 @@
-﻿using System.Reactive.Linq;
+﻿using System;
+using System.Reactive.Linq;
 using System.Windows.Input;
 using Client.Helper;
 using Client.Shared.View;
 using Client.Ui.Database;
 using ReactiveUI;
+using Shared.DataAccess;
 using Shared.TestData;
 
 namespace Client.Ui.MainView;
@@ -23,6 +25,8 @@ public class MainWindowViewModel : ViewModelBase
     {
         ImageHelper.Initialize();
         ItemDatabase.Initialize();
+        DataAccess.Initialize();
+        
         ShowDialog = new Interaction<DatabaseWindowViewModel, bool>();
         OpenDatabaseWindow = ReactiveCommand.CreateFromTask(async () =>
         {

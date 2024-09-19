@@ -3,38 +3,75 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:Client.Ui.Database.Items.ItemList"
-             mc:Ignorable="d" d:DesignHeight="200"
+             mc:Ignorable="d" d:DesignHeight="250"
              x:Class="Client.Ui.Database.Items.ItemList.DbItemListView"
-             x:DataType="vm:DbItemListViewModel">
-
-    <UserControl.Resources>
-        <SolidColorBrush x:Key="SelectionColor" Color="Orange" Opacity=".9" />
-    </UserControl.Resources>
-
+             x:DataType="vm:DbItemListViewModel"
+             Background="{DynamicResource BrushBackground}">
+    
     <Grid RowDefinitions="*, Auto">
-        <ListBox Grid.Row="0"
-            ItemsSource="{Binding Items, FallbackValue=AAA}"
-            SelectedValue="{Binding SelectedItem}"
-            Background="LightGray" MinWidth="200">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Panel Margin="-12 -9 -12 -12">
-                        <vm:DbItemListEntry />
-                    </Panel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-            <ListBox.Styles>
-                <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
-                    <Setter Property="Background" Value="{DynamicResource SelectionColor}" />
-                </Style>
-            </ListBox.Styles>
-        </ListBox>
-
-        <Border Grid.Row="1" BorderBrush="Black" BorderThickness="0 1 0 0" Background="DarkGray">
-            <Button Command="{Binding AddItemCommand}" Margin="3" Padding="0"
-                    HorizontalAlignment="Right">
-                <PathIcon Data="{StaticResource AddSquareRegular}" />
-            </Button>
+        
+        <Border Grid.Row="0" Classes="Group">
+            <ListBox ItemsSource="{Binding Items, FallbackValue=AAA}"
+                     SelectedValue="{Binding SelectedItem}"
+                     Background="{DynamicResource BrushGroupBox}" MinWidth="250">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Panel Margin="-12 -9 -12 -12">
+                            <vm:DbItemListEntry />
+                            <StackPanel Name="EditPanel" 
+                                        Orientation="Horizontal" 
+                                        HorizontalAlignment="Right" 
+                                        VerticalAlignment="Top">
+                                <Button Margin="3 5" Classes="List"
+                                        Command="{Binding $parent[ListBox].((vm:DbItemListViewModel)DataContext).OnEditItem, FallbackValue=x}"
+                                        CommandParameter="{Binding}">
+                                    <PathIcon Data="{StaticResource EditRegular}" />
+                                </Button>
+                                <Button Margin="0 0 5 0" Classes="List"
+                                        Command="{Binding $parent[ListBox].((vm:DbItemListViewModel)DataContext).OnDeleteItem, FallbackValue=x}"
+                                        CommandParameter="{Binding}">
+                                    <PathIcon Data="{StaticResource DeleteRegular}" />
+                                </Button>
+                            </StackPanel>
+                        </Panel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <ListBox.Styles>
+                    <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+                        <Setter Property="Background" Value="{DynamicResource BrushStandardOrange}" />
+                    </Style>
+                    <Style Selector="ListBoxItem StackPanel#EditPanel">
+                        <Setter Property="IsVisible" Value="False" />
+                    </Style>
+                    <Style Selector="ListBoxItem:selected:pointerover StackPanel#EditPanel">
+                        <Setter Property="IsVisible" Value="True" />
+                    </Style>
+                </ListBox.Styles>
+            </ListBox>
+        </Border>
+        
+        <Border Grid.Row="1" Classes="Group" Margin="0 4 0 0">
+            <StackPanel Orientation="Horizontal">
+                <Button Margin="4 4 10 4"
+                        Width="35" 
+                        Classes="PathIcon"
+                        Command="{Binding AddItemCommand}">
+                    <PathIcon Data="{StaticResource AddRegular}"
+                              VerticalAlignment="Center" Margin="0">
+                        <PathIcon.Effect>
+                            <DropShadowEffect OffsetX="0" OffsetY="0" Opacity=".5" BlurRadius="5" />
+                        </PathIcon.Effect>
+                    </PathIcon>
+                </Button>
+                <TextBlock Text="add item"
+                           FontFamily="{DynamicResource Poppins}" FontSize="20"
+                           Margin="0 3 0 0"
+                           VerticalAlignment="Center">
+                    <TextBlock.Effect>
+                        <DropShadowEffect OffsetX="0" OffsetY="0" Opacity=".5" BlurRadius="5" />
+                    </TextBlock.Effect>
+                </TextBlock>
+            </StackPanel>
         </Border>
     </Grid>
 

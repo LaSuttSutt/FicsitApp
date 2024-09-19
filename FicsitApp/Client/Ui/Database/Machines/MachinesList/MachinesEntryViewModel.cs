@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Linq;
 using Avalonia.Media.Imaging;
 using Client.Helper;
 using Client.Shared.DomainModel;
 using Client.Shared.View;
 using ReactiveUI;
-using Shared.TestData;
+using Shared.DataAccess;
+using Shared.DomainModel;
 
 namespace Client.Ui.Database.Machines.MachinesList;
 
@@ -21,7 +21,7 @@ public class MachinesEntryViewModel : ViewModelBase
     {
         MachineId = machineId;
         
-        var machine = ItemDatabase.Machines.FirstOrDefault(m => m.Id == machineId);
+        var machine = DataAccess.GetEntity<Machine>(machineId);
         Name = machine?.Name ?? "<Machine not found>";
         Image = machine?.Image() ?? ImageHelper.DefaultImage;
         Inputs = machine?.ItemInputs ?? 0;
@@ -30,7 +30,7 @@ public class MachinesEntryViewModel : ViewModelBase
 
     public void Reload()
     {
-        var machine = ItemDatabase.Machines.FirstOrDefault(m => m.Id == MachineId);
+        var machine = DataAccess.GetEntity<Machine>(MachineId);
         if(machine == null) return;
 
         Name = machine.Name;

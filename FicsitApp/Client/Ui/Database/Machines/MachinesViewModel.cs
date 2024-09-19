@@ -8,8 +8,8 @@ using Client.Ui.Database.Machines.Creation;
 using Client.Ui.Database.Machines.MachinesList;
 using Client.Ui.Shared;
 using ReactiveUI;
+using Shared.DataAccess;
 using Shared.DomainModel;
-using Shared.TestData;
 
 namespace Client.Ui.Database.Machines;
 
@@ -36,7 +36,7 @@ public class MachinesViewModel : NavigationViewModel
             
             if (result.Result == DialogResult.Ok)
             {
-                ItemDatabase.Machines.Add(machine);
+                DataAccess.AddEntity(machine);
                 ListViewModel.Machines.Add(new MachinesEntryViewModel(machine.Id));
             }
         });
@@ -44,7 +44,7 @@ public class MachinesViewModel : NavigationViewModel
     
     private async void ListViewModelOnOnEditMachineClicked(object? sender, Guid e)
     {
-        var machine = ItemDatabase.Machines.FirstOrDefault(m => m.Id == e);
+        var machine = DataAccess.GetEntity<Machine>(e);
         if(machine == null) return;
         
         var machineClone = machine.Clone();
@@ -52,20 +52,22 @@ public class MachinesViewModel : NavigationViewModel
         var result = await ShowDialog.Handle(viewModel);
 
         if (result.Result != DialogResult.Ok) return;
+        
         machine.Update(machineClone);
+        DataAccess.UpdateEntity(machine);
         var model = ListViewModel.Machines.FirstOrDefault(model => model.MachineId == machine.Id);
         model?.Reload();
     }
     
     private void ListViewModelOnOnDeleteMachineClicked(object? sender, Guid e)
     {
-        var machine = ItemDatabase.Machines.FirstOrDefault(m => m.Id == e);
+        var machine = DataAccess.GetEntity<Machine>(e);
         if(machine == null) return;
         
         var model = ListViewModel.Machines.FirstOrDefault(model => model.MachineId == machine.Id);
         if (model == null) return;
         
         ListViewModel.Machines.Remove(model);
-        ItemDatabase.Machines.Remove(machine);
+        DataAccess.DeleteEntity(machine);
     }
 }

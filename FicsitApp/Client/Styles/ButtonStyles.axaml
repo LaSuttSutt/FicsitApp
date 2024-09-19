@@ -2,7 +2,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
         <Border Padding="20">
-            <Button Classes="Dialog">Cancel</Button>
+            <Button Classes="List" Margin="5 3">
+                <PathIcon Data="{StaticResource EditRegular}"></PathIcon>
+            </Button>
         </Border>
     </Design.PreviewWith>
 
@@ -37,6 +39,19 @@
     <!-- PathIcon Buttons -->
     <Style Selector="Button.PathIcon:pointerover /template/ ContentPresenter">
         <Setter Property="Background" Value="{DynamicResource BrushStandardOrange}" />
+    </Style>
+    
+    <!--  ListItem Buttons -->
+    <Style Selector="Button.List">
+        <Setter Property="Background" Value="{DynamicResource BrushBackground}" />
+    </Style>
+    
+    <Style Selector="Button.List:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="DimGray" />
+    </Style>
+    
+    <Style Selector="Button.List PathIcon">
+        <Setter Property="Foreground" Value="{DynamicResource BrushStandardOrange}" />
     </Style>
     
 </Styles>

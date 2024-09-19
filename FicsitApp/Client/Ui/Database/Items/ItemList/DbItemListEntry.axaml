@@ -13,14 +13,20 @@
             <Image
                 Source="{Binding Image, 
                         FallbackValue={x:Static helper:ImageHelper.DefaultImage}} "
-                Width="32" Margin="5 3">
+                Width="32" Margin="5 5">
                 <Image.Effect>
                     <DropShadowEffect OffsetX="1" OffsetY="1" BlurRadius="7"></DropShadowEffect>
                 </Image.Effect>
             </Image>
-            <TextBlock Text="{Binding Name, FallbackValue=Test-Item}" 
-                       FontSize="16" Margin="10 0"
-                       VerticalAlignment="Center" FontFamily="{DynamicResource Poppins}"/>
+            <TextBlock Text="{Binding Name, FallbackValue=Packaged Liquid Biofuel}" 
+                       FontSize="18"
+                       FontFamily="{DynamicResource Poppins}"
+                       VerticalAlignment="Center"
+                       Margin="5 0">
+                <TextBlock.Effect>
+                    <DropShadowEffect OffsetX="1" OffsetY="1" Opacity=".5" BlurRadius="3"></DropShadowEffect>
+                </TextBlock.Effect>
+            </TextBlock>
         </StackPanel>
     </Border>
 

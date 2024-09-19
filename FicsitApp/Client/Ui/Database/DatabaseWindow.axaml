@@ -12,7 +12,7 @@
         Title="Ficsit App - Database"
         Width="1024"
         Height="768"
-        WindowStartupLocation="CenterScreen"
+        WindowStartupLocation="CenterOwner"
         ShowInTaskbar="False"
         TransparencyLevelHint="AcrylicBlur"
         Background="Transparent"

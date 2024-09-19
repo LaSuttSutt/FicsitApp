@@ -8,17 +8,21 @@
              xmlns:list="using:Client.Ui.Database.Items.ItemList"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Client.Ui.Database.Items.ItemsView"
-             x:DataType="vm:ItemsViewModel">
+             x:DataType="vm:ItemsViewModel"
+             Background="{DynamicResource BrushBackground}">
     
-    <Grid ColumnDefinitions="Auto, *">
+    <Grid ColumnDefinitions="Auto, *" Background="{DynamicResource BrushBackground}">
         
         <!-- List of items on the left -->
-        <list:DbItemListView Grid.Column="0" DbWindow="{Binding #DbWindow}"
+        <list:DbItemListView Grid.Column="0" 
+                             DbWindow="{Binding #DbWindow}"
                              DataContext="{Binding ItemListViewModel}" />
-
+        
         <!-- Item Details View on the right -->
-        <details:ItemDetailsView Grid.Column="1"
-                                 DataContext="{Binding ItemDetailsViewModel}" />
+        <Border Grid.Column="1" BorderBrush="Black" BorderThickness="2" Margin="4 0 0 0">
+            <details:ItemDetailsView DataContext="{Binding ItemDetailsViewModel}" />
+        </Border>
+        
     </Grid>
     
 </UserControl>

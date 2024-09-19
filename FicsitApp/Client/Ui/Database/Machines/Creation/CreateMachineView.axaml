@@ -10,7 +10,7 @@
         x:DataType="vm:CreateMachineViewModel"
         Title="Ficsit App - Machine"
         Icon="/Assets/Icon.ico"
-        Height="382"
+        Height="457"
         Width="400"
         WindowStartupLocation="CenterOwner"
         ShowInTaskbar="False"

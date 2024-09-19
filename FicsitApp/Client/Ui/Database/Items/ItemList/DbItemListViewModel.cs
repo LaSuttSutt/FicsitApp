@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Windows.Input;
 using Client.Shared.View;
@@ -16,8 +17,12 @@ public class DbItemListViewModel : ViewModelBase
     public ObservableCollection<DbItemListEntryViewModel> Items { get; set; } = [];
 
     private DbItemListEntryViewModel? _selectedItem;
-
     public event EventHandler<Guid>? SelectedItemChanged;
+    
+    public ReactiveCommand<DbItemListEntryViewModel, Unit> OnEditItem { get; }
+    public ReactiveCommand<DbItemListEntryViewModel, Unit> OnDeleteItem { get; }
+
+    
     
     public ICommand AddItemCommand { get; }
     public Interaction<CreateItemViewModel, List<Item>?> ShowDialog { get; }
