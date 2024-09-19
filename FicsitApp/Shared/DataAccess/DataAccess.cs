@@ -6,6 +6,7 @@ public static class DataAccess
 
     public static void Initialize()
     {
+        DbContext.Database.EnsureCreated();
         DbContext.SaveChanges();
     }
     
