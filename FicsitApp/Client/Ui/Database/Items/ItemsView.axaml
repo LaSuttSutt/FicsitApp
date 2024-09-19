@@ -1,5 +1,4 @@
-﻿<UserControl Name="DbWindow" 
-             xmlns="https://github.com/avaloniaui"
+﻿<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -14,9 +13,7 @@
     <Grid ColumnDefinitions="Auto, *" Background="{DynamicResource BrushBackground}">
         
         <!-- List of items on the left -->
-        <list:DbItemListView Grid.Column="0" 
-                             DbWindow="{Binding #DbWindow}"
-                             DataContext="{Binding ItemListViewModel}" />
+        <list:DbItemListView Grid.Column="0" DataContext="{Binding ItemListViewModel}" />
         
         <!-- Item Details View on the right -->
         <Border Grid.Column="1" BorderBrush="Black" BorderThickness="2" Margin="4 0 0 0">
