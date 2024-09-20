@@ -16,9 +16,8 @@
         <list:DbItemListView Grid.Column="0" DataContext="{Binding ItemListViewModel}" />
         
         <!-- Item Details View on the right -->
-        <Border Grid.Column="1" BorderBrush="Black" BorderThickness="2" Margin="4 0 0 0">
-            <details:ItemDetailsView DataContext="{Binding ItemDetailsViewModel}" />
-        </Border>
+        <details:ItemDetailsView Grid.Column="1" Margin="4 0 0 0" 
+                                 DataContext="{Binding ItemDetailsViewModel}" />
         
     </Grid>
     

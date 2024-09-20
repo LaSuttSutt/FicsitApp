@@ -1,15 +1,16 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Windows.Input;
+using Client.Shared.DomainModel;
 using Client.Shared.View;
 using Client.Ui.Database.Items.Creation;
 using Client.Ui.Shared;
 using ReactiveUI;
 using Shared.DataAccess;
 using Shared.DomainModel;
-using Shared.TestData;
 
 namespace Client.Ui.Database.Items.ItemList;
 
@@ -58,20 +59,9 @@ public class DbItemListViewModel : ViewModelBase
 
             if (result.Result == DialogResult.Ok)
             {
-                
+                DataAccess.AddEntity(item);
+                Items.Add(new DbItemListEntryViewModel(item.Id));
             }
-            /*
-             var machine = new Machine();
-               
-               var viewModel = new CreateMachineViewModel(machine);
-               var result = await ShowDialog.Handle(viewModel);
-               
-               if (result.Result == DialogResult.Ok)
-               {
-                   DataAccess.AddEntity(machine);
-                   ListViewModel.Machines.Add(new MachinesEntryViewModel(machine.Id));
-               }
-             */
         });
     }
 
@@ -86,16 +76,38 @@ public class DbItemListViewModel : ViewModelBase
         {
             Items.Add(new DbItemListEntryViewModel(item.Id));
         }
-
-        SelectedItem = Items[0];
+        
+        if (Items.Count > 0)
+            SelectedItem = Items[0];
     }
 
-    private void EditItem(DbItemListEntryViewModel item)
+    private async void EditItem(DbItemListEntryViewModel e)
     {
+        var item = DataAccess.GetEntity<Item>(e.ItemId);
+        if (item == null) return;
+        
+        var itemClone = item.Clone();
+        var viewModel = new CreateItemViewModel(itemClone);
+        var result = await ShowDialog.Handle(viewModel);
+
+        if (result.Result != DialogResult.Ok) return;
+        
+        item.Update(itemClone);
+        DataAccess.UpdateEntity(item);
+        var model = Items.FirstOrDefault(model => model.ItemId == item.Id);
+        model?.Reload();
     }
 
-    private void DeleteItem(DbItemListEntryViewModel item)
+    private void DeleteItem(DbItemListEntryViewModel e)
     {
+        var item = DataAccess.GetEntity<Item>(e.ItemId);
+        if(item == null) return;
+        
+        var model = Items.FirstOrDefault(model => model.ItemId == item.Id);
+        if (model == null) return;
+        
+        Items.Remove(model);
+        DataAccess.DeleteEntity(item);
     }
     
     #endregion
