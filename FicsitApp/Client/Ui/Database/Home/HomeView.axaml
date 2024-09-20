@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:Client.Ui.Database.Home"
+             xmlns:helper="using:Client.Helper"
              mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="350"
              x:Class="Client.Ui.Database.Home.HomeView"
              x:DataType="vm:HomeViewModel"
@@ -14,7 +15,7 @@
                 <Button Classes="NavBtn"
                         Command="{Binding OnNavButtonClicked}"
                         CommandParameter="{Binding ItemsViewModel}">
-                    <Image Classes="Standard" Source="avares://Client/Assets/ImageDb/C05_screws_64.png" />
+                    <Image Classes="Standard" Source="{x:Static helper:ImageHelper.DefaultItem}" />
                 </Button>
                 <TextBlock Text="Items" Classes="NavBtn" />
             </StackPanel>
@@ -22,7 +23,7 @@
                 <Button Classes="NavBtn"
                         Command="{Binding OnNavButtonClicked}"
                         CommandParameter="{Binding MachinesViewModel}">
-                    <Image Classes="Standard" Source="avares://Client/Assets/ImageDb/G_Constructor_64.png" />
+                    <Image Classes="Standard" Source="{x:Static helper:ImageHelper.DefaultMachine}" />
                 </Button>
                 <TextBlock Text="Machines" Classes="NavBtn" />
             </StackPanel>

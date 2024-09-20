@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
@@ -11,12 +12,14 @@ public static class ImageHelper
     #region Declaration -------------------------
 
     public static Bitmap DefaultImage { get; } = 
-        new(AssetLoader.Open(new Uri("avares://Client/Assets/ImageDb/A01_default_64.png")));
-    
-    public static Bitmap DefaultMachine { get; } =
-        new(AssetLoader.Open(new Uri("avares://Client/Assets/ImageDb/G_Constructor_64.png")));
+        new(AssetLoader.Open(new Uri("avares://Client/Assets/ImageDb/Default.png")));
+    public static Bitmap DefaultItem { get; } =
+        new(AssetLoader.Open(new Uri("avares://Client/Assets/ImageDb/Screws.png")));
+    public static Bitmap DefaultMachine { get; } = 
+        new(AssetLoader.Open(new Uri("avares://Client/Assets/ImageDb/Constructor.png")));
     
     public static Dictionary<string, Bitmap> Images { get; } = [];
+    public static List<FicsitImage> ItemImages { get; } = [];
     public static List<FicsitImage> MachineImages { get; } = [];
     
     #endregion
@@ -25,33 +28,20 @@ public static class ImageHelper
 
     public static void Initialize()
     {
-        var imageUris =
-            AssetLoader.GetAssets(new Uri("avares://Client/Assets/ImageDb/"), new Uri("avares://Client/")).ToList();
-        
-        foreach (var uri in imageUris)
+        InitImagePart(ItemImages, "./_ImgItems");
+        InitImagePart(MachineImages, "./_ImgMachines");
+    }
+
+    private static void InitImagePart(List<FicsitImage> imgList, string relativeFolderPath)
+    {
+        var directory = Directory.CreateDirectory(relativeFolderPath);
+        foreach (var imgFile in directory.GetFiles("*.png").OrderBy(fi => fi.Name))
         {
-            var path = uri.OriginalString;
-            var image = new Bitmap(AssetLoader.Open(new Uri(uri.OriginalString)));
-            Images.Add(path, image);
+            var image = new Bitmap(imgFile.FullName);
+            Images.Add(imgFile.Name, image);
+            imgList.Add(new FicsitImage(imgFile.Name, image));
         }
-        
-        InitMachines();
     }
-
-    private static void InitMachines()
-    {
-        AddImageToList(MachineImages, "G_Constructor_64");
-        AddImageToList(MachineImages, "G_Assembler_64");
-        AddImageToList(MachineImages, "G_Blender_64");
-        AddImageToList(MachineImages, "G_Manufacturer_64");
-        AddImageToList(MachineImages, "A01_default_64");
-    }
-
-    private static void AddImageToList(List<FicsitImage> images, string imageName)
-    {
-        var path = "avares://Client/Assets/ImageDb/" + imageName + ".png";
-        images.Add(new FicsitImage(path, Images[path]));
-    }
-
+    
     #endregion
 }
