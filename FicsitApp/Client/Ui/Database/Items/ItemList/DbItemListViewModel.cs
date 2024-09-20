@@ -7,6 +7,7 @@ using Client.Shared.View;
 using Client.Ui.Database.Items.Creation;
 using Client.Ui.Shared;
 using ReactiveUI;
+using Shared.DataAccess;
 using Shared.DomainModel;
 using Shared.TestData;
 
@@ -81,7 +82,7 @@ public class DbItemListViewModel : ViewModelBase
     public void ReloadData()
     {
         Items.Clear();
-        foreach (var item in ItemDatabase.Items)
+        foreach (var item in DataAccess.GetEntities<Item>())
         {
             Items.Add(new DbItemListEntryViewModel(item.Id));
         }
