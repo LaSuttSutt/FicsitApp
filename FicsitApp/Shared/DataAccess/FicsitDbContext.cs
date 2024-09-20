@@ -5,6 +5,7 @@ namespace Shared.DataAccess;
 
 public class FicsitDbContext : DbContext
 {
+    public DbSet<Item> Items { get; set; }
     public DbSet<Machine> Machines { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

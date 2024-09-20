@@ -52,7 +52,7 @@ public class DbItemListViewModel : ViewModelBase
         {
             var item = new Item();
             
-            var viewModel = new CreateItemViewModel();
+            var viewModel = new CreateItemViewModel(item);
             var result = await ShowDialog.Handle(viewModel);
 
             if (result.Result == DialogResult.Ok)

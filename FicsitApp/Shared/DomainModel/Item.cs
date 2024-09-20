@@ -6,8 +6,10 @@ namespace Shared.DomainModel;
 [Table("Items")]
 public class Item
 {
-    [Key] public Guid Id { get; init; }
-    public string Name { get; init; } = "New item";
-    public string ImageName { get; init; } = "avares://Assets/ImageDb/_default_65.png";
-    public bool IsResource { get; init; }
+    [Key] public Guid Id { get; init; } = Guid.NewGuid();
+    public string Name { get; set; } = "New item";
+    public string ShortName { get; set; } = "";
+    public string ImageName { get; set; } = "avares://Assets/ImageDb/_default_65.png";
+    public bool IsResource { get; set; }
+    public bool HasShortName => !string.IsNullOrWhiteSpace(ShortName);
 }
