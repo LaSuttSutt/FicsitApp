@@ -1,0 +1,97 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:Client.Ui.Database.Recipes"
+        xmlns:controls="using:Client.Ui.Shared.Controls"
+        xmlns:helper="using:Client.Helper"
+        mc:Ignorable="d"
+        x:Class="Client.Ui.Database.Recipes.CreateRecipeView"
+        x:DataType="vm:CreateRecipeViewModel"
+        Title="Ficsit App - Machine"
+        Icon="/Assets/Icon.ico"
+        Height="483"
+        Width="600"
+        WindowStartupLocation="CenterOwner"
+        ShowInTaskbar="False"
+        Background="{DynamicResource BrushBackground}"
+        ExtendClientAreaToDecorationsHint="True">
+
+    <controls:FicsitHeaderControl>
+        <Grid RowDefinitions="Auto, *" ColumnDefinitions="Auto, *" Margin="20">
+
+            <!-- Recipe Data -->
+            <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                    Classes="Group" Margin="0 0 0 4">
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Margin="10 5 10 10" Width="314">
+                        <Label Classes="Input">Name</Label>
+                        <TextBox Name="TxtName"
+                                 Classes="Input"
+                                 Text="{Binding Recipe.Name,
+                                 FallbackValue=New recipe}" />
+                    </StackPanel>
+                    <StackPanel Margin="10 5 10 10" Width="200">
+                        <Label Classes="Input">Amount per minute</Label>
+                        <NumericUpDown Classes="Input"
+                                       FormatString="0.00"
+                                       Value="{Binding Recipe.Amount,
+                                       FallbackValue=1}" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Machine Images -->
+            <Border Grid.Row="1" Grid.Column="0" Classes="Group" Width="100">
+                <ListBox Margin="10 10 0 10"
+                         ItemsSource="{Binding MachineImages,
+                         FallbackValue=xxxxx}"
+                         SelectedItem="{Binding SelectedMachineImage}"
+                         Background="{DynamicResource BrushGroupBox}">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Margin="0" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Image Width="64"
+                                   Margin="-5"
+                                   Source="{Binding Image, 
+                                   FallbackValue={x:Static helper:ImageHelper.DefaultMachine}}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                    <ListBox.Styles>
+                        <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+                            <Setter Property="Background" Value="{DynamicResource BrushStandardOrange}" />
+                        </Style>
+                    </ListBox.Styles>
+                </ListBox>
+            </Border>
+
+            <!-- Ingredients -->
+            <Border Grid.Row="1" Grid.Column="1" Classes="Group" Margin="4 0 0 0">
+                <StackPanel Margin="10 5 10 10">
+                    <Label Classes="Input">Ingredients</Label>
+                    <StackPanel Orientation="Horizontal" Margin="0 7 0 0" Spacing="10">
+                        <Label Classes="Input" Width="18" VerticalAlignment="Center">1</Label>
+                        <ComboBox Width="218">
+                            <ComboBoxItem>Iron Ore</ComboBoxItem>
+                            <ComboBoxItem>Iron Ingot</ComboBoxItem>
+                        </ComboBox>
+                        <NumericUpDown Width="175" FormatString="0.00 /min" Value="3" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0 7 0 0" Spacing="10">
+                        <Label Classes="Input" Width="18" VerticalAlignment="Center">2</Label>
+                        <ComboBox Width="218">
+                            <ComboBoxItem>Iron Ore</ComboBoxItem>
+                            <ComboBoxItem>Iron Ingot</ComboBoxItem>
+                        </ComboBox>
+                        <NumericUpDown Width="175" FormatString="0.00 /min" Value="3" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+        </Grid>
+    </controls:FicsitHeaderControl>
+</Window>

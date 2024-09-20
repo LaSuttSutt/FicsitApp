@@ -2,11 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Windows.Input;
 using Avalonia.Media.Imaging;
 using Client.Helper;
 using Client.Shared.DomainModel;
 using Client.Shared.View;
+using Client.Ui.Database.Machines.MachinesList;
+using Client.Ui.Database.Recipes;
+using Client.Ui.Shared;
 using ReactiveUI;
 using Shared.DataAccess;
 using Shared.DomainModel;
@@ -18,6 +22,8 @@ public class ItemDetailsViewModel : ViewModelBase
 {
     private Guid _itemId = Guid.Empty;
     public ICommand AddRecipeCommand { get; }
+    
+    public Interaction<CreateRecipeViewModel, ShowDialogResult> ShowDialog { get; }
 
     public Guid ItemId
     {
@@ -37,7 +43,20 @@ public class ItemDetailsViewModel : ViewModelBase
 
     public ItemDetailsViewModel()
     {
-        AddRecipeCommand = ReactiveCommand.Create(() => { });
+        ShowDialog = new Interaction<CreateRecipeViewModel, ShowDialogResult>();
+        AddRecipeCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var recipe = new Recipe();
+            
+            var viewModel = new CreateRecipeViewModel(recipe);
+            var result = await ShowDialog.Handle(viewModel);
+            
+            if (result.Result == DialogResult.Ok)
+            {
+                DataAccess.AddEntity(recipe);
+                Recipes.Add(new RecipeDetailViewModel(recipe.Id));
+            }
+        });
     }
     
     private void LoadItem()
