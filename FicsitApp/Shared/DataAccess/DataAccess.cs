@@ -1,4 +1,6 @@
-﻿namespace Shared.DataAccess;
+﻿using System.Linq.Expressions;
+
+namespace Shared.DataAccess;
 
 public static class DataAccess
 {
@@ -13,6 +15,11 @@ public static class DataAccess
     public static List<T> GetEntities<T>() where T : class
     {
         return DbContext.Set<T>().ToList();
+    }
+    
+    public static List<T> GetEntities<T>(Expression<Func<T,bool>> clause) where T : class
+    {
+        return DbContext.Set<T>().Where(clause).ToList();
     }
 
     public static T? GetEntity<T>(Guid id) where T : class
@@ -35,6 +42,12 @@ public static class DataAccess
     public static void DeleteEntity<T>(T entity) where T : class
     {
         DbContext.Set<T>().Remove(entity);
+        DbContext.SaveChanges();
+    }
+
+    public static void DeleteEntities<T>(IEnumerable<T> entities) where T : class
+    {
+        DbContext.Set<T>().RemoveRange(entities);
         DbContext.SaveChanges();
     }
 }

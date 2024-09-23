@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
@@ -35,13 +36,12 @@ public class DbItemListViewModel : ViewModelBase
         set
         {
             this.RaiseAndSetIfChanged(ref _selectedItem, value);
-            if (value is not null)
-                SelectedItemChanged?.Invoke(this, value.ItemId);
+            SelectedItemChanged?.Invoke(this, value?.ItemId ?? Guid.Empty);
         }
     }
 
     #endregion
-    
+
     #region Constructors
 
     public DbItemListViewModel()
@@ -53,7 +53,7 @@ public class DbItemListViewModel : ViewModelBase
         AddItemCommand = ReactiveCommand.CreateFromTask(async () =>
         {
             var item = new Item();
-            
+
             var viewModel = new CreateItemViewModel(item);
             var result = await ShowDialog.Handle(viewModel);
 
@@ -66,9 +66,9 @@ public class DbItemListViewModel : ViewModelBase
     }
 
     #endregion
-    
+
     #region Methods
-    
+
     public void ReloadData()
     {
         Items.Clear();
@@ -76,7 +76,7 @@ public class DbItemListViewModel : ViewModelBase
         {
             Items.Add(new DbItemListEntryViewModel(item.Id));
         }
-        
+
         if (Items.Count > 0)
             SelectedItem = Items[0];
     }
@@ -85,13 +85,13 @@ public class DbItemListViewModel : ViewModelBase
     {
         var item = DataAccess.GetEntity<Item>(e.ItemId);
         if (item == null) return;
-        
+
         var itemClone = item.Clone();
         var viewModel = new CreateItemViewModel(itemClone);
         var result = await ShowDialog.Handle(viewModel);
 
         if (result.Result != DialogResult.Ok) return;
-        
+
         item.Update(itemClone);
         DataAccess.UpdateEntity(item);
         var model = Items.FirstOrDefault(model => model.ItemId == item.Id);
@@ -101,14 +101,22 @@ public class DbItemListViewModel : ViewModelBase
     private void DeleteItem(DbItemListEntryViewModel e)
     {
         var item = DataAccess.GetEntity<Item>(e.ItemId);
-        if(item == null) return;
-        
+        if (item == null) return;
+
         var model = Items.FirstOrDefault(model => model.ItemId == item.Id);
         if (model == null) return;
-        
+
         Items.Remove(model);
+
+        // Delete recipes & ingredients before item
+        var recipes = DataAccess.GetEntities<Recipe>(r => r.ItemId == item.Id);
+        var ingredients = new List<Ingredient>();
+        recipes.ForEach(r => ingredients.AddRange(
+            DataAccess.GetEntities<Ingredient>(i => i.RecipeId == r.Id)));
+        DataAccess.DeleteEntities(ingredients);
+        DataAccess.DeleteEntities(recipes);
         DataAccess.DeleteEntity(item);
     }
-    
+
     #endregion
 }

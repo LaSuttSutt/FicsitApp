@@ -8,7 +8,9 @@
              x:Class="Client.Ui.Database.Items.ItemDetails.ItemDetailsView"
              x:DataType="vm:ItemDetailsViewModel">
 
-    <Grid RowDefinitions="Auto, Auto, * Auto" Background="{DynamicResource BrushBackground}">
+    <Grid RowDefinitions="Auto, Auto, * Auto" 
+          Background="{DynamicResource BrushBackground}"
+          IsVisible="{Binding ItemIdNotEmpty}">
 
         <!-- Header -->
         <Border Grid.Row="0" Classes="Group" Margin="0 0 0 4">

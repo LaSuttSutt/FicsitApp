@@ -5,6 +5,7 @@
         xmlns:vm="using:Client.Ui.Database.Recipes"
         xmlns:controls="using:Client.Ui.Shared.Controls"
         xmlns:helper="using:Client.Helper"
+        xmlns:shared="using:Client.Shared.DomainModel"
         mc:Ignorable="d"
         x:Class="Client.Ui.Database.Recipes.CreateRecipeView"
         x:DataType="vm:CreateRecipeViewModel"
@@ -16,6 +17,24 @@
         ShowInTaskbar="False"
         Background="{DynamicResource BrushBackground}"
         ExtendClientAreaToDecorationsHint="True">
+    
+    <Window.Styles>
+        <Style Selector="ComboBox.Ingredient">
+            <Setter Property="Width" Value="218" />
+            <Setter Property="Height" Value="25" />
+            <Setter Property="Padding" Value="5 0" />
+            <Setter Property="ItemTemplate">
+                <Setter.Value>
+                    <DataTemplate x:DataType="shared:ItemListModel">
+                        <StackPanel Orientation="Horizontal" Margin="0">
+                            <Image Source="{Binding Image}" Width="20" />
+                            <Label Content="{Binding Item.Name}" Margin="5 0" />
+                        </StackPanel>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Styles>
 
     <controls:FicsitHeaderControl>
         <Grid RowDefinitions="Auto, *" ColumnDefinitions="Auto, *" Margin="20">
@@ -44,9 +63,9 @@
             <!-- Machine Images -->
             <Border Grid.Row="1" Grid.Column="0" Classes="Group" Width="100">
                 <ListBox Margin="10 10 0 10"
-                         ItemsSource="{Binding MachineImages,
+                         ItemsSource="{Binding Machines,
                          FallbackValue=xxxxx}"
-                         SelectedItem="{Binding SelectedMachineImage}"
+                         SelectedItem="{Binding SelectedMachine}"
                          Background="{DynamicResource BrushGroupBox}">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -57,7 +76,7 @@
                         <DataTemplate>
                             <Image Width="64"
                                    Margin="-5"
-                                   Source="{Binding Image, 
+                                   Source="{Binding Item2, 
                                    FallbackValue={x:Static helper:ImageHelper.DefaultMachine}}" />
                         </DataTemplate>
                     </ListBox.ItemTemplate>
@@ -70,24 +89,20 @@
             </Border>
 
             <!-- Ingredients -->
-            <Border Grid.Row="1" Grid.Column="1" Classes="Group" Margin="4 0 0 0">
+            <Border Grid.Row="1" Grid.Column="1" Classes="Group" Margin="4 0 0 0"
+                    IsVisible="{Binding HasMachineSelection}">
                 <StackPanel Margin="10 5 10 10">
                     <Label Classes="Input">Ingredients</Label>
                     <StackPanel Orientation="Horizontal" Margin="0 7 0 0" Spacing="10">
                         <Label Classes="Input" Width="18" VerticalAlignment="Center">1</Label>
-                        <ComboBox Width="218">
-                            <ComboBoxItem>Iron Ore</ComboBoxItem>
-                            <ComboBoxItem>Iron Ingot</ComboBoxItem>
-                        </ComboBox>
-                        <NumericUpDown Width="175" FormatString="0.00 /min" Value="3" />
+                        <ComboBox Classes="Ingredient" ItemsSource="{Binding Items}" />
+                        <NumericUpDown Width="175" FormatString="0.00 /min" Value="30" />
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="0 7 0 0" Spacing="10">
+                    <StackPanel Orientation="Horizontal" Margin="0 7 0 0" Spacing="10"
+                                IsVisible="{Binding HasIngredient2}">
                         <Label Classes="Input" Width="18" VerticalAlignment="Center">2</Label>
-                        <ComboBox Width="218">
-                            <ComboBoxItem>Iron Ore</ComboBoxItem>
-                            <ComboBoxItem>Iron Ingot</ComboBoxItem>
-                        </ComboBox>
-                        <NumericUpDown Width="175" FormatString="0.00 /min" Value="3" />
+                        <ComboBox Classes="Ingredient" ItemsSource="{Binding Items}" />
+                        <NumericUpDown Width="175" FormatString="0.00 /min" Value="30" />
                     </StackPanel>
                 </StackPanel>
             </Border>

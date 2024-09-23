@@ -31,9 +31,12 @@ public class ItemDetailsViewModel : ViewModelBase
         set
         {
             _itemId = value;
+            this.RaisePropertyChanged(nameof(ItemIdNotEmpty));
             LoadItem();
         }
     }
+    
+    public bool ItemIdNotEmpty => ItemId != Guid.Empty;
     
     public string Name { get; set; } = string.Empty;
     public Bitmap Image { get; set; } = ImageHelper.DefaultImage;
@@ -46,8 +49,11 @@ public class ItemDetailsViewModel : ViewModelBase
         ShowDialog = new Interaction<CreateRecipeViewModel, ShowDialogResult>();
         AddRecipeCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            var recipe = new Recipe();
-            
+            var recipe = new Recipe
+            {
+                ItemId = ItemId
+            };
+
             var viewModel = new CreateRecipeViewModel(recipe);
             var result = await ShowDialog.Handle(viewModel);
             
