@@ -34,8 +34,6 @@
 
     <ItemGroup>
       <AdditionalFiles Include="Ui\Database\Items\Creation\CreateItemView.axaml" />
-      <AdditionalFiles Include="Ui\Database\Items\Creation\Pages\ImagesView.axaml" />
-      <AdditionalFiles Include="Ui\Database\Items\Creation\Pages\ItemDetailsView.axaml" />
       <AdditionalFiles Include="Ui\Database\Items\ItemDetails\ItemDetailsView.axaml" />
       <AdditionalFiles Include="Ui\Database\Items\ItemDetails\RecipeDetailView.axaml" />
       <AdditionalFiles Include="Ui\Database\Items\ItemList\DbItemListEntry.axaml" />

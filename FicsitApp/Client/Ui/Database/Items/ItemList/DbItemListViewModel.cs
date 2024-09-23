@@ -96,6 +96,7 @@ public class DbItemListViewModel : ViewModelBase
         DataAccess.UpdateEntity(item);
         var model = Items.FirstOrDefault(model => model.ItemId == item.Id);
         model?.Reload();
+        SelectedItemChanged?.Invoke(this, e.ItemId);
     }
 
     private void DeleteItem(DbItemListEntryViewModel e)

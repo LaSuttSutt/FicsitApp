@@ -20,6 +20,8 @@ namespace Client.Ui.Database.Items.ItemDetails;
 
 public class ItemDetailsViewModel : ViewModelBase
 {
+    #region Declarations
+    
     private Guid _itemId = Guid.Empty;
     public ICommand AddRecipeCommand { get; }
     
@@ -44,6 +46,10 @@ public class ItemDetailsViewModel : ViewModelBase
     
     public ObservableCollection<RecipeDetailViewModel> Recipes { get; set; } = [];
 
+    #endregion
+    
+    #region Constructors
+    
     public ItemDetailsViewModel()
     {
         ShowDialog = new Interaction<CreateRecipeViewModel, ShowDialogResult>();
@@ -64,6 +70,10 @@ public class ItemDetailsViewModel : ViewModelBase
             }
         });
     }
+    
+    #endregion
+    
+    #region Methods
     
     private void LoadItem()
     {
@@ -101,4 +111,6 @@ public class ItemDetailsViewModel : ViewModelBase
     
     // ReSharper disable once CollectionNeverQueried.Global
     public static readonly List<Recipe> TestRecipes = [new Recipe(), new Recipe()];
+    
+    #endregion
 }
