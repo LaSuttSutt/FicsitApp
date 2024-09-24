@@ -4,28 +4,56 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="using:Client.Ui.Shared.Controls"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d"
         x:Class="Client.Ui.MainView.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/Icon.ico"
         Title="Ficsit App"
-        Width="1024"
-        Height="768"
+        Width="600"
+        Height="450"
         WindowStartupLocation="CenterScreen"
         TransparencyLevelHint="AcrylicBlur"
         Background="Transparent"
         ExtendClientAreaToDecorationsHint="True">
 
-    <Design.DataContext>
-        <vm:MainWindowViewModel/>
-    </Design.DataContext>
-
     <controls:FicsitHeaderControl>
-        <Grid ColumnDefinitions="Auto, *">
-            <Border Grid.Column="0" BorderThickness="1" BorderBrush="Black" Margin="15">
-                <StackPanel Background="{DynamicResource BrushGroupBox}" 
-                            Width="250">
-                    <Button Margin="10" Command="{Binding OpenDatabaseWindow}" Content="Database"/>
+        <Grid ColumnDefinitions="*, Auto" RowDefinitions="*, Auto">
+
+            <!-- Project-List -->
+            <Border Grid.Row="0" Grid.Column="0" Classes="Group" Margin="15 15 15 4">
+            </Border>
+
+            <!-- Project add -->
+            <Border Grid.Row="1" Grid.Column="0" Classes="Group" Margin="15 0 15 15">
+                <StackPanel Orientation="Horizontal">
+                    <Button Margin="4 4 10 4"
+                            Width="35"
+                            Classes="PathIcon"
+                            Command="{Binding AddProjectCommand}">
+                        <PathIcon Data="{StaticResource AddRegular}"
+                                  VerticalAlignment="Center" Margin="0">
+                            <PathIcon.Effect>
+                                <DropShadowEffect OffsetX="0" OffsetY="0" Opacity=".5" BlurRadius="5" />
+                            </PathIcon.Effect>
+                        </PathIcon>
+                    </Button>
+                    <TextBlock Text="add project"
+                               Classes="Add"
+                               Margin="0 3 0 0">
+                    </TextBlock>
+                </StackPanel>
+            </Border>
+
+            <!-- Data-Management -->
+            <Border Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Classes="Group" Margin="0 15 15 15">
+                <StackPanel>
+                    <StackPanel Margin="20">
+                        <Button Classes="NavBtn"
+                                Command="{Binding OpenDatabaseWindowCommand}">
+                            <Image Classes="Standard" Source="avares://Client/Assets/ImageDb/HardDrive.png" />
+                        </Button>
+                        <TextBlock Text="Database" Classes="NavBtn" />
+                    </StackPanel>
                 </StackPanel>
             </Border>
         </Grid>

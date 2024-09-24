@@ -14,7 +14,8 @@ public class MainWindowViewModel : ViewModelBase
 {
     #region View Properties ---------------------
 
-    public ICommand OpenDatabaseWindow { get; }
+    public ICommand OpenDatabaseWindowCommand { get; }
+    public ICommand AddProjectCommand { get; }
     public Interaction<DatabaseWindowViewModel, bool> ShowDialog { get; }
 
     #endregion
@@ -28,7 +29,7 @@ public class MainWindowViewModel : ViewModelBase
         DataAccess.Initialize();
         
         ShowDialog = new Interaction<DatabaseWindowViewModel, bool>();
-        OpenDatabaseWindow = ReactiveCommand.CreateFromTask(async () =>
+        AddProjectCommand = ReactiveCommand.CreateFromTask(async () =>
         {
             var viewModel = new DatabaseWindowViewModel();
             return await ShowDialog.Handle(viewModel);

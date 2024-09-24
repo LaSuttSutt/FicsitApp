@@ -10,5 +10,7 @@ public class Recipe
     public Guid ItemId { get; set; }
     public Guid MachineId { get; set; }
     public decimal Amount { get; set; }
+    
+    [MaxLength(150)]
     public string Name { get; set; } = "New recipe";
 }

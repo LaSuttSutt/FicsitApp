@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shared.DataAccess;
 
@@ -10,9 +11,11 @@ using Shared.DataAccess;
 namespace Shared.Migrations
 {
     [DbContext(typeof(FicsitDbContext))]
-    partial class FicsitDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240924093609_AddProjects")]
+    partial class AddProjects
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.8");
