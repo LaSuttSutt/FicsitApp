@@ -20,5 +20,5 @@ public class Item
     public bool IsResource { get; set; }
     
     public bool HasShortName => !string.IsNullOrWhiteSpace(ShortName);
-    public string GetShortName() => HasShortName ? ShortName : Name;
+    public string ShortNameOrName => HasShortName ? ShortName : Name;
 }

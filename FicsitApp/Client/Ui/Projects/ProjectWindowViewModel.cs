@@ -1,6 +1,8 @@
-﻿namespace Client.Ui.Projects;
+﻿using Shared.DomainModel;
 
-public class ProjectWindowViewModel
+namespace Client.Ui.Projects;
+
+public class ProjectWindowViewModel(Project project)
 {
-    
+    private Project _project = project;
 }

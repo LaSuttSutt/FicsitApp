@@ -6,6 +6,7 @@ using Client.Helper;
 using Client.Shared.DomainModel;
 using Client.Shared.View;
 using Client.Ui.Database;
+using Client.Ui.Projects;
 using Client.Ui.Projects.Creation;
 using Client.Ui.Shared;
 using DynamicData;
@@ -22,9 +23,11 @@ public class MainWindowViewModel : ViewModelBase
 
     public ICommand OpenDatabaseWindowCommand { get; }
     public ICommand AddProjectCommand { get; }
+    public ReactiveCommand<Project, Unit> OpenProjectWindowCommand { get; }
     public ReactiveCommand<Project, Unit> EditProjectCommand { get; }
     public ReactiveCommand<Project, Unit> DeleteProjectCommand { get; }
     public Interaction<DatabaseWindowViewModel, bool> ShowDatabaseDialog { get; }
+    public Interaction<ProjectWindowViewModel, bool> ShowProjectDialog { get; }
     public Interaction<CreateProjectWindowViewModel, ShowDialogResult> ShowCreateProjectDialog { get; }
     public ObservableCollection<Project> Projects { get; } = [];
 
@@ -40,6 +43,9 @@ public class MainWindowViewModel : ViewModelBase
         
         LoadProjects();
         
+        ShowProjectDialog = new Interaction<ProjectWindowViewModel, bool>();
+        OpenProjectWindowCommand = ReactiveCommand.Create<Project>(OpenProjectDialog);
+        
         ShowDatabaseDialog = new Interaction<DatabaseWindowViewModel, bool>();
         OpenDatabaseWindowCommand = ReactiveCommand.CreateFromTask(async () =>
         {
@@ -54,7 +60,7 @@ public class MainWindowViewModel : ViewModelBase
 
             var viewModel = new CreateProjectWindowViewModel(project);
             var result = await ShowCreateProjectDialog.Handle(viewModel);
-            
+
             if (result.Result == DialogResult.Ok)
             {
                 DataAccess.AddEntity(project);
@@ -92,6 +98,12 @@ public class MainWindowViewModel : ViewModelBase
     {
         Projects.Remove(project);
         DataAccess.DeleteEntity(project);
+    }
+
+    private async void OpenProjectDialog(Project project)
+    {
+        var viewModel = new ProjectWindowViewModel(project);
+        await ShowProjectDialog.Handle(viewModel);
     }
     
     #endregion

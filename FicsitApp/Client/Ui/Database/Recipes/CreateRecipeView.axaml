@@ -144,7 +144,7 @@
                     <DataTemplate x:DataType="shared:ItemListModel">
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Source="{Binding Image}" Width="20" />
-                            <Label Content="{Binding Item.Name}" 
+                            <Label Content="{Binding Item.ShortNameOrName}" 
                                    Margin="5 0" 
                                    FontFamily="{DynamicResource Poppins}"/>
                         </StackPanel>
