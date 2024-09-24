@@ -20,6 +20,7 @@ public class RecipeDetailViewModel : ViewModelBase
     public string Name { get; set; } = string.Empty;
     public Bitmap Image { get; set; } = ImageHelper.DefaultImage;
     public decimal AmountPerMinute { get; set; }
+    public Bitmap MachineImage { get; set; } = ImageHelper.DefaultMachine;
 
     public ObservableCollection<RecipeDetailViewEntry> Ingredients { get; set; } = [];
     public ObservableCollection<RecipeDetailViewEntry> ByProducts { get; set; } = [];
@@ -55,6 +56,9 @@ public class RecipeDetailViewModel : ViewModelBase
             RefreshView(recipe.Name, "<Item not found>", 0);
             return;
         }
+        
+        var machine = DataAccess.GetEntity<Machine>(recipe.MachineId);
+        MachineImage = machine?.Image() ?? ImageHelper.DefaultMachine;
 
         RefreshView(recipe.Name, item.Name, recipe.Amount, item.Image());
     }
