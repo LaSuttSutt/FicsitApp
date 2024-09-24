@@ -38,17 +38,17 @@ public class CreateRecipeViewModel : ViewModelBase
     public bool HasIngredient4 { get; set; }
     public bool HasByProduct1 { get; set; }
     public bool HasByProduct2 { get; set; }
-    public ItemListModel SelectedIngredient1 { get; set; }
+    public ItemListModel SelectedIngredient1 { get; set; } = null!;
     public decimal Ingredient1Amount { get; set; }
-    public ItemListModel SelectedIngredient2 { get; set; }
+    public ItemListModel SelectedIngredient2 { get; set; } = null!;
     public decimal Ingredient2Amount { get; set; }
-    public ItemListModel SelectedIngredient3 { get; set; }
+    public ItemListModel SelectedIngredient3 { get; set; } = null!;
     public decimal Ingredient3Amount { get; set; }
-    public ItemListModel SelectedIngredient4 { get; set; }
+    public ItemListModel SelectedIngredient4 { get; set; } = null!;
     public decimal Ingredient4Amount { get; set; }
-    public ItemListModel SelectedByProduct1 { get; set; }
+    public ItemListModel SelectedByProduct1 { get; set; } = null!;
     public decimal ByProduct1Amount { get; set; }
-    public ItemListModel SelectedByProduct2 { get; set; }
+    public ItemListModel SelectedByProduct2 { get; set; } = null!;
     public decimal ByProduct2Amount { get; set; }
 
     public ReactiveCommand<Unit, ShowDialogResult> SaveRecipeCommand { get; }
@@ -66,13 +66,6 @@ public class CreateRecipeViewModel : ViewModelBase
 
         LoadPageData();
         DoPreSelection();
-
-        SelectedIngredient1 = Items.First();
-        SelectedIngredient2 = Items.First();
-        SelectedIngredient3 = Items.First();
-        SelectedIngredient4 = Items.First();
-        SelectedByProduct1 = Items.First();
-        SelectedByProduct2 = Items.First();
 
         SaveRecipeCommand = ReactiveCommand.Create(() =>
         {
@@ -101,7 +94,30 @@ public class CreateRecipeViewModel : ViewModelBase
             SelectedMachine = Machines.First();
 
         var ingredients = DataAccess.GetEntities<Ingredient>
-            (i => i.RecipeId == Recipe.Id).OrderBy(i => i.IsByProduct);
+            (i => i.RecipeId == Recipe.Id && !i.IsByProduct);
+        var byProducts = DataAccess.GetEntities<Ingredient>
+            (i => i.RecipeId == Recipe.Id && i.IsByProduct);
+
+        SelectedIngredient1 = Items.First();
+        SelectedIngredient2 = Items.First();
+        SelectedIngredient3 = Items.First();
+        SelectedIngredient4 = Items.First();
+        SelectedByProduct1 = Items.First();
+        SelectedByProduct2 = Items.First();
+        
+        if (ingredients.Count > 0)
+            LoadIngredient(1, ingredients[0]);
+        if (ingredients.Count > 1)
+            LoadIngredient(2, ingredients[1]);
+        if (ingredients.Count > 2)
+            LoadIngredient(3, ingredients[2]);
+        if (ingredients.Count > 3)
+            LoadIngredient(4, ingredients[3]);
+
+        if (byProducts.Count > 0)
+            LoadIngredient(1, byProducts[0]);
+        if (byProducts.Count > 1)
+            LoadIngredient(2, byProducts[1]);
     }
 
     private bool SaveData()
@@ -179,8 +195,55 @@ public class CreateRecipeViewModel : ViewModelBase
         }
 
         var ingredient = new Ingredient()
-            {RecipeId = Recipe.Id, ItemId = item.Id, Amount = amount, IsByProduct = isByProduct};
+            { RecipeId = Recipe.Id, ItemId = item.Id, Amount = amount, IsByProduct = isByProduct };
         DataAccess.AddEntity(ingredient);
+    }
+
+    private void LoadIngredient(int number, Ingredient ingredient)
+    {
+        switch (number)
+        {
+            case 1:
+                if (ingredient.IsByProduct)
+                {
+                    SelectedByProduct1 = Items.First(i => i.Item.Id == ingredient.ItemId);
+                    ByProduct1Amount = ingredient.Amount;
+                }
+                else
+                {
+                    SelectedIngredient1 = Items.First(i => i.Item.Id == ingredient.ItemId);
+                    Ingredient1Amount = ingredient.Amount;
+                }
+
+                break;
+
+            case 2:
+                if (ingredient.IsByProduct)
+                {
+                    SelectedByProduct2 = Items.First(i => i.Item.Id == ingredient.ItemId);
+                    ByProduct2Amount = ingredient.Amount;
+                }
+                else
+                {
+                    SelectedIngredient2 = Items.First(i => i.Item.Id == ingredient.ItemId);
+                    Ingredient2Amount = ingredient.Amount;
+                }
+
+                break;
+
+            case 3:
+                SelectedIngredient3 = Items.First(i => i.Item.Id == ingredient.ItemId);
+                Ingredient3Amount = ingredient.Amount;
+                break;
+
+            case 4:
+                SelectedIngredient4 = Items.First(i => i.Item.Id == ingredient.ItemId);
+                Ingredient4Amount = ingredient.Amount;
+                break;
+
+            default:
+                return;
+        }
     }
 
     #endregion

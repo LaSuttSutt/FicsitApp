@@ -50,7 +50,44 @@
         <!-- Recipes, if not resource -->
         <Border Grid.Row="2" Classes="Group" Margin="0 0 0 4"
                 IsVisible="{Binding !IsResource, FallbackValue=true}">
-
+            <ListBox ItemsSource="{Binding Recipes, 
+                     FallbackValue={x:Static vm:ItemDetailsViewModel.TestRecipes}}"
+                     Background="{DynamicResource BrushGroupBox}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Panel Margin="-12 -9 -12 -12">
+                            <vm:RecipeDetailView />
+                            <StackPanel Name="EditPanel" 
+                                        Orientation="Horizontal" 
+                                        HorizontalAlignment="Right" 
+                                        VerticalAlignment="Top">
+                                <Button Margin="3 5" Classes="List"
+                                        Command="{Binding $parent[ListBox].((vm:ItemDetailsViewModel)DataContext).OnEditRecipe, FallbackValue=x}"
+                                        CommandParameter="{Binding}">
+                                    <PathIcon Data="{StaticResource EditRegular}" />
+                                </Button>
+                                <Button Margin="0 0 5 0" Classes="List"
+                                        Command="{Binding $parent[ListBox].((vm:ItemDetailsViewModel)DataContext).OnDeleteRecipe, FallbackValue=x}"
+                                        CommandParameter="{Binding}">
+                                    <PathIcon Data="{StaticResource DeleteRegular}" />
+                                </Button>
+                            </StackPanel>
+                        </Panel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ListBox.Styles>
+                    <Style Selector="ListBoxItem:selected Panel">
+                        <Setter Property="Background" Value="{DynamicResource BrushStandardOrange}" />
+                    </Style>
+                    <Style Selector="ListBoxItem StackPanel#EditPanel">
+                        <Setter Property="IsVisible" Value="False" />
+                    </Style>
+                    <Style Selector="ListBoxItem:selected:pointerover StackPanel#EditPanel">
+                        <Setter Property="IsVisible" Value="True" />
+                    </Style>
+                </ListBox.Styles>
+            </ListBox>
+            
         </Border>
 
         <!-- Add Recipes, if not resource -->
@@ -75,18 +112,5 @@
             </StackPanel>
         </Border>
     </Grid>
-
-    <!--
-    <ItemsControl Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
-                  IsVisible="{Binding !IsResource, FallbackValue=true}"
-                  ItemsSource="{Binding Recipes, 
-                              FallbackValue={x:Static vm:ItemDetailsViewModel.TestRecipes}}">
-        <ItemsControl.ItemTemplate>
-            <DataTemplate>
-                <vm:RecipeDetailView />
-            </DataTemplate>
-        </ItemsControl.ItemTemplate>
-    </ItemsControl>
-    -->
 
 </UserControl>

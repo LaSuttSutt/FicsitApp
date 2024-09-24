@@ -7,6 +7,7 @@ using Client.Helper;
 using Client.Shared.DomainModel;
 using Client.Shared.View;
 using ReactiveUI;
+using Shared.DataAccess;
 using Shared.DomainModel;
 using Shared.TestData;
 
@@ -14,6 +15,7 @@ namespace Client.Ui.Database.Items.ItemDetails;
 
 public class RecipeDetailViewModel : ViewModelBase
 {
+    public Guid RecipeId { get; private set; }
     public string RecipeName { get; set; } = string.Empty;
     public string Name { get; set; } = string.Empty;
     public Bitmap Image { get; set; } = ImageHelper.DefaultImage;
@@ -26,20 +28,28 @@ public class RecipeDetailViewModel : ViewModelBase
     
     public RecipeDetailViewModel(Guid recipeId)
     {
-        LoadRecipe(recipeId);
-        LoadIngredients(recipeId);
+        Reload(recipeId);
     }
 
-    private void LoadRecipe(Guid id)
+    public void Reload(Guid recipeId)
     {
-        var recipe = ItemDatabase.Recipes.FirstOrDefault(r => r.Id == id);
+        Ingredients.Clear();
+        ByProducts.Clear();
+        RecipeId = recipeId;
+        LoadRecipe();
+        LoadIngredients();
+    }
+    
+    private void LoadRecipe()
+    {
+        var recipe = DataAccess.GetEntity<Recipe>(RecipeId);
         if (recipe == null)
         {
             RefreshView("<Recipe not found>", "<Item not found>", 0);
             return;
         }
 
-        var item = ItemDatabase.Items.FirstOrDefault(i => i.Id == recipe.ItemId);
+        var item = DataAccess.GetEntity<Item>(recipe.ItemId);
         if (item == null)
         {
             RefreshView(recipe.Name, "<Item not found>", 0);
@@ -49,13 +59,13 @@ public class RecipeDetailViewModel : ViewModelBase
         RefreshView(recipe.Name, item.Name, recipe.Amount, item.Image());
     }
 
-    private void LoadIngredients(Guid recipeId)
+    private void LoadIngredients()
     {
-        var ingredients = ItemDatabase.Ingredients.Where
-            (i => i.RecipeId == recipeId && !i.IsByProduct);
+        var ingredients = DataAccess.GetEntities<Ingredient>(
+            i => i.RecipeId == RecipeId && !i.IsByProduct);
         
-        var byProducts = ItemDatabase.Ingredients.Where
-            (i => i.RecipeId == recipeId && i.IsByProduct);
+        var byProducts = DataAccess.GetEntities<Ingredient>(
+            i => i.RecipeId == RecipeId && i.IsByProduct);
         
         BuildIngredientsViewModel(ingredients, Ingredients);
         BuildIngredientsViewModel(byProducts, ByProducts);
@@ -67,7 +77,7 @@ public class RecipeDetailViewModel : ViewModelBase
     {
         foreach (var ingredient in ingredients)
         {
-            var item = ItemDatabase.Items.FirstOrDefault(i => i.Id == ingredient.ItemId);
+            var item = DataAccess.GetEntity<Item>(ingredient.ItemId);
             if (item == null)
                 continue;
 

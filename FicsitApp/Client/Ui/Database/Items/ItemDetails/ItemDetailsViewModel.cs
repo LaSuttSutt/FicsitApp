@@ -2,19 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Windows.Input;
 using Avalonia.Media.Imaging;
 using Client.Helper;
 using Client.Shared.DomainModel;
 using Client.Shared.View;
-using Client.Ui.Database.Machines.MachinesList;
 using Client.Ui.Database.Recipes;
 using Client.Ui.Shared;
 using ReactiveUI;
 using Shared.DataAccess;
 using Shared.DomainModel;
-using Shared.TestData;
 
 namespace Client.Ui.Database.Items.ItemDetails;
 
@@ -24,6 +23,9 @@ public class ItemDetailsViewModel : ViewModelBase
     
     private Guid _itemId = Guid.Empty;
     public ICommand AddRecipeCommand { get; }
+    
+    public ReactiveCommand<RecipeDetailViewModel, Unit> OnEditRecipe { get; }
+    public ReactiveCommand<RecipeDetailViewModel, Unit> OnDeleteRecipe { get; }
     
     public Interaction<CreateRecipeViewModel, ShowDialogResult> ShowDialog { get; }
 
@@ -52,6 +54,9 @@ public class ItemDetailsViewModel : ViewModelBase
     
     public ItemDetailsViewModel()
     {
+        OnEditRecipe = ReactiveCommand.Create<RecipeDetailViewModel>(EditRecipe);
+        OnDeleteRecipe = ReactiveCommand.Create<RecipeDetailViewModel>(DeleteRecipe);
+        
         ShowDialog = new Interaction<CreateRecipeViewModel, ShowDialogResult>();
         AddRecipeCommand = ReactiveCommand.CreateFromTask(async () =>
         {
@@ -92,7 +97,7 @@ public class ItemDetailsViewModel : ViewModelBase
     {
         Recipes.Clear();
 
-        foreach (var recipe in ItemDatabase.Recipes.Where(r => r.ItemId == ItemId))
+        foreach (var recipe in DataAccess.GetEntities<Recipe>(r => r.ItemId == ItemId))
         {
             Recipes.Add(new RecipeDetailViewModel(recipe.Id));
         }
@@ -107,6 +112,39 @@ public class ItemDetailsViewModel : ViewModelBase
         this.RaisePropertyChanged(nameof(Name));
         this.RaisePropertyChanged(nameof(Image));
         this.RaisePropertyChanged(nameof(IsResource));
+    }
+    
+    private async void EditRecipe(RecipeDetailViewModel e)
+    {
+        var recipe = DataAccess.GetEntity<Recipe>(e.RecipeId);
+        if (recipe == null) return;
+
+        var recipeClone = recipe.Clone();
+        var viewModel = new CreateRecipeViewModel(recipeClone);
+        var result = await ShowDialog.Handle(viewModel);
+
+        if (result.Result != DialogResult.Ok) return;
+
+        recipe.Update(recipeClone);
+        DataAccess.UpdateEntity(recipe);
+        var model = Recipes.FirstOrDefault(r => r.RecipeId == recipe.Id);
+        model?.Reload(recipe.Id);
+    }
+
+    private void DeleteRecipe(RecipeDetailViewModel e)
+    {
+        var recipe = DataAccess.GetEntity<Recipe>(e.RecipeId);
+        if (recipe == null) return;
+
+        var model = Recipes.FirstOrDefault(r => r.RecipeId == recipe.Id);
+        if (model == null) return;
+
+        Recipes.Remove(model);
+
+        // Delete recipes & ingredients before item
+        var ingredients = DataAccess.GetEntities<Ingredient>(i => i.RecipeId == recipe.Id);
+        DataAccess.DeleteEntities(ingredients);
+        DataAccess.DeleteEntity(recipe);
     }
     
     // ReSharper disable once CollectionNeverQueried.Global

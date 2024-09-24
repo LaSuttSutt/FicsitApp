@@ -8,7 +8,7 @@
              x:Class="Client.Ui.Database.Items.ItemDetails.RecipeDetailView"
              x:DataType="vm:RecipeDetailViewModel">
 
-    <Border BorderBrush="DimGray" BorderThickness="0 0 0 1" Background="LightGray">
+    <Border BorderBrush="DimGray" BorderThickness="0 0 0 1">
         <StackPanel Margin="5">
             
             <!-- Header -->
@@ -29,8 +29,9 @@
                            FontFamily="{DynamicResource Poppins}" FontSize="16" />
                 <TextBlock VerticalAlignment="Center" Margin="10 0 0 0"
                            FontFamily="{DynamicResource Poppins}" FontSize="16"
-                           Text="{Binding AmountPerMinute, FallbackValue=30}" />
-                <TextBlock VerticalAlignment="Center" Margin="0 0 0 0"
+                           Text="{Binding AmountPerMinute, 
+                           FallbackValue=30, StringFormat=0.00}" />
+                <TextBlock VerticalAlignment="Center" Margin="4 0 0 0"
                            FontFamily="{DynamicResource Poppins}" FontSize="16"
                            Text="/min" />
             </StackPanel>
@@ -54,8 +55,9 @@
                                        FontFamily="{DynamicResource Poppins}" FontSize="16" />
                             <TextBlock VerticalAlignment="Center" Margin="10 0 0 0"
                                        FontFamily="{DynamicResource Poppins}" FontSize="16"
-                                       Text="{Binding AmountPerMinute, FallbackValue=20}" />
-                            <TextBlock VerticalAlignment="Center" Margin="0 0 0 0"
+                                       Text="{Binding AmountPerMinute, 
+                                       FallbackValue=20, StringFormat=0.00}" />
+                            <TextBlock VerticalAlignment="Center" Margin="4 0 0 0"
                                        FontFamily="{DynamicResource Poppins}" FontSize="16"
                                        Text="/min" />
                         </StackPanel>
@@ -84,8 +86,9 @@
                                        FontFamily="{DynamicResource Poppins}" FontSize="16" />
                             <TextBlock VerticalAlignment="Center" Margin="10 0 0 0"
                                        FontFamily="{DynamicResource Poppins}" FontSize="16"
-                                       Text="{Binding AmountPerMinute, FallbackValue=20}" />
-                            <TextBlock VerticalAlignment="Center" Margin="0 0 0 0"
+                                       Text="{Binding AmountPerMinute, 
+                                       FallbackValue=20, StringFormat=0.00}" />
+                            <TextBlock VerticalAlignment="Center" Margin="4 0 0 0"
                                        FontFamily="{DynamicResource Poppins}" FontSize="16"
                                        Text="/min" />
                         </StackPanel>
