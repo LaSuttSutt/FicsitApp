@@ -69,4 +69,10 @@
         <Setter Property="FontSize" Value="15" />
     </Style>
     
+    <!-- Label ProjectList -->
+    <Style Selector="Label.List">
+        <Setter Property="FontFamily" Value="{DynamicResource Poppins}" />
+        <Setter Property="FontSize" Value="20" />
+    </Style>
+    
 </Styles>

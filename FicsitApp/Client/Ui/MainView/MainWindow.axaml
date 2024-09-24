@@ -21,6 +21,47 @@
 
             <!-- Project-List -->
             <Border Grid.Row="0" Grid.Column="0" Classes="Group" Margin="15 15 15 4">
+                <ListBox Background="{DynamicResource BrushGroupBox}"
+                         ItemsSource="{Binding Projects}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderThickness="0 0 0 1" BorderBrush="Black"
+                                    Margin="-12 -9 -12 -12">
+                                <Grid>
+                                    <Label Classes="List" Margin="7"
+                                           Content="{Binding Name}" />
+
+                                    <StackPanel Name="EditPanel"
+                                                Orientation="Horizontal"
+                                                HorizontalAlignment="Right"
+                                                VerticalAlignment="Top">
+                                        <Button Margin="3 5" Classes="List"
+                                                Command="{Binding $parent[ListBox].((vm:MainWindowViewModel)DataContext).EditProjectCommand, FallbackValue=x}"
+                                                CommandParameter="{Binding}">
+                                            <PathIcon Data="{StaticResource EditRegular}" />
+                                        </Button>
+                                        <Button Margin="0 0 5 0" Classes="List"
+                                                Command="{Binding $parent[ListBox].((vm:MainWindowViewModel)DataContext).DeleteProjectCommand, FallbackValue=x}"
+                                                CommandParameter="{Binding}">
+                                            <PathIcon Data="{StaticResource DeleteRegular}" />
+                                        </Button>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                    <ListBox.Styles>
+                        <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+                            <Setter Property="Background" Value="{DynamicResource BrushStandardOrange}" />
+                        </Style>
+                        <Style Selector="ListBoxItem StackPanel#EditPanel">
+                            <Setter Property="IsVisible" Value="False" />
+                        </Style>
+                        <Style Selector="ListBoxItem:selected:pointerover StackPanel#EditPanel">
+                            <Setter Property="IsVisible" Value="True" />
+                        </Style>
+                    </ListBox.Styles>
+                </ListBox>
             </Border>
 
             <!-- Project add -->

@@ -1,0 +1,23 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:Client.Ui.Projects"
+        xmlns:controls="using:Client.Ui.Shared.Controls"
+        mc:Ignorable="d"
+        x:Class="Client.Ui.Projects.ProjectWindow"
+        x:DataType="vm:ProjectWindowViewModel"
+        Icon="/Assets/Icon.ico"
+        Title="Ficsit App - Project"
+        Width="350"
+        Height="250"
+        WindowStartupLocation="CenterOwner"
+        ShowInTaskbar="False"
+        TransparencyLevelHint="AcrylicBlur"
+        Background="Transparent"
+        ExtendClientAreaToDecorationsHint="True">
+
+    <controls:FicsitHeaderControl>
+        
+    </controls:FicsitHeaderControl>
+</Window>
