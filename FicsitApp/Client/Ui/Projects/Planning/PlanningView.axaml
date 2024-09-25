@@ -7,7 +7,7 @@
              x:Class="Client.Ui.Projects.Planning.PlanningView"
              x:DataType="vm:PlanningViewModel"
              Background="{DynamicResource BrushBackground}">
-    <Border Classes="Group" Margin="15">
+    <Border Classes="Group">
         <Button Command="{Binding DialogCheck}">Check</Button>
     </Border>
 </UserControl>

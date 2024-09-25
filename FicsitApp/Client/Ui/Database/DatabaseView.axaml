@@ -1,25 +1,17 @@
-﻿<Window Name="DbWindow"
-        xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:vm="using:Client.Ui.Database"
-        xmlns:controls="using:Client.Ui.Shared.Controls"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="Client.Ui.Database.DatabaseWindow"
-        x:DataType="vm:DatabaseWindowViewModel"
-        Icon="/Assets/Icon.ico"
-        Title="Ficsit App - Database"
-        Width="1024"
-        Height="768"
-        WindowStartupLocation="CenterOwner"
-        ShowInTaskbar="False"
-        TransparencyLevelHint="AcrylicBlur"
-        Background="Transparent"
-        ExtendClientAreaToDecorationsHint="True">
-
-    <controls:FicsitHeaderControl>
-        <Grid RowDefinitions="Auto, *" Margin="20">
+﻿<UserControl Name="DbWindow"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:Client.Ui.Database"
+             mc:Ignorable="d"
+             x:Class="Client.Ui.Database.DatabaseView"
+             x:DataType="vm:DatabaseViewModel"
+             Width="984"
+             Height="697"
+             Background="{DynamicResource BrushBackground}">
+    
+        <Grid RowDefinitions="Auto, *">
 
             <Border Grid.Row="0" BorderThickness="2" BorderBrush="Black" Margin="0 0 0 4">
                 <StackPanel Orientation="Horizontal"
@@ -46,7 +38,5 @@
             </Border>
 
             <TransitioningContentControl Grid.Row="1" Content="{Binding CurrentView}" />
-            
         </Grid>
-    </controls:FicsitHeaderControl>
-</Window>
+</UserControl>

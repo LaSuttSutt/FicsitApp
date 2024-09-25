@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia;
@@ -31,7 +32,8 @@ public partial class SaveCancelDialog : ReactiveWindow<SaveCancelDialogModel>
         return result?.Result ?? DialogResult.Cancel;
     }
     
-    private SaveCancelDialog()
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+    public SaveCancelDialog()
     {
         InitializeComponent();
         

@@ -53,7 +53,7 @@ public class DbItemListViewModel : ViewModelBase
             var item = new Item();
 
             var viewModel = new CreateItemViewModel(item);
-            var result = await SaveCancelDialog.Show<DatabaseWindow>(viewModel);
+            var result = await SaveCancelDialog.Show<ModalWindow>(viewModel);
 
             if (result == DialogResult.Ok)
             {
@@ -86,7 +86,7 @@ public class DbItemListViewModel : ViewModelBase
 
         var itemClone = item.Clone();
         var viewModel = new CreateItemViewModel(itemClone);
-        var result = await SaveCancelDialog.Show<DatabaseWindow>(viewModel);
+        var result = await SaveCancelDialog.Show<ModalWindow>(viewModel);
 
         if (result != DialogResult.Ok) return;
 

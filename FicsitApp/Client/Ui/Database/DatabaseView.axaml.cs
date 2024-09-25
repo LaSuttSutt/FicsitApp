@@ -2,9 +2,9 @@
 
 namespace Client.Ui.Database;
 
-public partial class DatabaseWindow : Window
+public partial class DatabaseView : UserControl
 {
-    public DatabaseWindow()
+    public DatabaseView()
     {
         InitializeComponent();
     }

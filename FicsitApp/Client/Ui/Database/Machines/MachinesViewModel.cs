@@ -29,7 +29,7 @@ public class MachinesViewModel : NavigationViewModel
             var machine = new Machine();
             
             var viewModel = new CreateMachineViewModel(machine);
-            var result = await SaveCancelDialog.Show<DatabaseWindow>(viewModel);
+            var result = await SaveCancelDialog.Show<ModalWindow>(viewModel);
             
             if (result == DialogResult.Ok)
             {
@@ -46,7 +46,7 @@ public class MachinesViewModel : NavigationViewModel
         
         var machineClone = machine.Clone();
         var viewModel = new CreateMachineViewModel(machineClone);
-        var result = await SaveCancelDialog.Show<DatabaseWindow>(viewModel);
+        var result = await SaveCancelDialog.Show<ModalWindow>(viewModel);
 
         if (result != DialogResult.Ok) return;
         

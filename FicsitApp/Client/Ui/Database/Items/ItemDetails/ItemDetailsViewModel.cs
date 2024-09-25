@@ -63,7 +63,7 @@ public class ItemDetailsViewModel : ViewModelBase
             };
 
             var viewModel = new CreateRecipeViewModel(recipe);
-            var result = await SaveCancelDialog.Show<DatabaseWindow>(viewModel);
+            var result = await SaveCancelDialog.Show<ModalWindow>(viewModel);
             
             if (result == DialogResult.Ok)
             {
@@ -118,7 +118,7 @@ public class ItemDetailsViewModel : ViewModelBase
 
         var recipeClone = recipe.Clone();
         var viewModel = new CreateRecipeViewModel(recipeClone);
-        var result = await SaveCancelDialog.Show<DatabaseWindow>(viewModel);
+        var result = await SaveCancelDialog.Show<ModalWindow>(viewModel);
 
         if (result != DialogResult.Ok) return;
 

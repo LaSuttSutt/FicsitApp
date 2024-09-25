@@ -4,7 +4,7 @@ using ReactiveUI;
 
 namespace Client.Ui.Shared.Dialogs;
 
-public class SaveCancelDialogModel(ISaveCancelViewModel saveCancelViewModel)
+public class SaveCancelDialogModel(ISaveCancelViewModel saveCancelViewModel) : ViewModelBase
 {
     public ViewModelBase ViewModel { get; set; } = (ViewModelBase)saveCancelViewModel;
     

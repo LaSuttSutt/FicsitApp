@@ -2,9 +2,9 @@
 
 namespace Client.Ui.Projects;
 
-public partial class ProjectWindow : Window
+public partial class ProjectView : UserControl
 {
-    public ProjectWindow()
+    public ProjectView()
     {
         InitializeComponent();
     }

@@ -1,0 +1,15 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:Client.Ui.Projects"
+             xmlns:plan="using:Client.Ui.Projects.Planning"
+             mc:Ignorable="d"
+             x:Class="Client.Ui.Projects.ProjectView"
+             x:DataType="vm:ProjectViewModel"
+             Width="984"
+             Height="697"
+             Background="Transparent">
+
+    <plan:PlanningView DataContext="{Binding PlanningViewModel}"></plan:PlanningView>
+</UserControl>

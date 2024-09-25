@@ -1,6 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using System.Reactive;
-using System.Reactive.Linq;
 using System.Windows.Input;
 using Client.Helper;
 using Client.Shared.DomainModel;
@@ -27,8 +26,6 @@ public class MainWindowViewModel : ViewModelBase
     public ReactiveCommand<Project, Unit> OpenProjectWindowCommand { get; }
     public ReactiveCommand<Project, Unit> EditProjectCommand { get; }
     public ReactiveCommand<Project, Unit> DeleteProjectCommand { get; }
-    public Interaction<DatabaseWindowViewModel, bool> ShowDatabaseDialog { get; }
-    public Interaction<ProjectWindowViewModel, bool> ShowProjectDialog { get; }
     public ObservableCollection<Project> Projects { get; } = [];
 
     #endregion
@@ -43,14 +40,11 @@ public class MainWindowViewModel : ViewModelBase
         
         LoadProjects();
         
-        ShowProjectDialog = new Interaction<ProjectWindowViewModel, bool>();
         OpenProjectWindowCommand = ReactiveCommand.Create<Project>(OpenProjectDialog);
-        
-        ShowDatabaseDialog = new Interaction<DatabaseWindowViewModel, bool>();
         OpenDatabaseWindowCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            var viewModel = new DatabaseWindowViewModel();
-            return await ShowDatabaseDialog.Handle(viewModel);
+            var viewModel = new DatabaseViewModel();
+            return await ModalWindow.Show<MainWindow>(viewModel);
         });
         
         AddProjectCommand = ReactiveCommand.CreateFromTask(async () =>
@@ -100,8 +94,8 @@ public class MainWindowViewModel : ViewModelBase
 
     private async void OpenProjectDialog(Project project)
     {
-        var viewModel = new ProjectWindowViewModel(project);
-        await ShowProjectDialog.Handle(viewModel);
+        var viewModel = new ProjectViewModel(project);
+        await ModalWindow.Show<MainWindow>(viewModel);
     }
     
     #endregion

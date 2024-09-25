@@ -20,7 +20,7 @@
         <Grid ColumnDefinitions="*, Auto" RowDefinitions="*, Auto">
 
             <!-- Project-List -->
-            <Border Grid.Row="0" Grid.Column="0" Classes="Group" Margin="15 15 15 4">
+            <Border Grid.Row="0" Grid.Column="0" Classes="Group" Margin="20 20 20 4">
                 <ListBox Background="{DynamicResource BrushGroupBox}"
                          ItemsSource="{Binding Projects}">
                     <ListBox.ItemTemplate>
@@ -70,7 +70,7 @@
             </Border>
 
             <!-- Project add -->
-            <Border Grid.Row="1" Grid.Column="0" Classes="Group" Margin="15 0 15 15">
+            <Border Grid.Row="1" Grid.Column="0" Classes="Group" Margin="20 0 20 20">
                 <StackPanel Orientation="Horizontal">
                     <Button Margin="4 4 10 4"
                             Width="35"
@@ -91,7 +91,7 @@
             </Border>
 
             <!-- Data-Management -->
-            <Border Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Classes="Group" Margin="0 15 15 15">
+            <Border Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Classes="Group" Margin="0 20 20 20">
                 <StackPanel>
                     <StackPanel Margin="20">
                         <Button Classes="NavBtn"
