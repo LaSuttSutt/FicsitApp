@@ -20,8 +20,6 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
             action(ViewModel!.ShowProjectDialog.RegisterHandler(DoShowProjectDialogAsync)));
         this.WhenActivated(action =>
             action(ViewModel!.ShowDatabaseDialog.RegisterHandler(DoShowDatabaseDialogAsync)));
-        this.WhenActivated(action =>
-            action(ViewModel!.ShowCreateProjectDialog.RegisterHandler(DoShowCreateProjectDialogAsync)));
     }
     
     private async Task DoShowProjectDialogAsync(InteractionContext<ProjectWindowViewModel, bool> interaction)
@@ -44,17 +42,5 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
 
         await dialog.ShowDialog(this);
         interaction.SetOutput(true);
-    }
-
-    private async Task DoShowCreateProjectDialogAsync(
-        InteractionContext<CreateProjectWindowViewModel, ShowDialogResult> interaction)
-    {
-        var dialog = new CreateProjectWindow()
-        {
-            DataContext = interaction.Input
-        };
-
-        var result = await dialog.ShowDialog<ShowDialogResult?>(this);
-        interaction.SetOutput(result ?? new ShowDialogResult(DialogResult.Cancel));
     }
 }

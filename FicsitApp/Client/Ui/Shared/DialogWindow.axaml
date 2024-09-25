@@ -2,15 +2,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:vm="using:Client.Ui.Projects.Creation"
+        xmlns:vm="using:Client.Ui.Shared"
         xmlns:controls="using:Client.Ui.Shared.Controls"
         mc:Ignorable="d"
-        x:Class="Client.Ui.Projects.Creation.CreateProjectWindow"
-        x:DataType="vm:CreateProjectWindowViewModel"
+        x:Class="Client.Ui.Shared.DialogWindow"
+        x:DataType="vm:DialogWindowViewModel"
         Icon="/Assets/Icon.ico"
-        Title="Ficsit App - Project"
-        Width="325"
-        Height="195"
         WindowStartupLocation="CenterOwner"
         ShowInTaskbar="False"
         TransparencyLevelHint="AcrylicBlur"
@@ -18,18 +15,11 @@
         ExtendClientAreaToDecorationsHint="True">
 
     <controls:FicsitHeaderControl>
+
         <Grid RowDefinitions="*, Auto">
-            
-            <!-- Project Data -->
-            <Border Grid.Row="0" Classes="Group" Margin="15 15 15 4">
-                <StackPanel Margin="10 5 10 10">
-                    <Label Classes="Input">Name</Label>
-                    <TextBox Name="TxtName" 
-                             Classes="Input"
-                             Text="{Binding Project.Name,
-                                 FallbackValue=New project}" />
-                </StackPanel>
-            </Border>
+            <TransitioningContentControl Grid.Row="0" 
+                                         Margin="15, 15, 15, 4"
+                                         Content="{Binding ViewModel}" />
             
             <!-- Save Cancel Buttons -->
             <Border Grid.Row="1" Classes="Group" Margin="15 0 15 15">
@@ -37,7 +27,7 @@
                 <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
                     <Button Margin="5"
                             Classes="Dialog"
-                            Command="{Binding SaveProjectCommand}"
+                            Command="{Binding SaveCommand}"
                             Content="Save" />
                     <Button Classes="Dialog"
                             Command="{Binding CancelCommand}"
@@ -45,5 +35,6 @@
                 </StackPanel>
             </Border>
         </Grid>
+        
     </controls:FicsitHeaderControl>
 </Window>

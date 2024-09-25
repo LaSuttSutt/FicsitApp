@@ -1,0 +1,23 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:Client.Ui.Projects.Creation"
+             mc:Ignorable="d"
+             Width="300"
+             Height="85"
+             x:Class="Client.Ui.Projects.Creation.CreateProjectView"
+             x:DataType="vm:CreateProjectViewModel">
+    
+    <!-- Project Data -->
+    <Border Classes="Group" >
+        <StackPanel Margin="10 5 10 10">
+            <Label Classes="Input">Name</Label>
+            <TextBox Name="TxtName" 
+                     Classes="Input"
+                     Text="{Binding Project.Name,
+                                 FallbackValue=New project}" />
+        </StackPanel>
+    </Border>
+    
+</UserControl>

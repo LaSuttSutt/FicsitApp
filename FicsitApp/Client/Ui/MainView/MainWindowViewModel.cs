@@ -28,7 +28,6 @@ public class MainWindowViewModel : ViewModelBase
     public ReactiveCommand<Project, Unit> DeleteProjectCommand { get; }
     public Interaction<DatabaseWindowViewModel, bool> ShowDatabaseDialog { get; }
     public Interaction<ProjectWindowViewModel, bool> ShowProjectDialog { get; }
-    public Interaction<CreateProjectWindowViewModel, ShowDialogResult> ShowCreateProjectDialog { get; }
     public ObservableCollection<Project> Projects { get; } = [];
 
     #endregion
@@ -53,15 +52,13 @@ public class MainWindowViewModel : ViewModelBase
             return await ShowDatabaseDialog.Handle(viewModel);
         });
         
-        ShowCreateProjectDialog = new Interaction<CreateProjectWindowViewModel, ShowDialogResult>();
         AddProjectCommand = ReactiveCommand.CreateFromTask(async () =>
         {
             var project = new Project();
+            var viewModel = new CreateProjectViewModel(project);
+            var result = await DialogWindow.Show<MainWindow>(viewModel, "Ficsit App - Project");
 
-            var viewModel = new CreateProjectWindowViewModel(project);
-            var result = await ShowCreateProjectDialog.Handle(viewModel);
-
-            if (result.Result == DialogResult.Ok)
+            if (result == DialogResult.Ok)
             {
                 DataAccess.AddEntity(project);
                 Projects.Add(project);
@@ -84,10 +81,10 @@ public class MainWindowViewModel : ViewModelBase
     private async void EditProject(Project project)
     {
         var projectClone = project.Clone();
-        var viewModel = new CreateProjectWindowViewModel(projectClone);
-        var result = await ShowCreateProjectDialog.Handle(viewModel);
+        var viewModel = new CreateProjectViewModel(projectClone);
+        var result = await DialogWindow.Show<MainWindow>(viewModel, "Ficsit App - Project");
 
-        if (result.Result != DialogResult.Ok) return;
+        if (result != DialogResult.Ok) return;
 
         project.Update(projectClone);
         DataAccess.UpdateEntity(project);
