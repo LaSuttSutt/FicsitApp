@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
-using System.Reactive.Linq;
 using System.Windows.Input;
 using Client.Shared.DomainModel;
 using Client.Shared.View;
 using Client.Ui.Database.Items.Creation;
 using Client.Ui.Shared;
+using Client.Ui.Shared.Dialogs;
 using ReactiveUI;
 using Shared.DataAccess;
 using Shared.DomainModel;
@@ -28,7 +28,6 @@ public class DbItemListViewModel : ViewModelBase
     public ReactiveCommand<DbItemListEntryViewModel, Unit> OnDeleteItem { get; }
 
     public ICommand AddItemCommand { get; }
-    public Interaction<CreateItemViewModel, ShowDialogResult> ShowDialog { get; }
 
     public DbItemListEntryViewModel? SelectedItem
     {
@@ -48,16 +47,15 @@ public class DbItemListViewModel : ViewModelBase
     {
         OnEditItem = ReactiveCommand.Create<DbItemListEntryViewModel>(EditItem);
         OnDeleteItem = ReactiveCommand.Create<DbItemListEntryViewModel>(DeleteItem);
-
-        ShowDialog = new Interaction<CreateItemViewModel, ShowDialogResult>();
+        
         AddItemCommand = ReactiveCommand.CreateFromTask(async () =>
         {
             var item = new Item();
 
             var viewModel = new CreateItemViewModel(item);
-            var result = await ShowDialog.Handle(viewModel);
+            var result = await SaveCancelDialog.Show<DatabaseWindow>(viewModel);
 
-            if (result.Result == DialogResult.Ok)
+            if (result == DialogResult.Ok)
             {
                 DataAccess.AddEntity(item);
                 Items.Add(new DbItemListEntryViewModel(item.Id));
@@ -88,9 +86,9 @@ public class DbItemListViewModel : ViewModelBase
 
         var itemClone = item.Clone();
         var viewModel = new CreateItemViewModel(itemClone);
-        var result = await ShowDialog.Handle(viewModel);
+        var result = await SaveCancelDialog.Show<DatabaseWindow>(viewModel);
 
-        if (result.Result != DialogResult.Ok) return;
+        if (result != DialogResult.Ok) return;
 
         item.Update(itemClone);
         DataAccess.UpdateEntity(item);

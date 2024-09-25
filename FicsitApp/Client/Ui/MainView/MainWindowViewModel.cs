@@ -9,6 +9,7 @@ using Client.Ui.Database;
 using Client.Ui.Projects;
 using Client.Ui.Projects.Creation;
 using Client.Ui.Shared;
+using Client.Ui.Shared.Dialogs;
 using DynamicData;
 using ReactiveUI;
 using Shared.DataAccess;
@@ -56,7 +57,7 @@ public class MainWindowViewModel : ViewModelBase
         {
             var project = new Project();
             var viewModel = new CreateProjectViewModel(project);
-            var result = await DialogWindow.Show<MainWindow>(viewModel, "Ficsit App - Project");
+            var result = await SaveCancelDialog.Show<MainWindow>(viewModel);
 
             if (result == DialogResult.Ok)
             {
@@ -82,7 +83,7 @@ public class MainWindowViewModel : ViewModelBase
     {
         var projectClone = project.Clone();
         var viewModel = new CreateProjectViewModel(projectClone);
-        var result = await DialogWindow.Show<MainWindow>(viewModel, "Ficsit App - Project");
+        var result = await SaveCancelDialog.Show<MainWindow>(viewModel);
 
         if (result != DialogResult.Ok) return;
 

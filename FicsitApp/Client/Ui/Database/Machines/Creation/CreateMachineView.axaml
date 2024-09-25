@@ -1,107 +1,80 @@
-﻿<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:vm="using:Client.Ui.Database.Machines.Creation"
-        xmlns:controls="using:Client.Ui.Shared.Controls"
-        xmlns:helper="using:Client.Helper"
-        mc:Ignorable="d"
-        x:Class="Client.Ui.Database.Machines.Creation.CreateMachineView"
-        x:DataType="vm:CreateMachineViewModel"
-        Title="Ficsit App - Machine"
-        Icon="/Assets/Icon.ico"
-        Height="457"
-        Width="400"
-        WindowStartupLocation="CenterOwner"
-        ShowInTaskbar="False"
-        Background="{DynamicResource BrushBackground}"
-        ExtendClientAreaToDecorationsHint="True">
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:Client.Ui.Database.Machines.Creation"
+             xmlns:helper="using:Client.Helper"
+             mc:Ignorable="d"
+             x:Class="Client.Ui.Database.Machines.Creation.CreateMachineView"
+             x:DataType="vm:CreateMachineViewModel"
+             Width="387"
+             Height="337"
+             Background="{DynamicResource BrushBackground}">
 
-    <controls:FicsitHeaderControl>
-        <Grid RowDefinitions="Auto, *, Auto">
+    <Grid RowDefinitions="Auto, *">
 
-            <!-- Machine Data -->
-            <Border Grid.Row="0"
-                    Margin="20 20 20 4"
-                    BorderBrush="Black"
-                    BorderThickness="2"
-                    Background="{DynamicResource BrushGroupBox}">
+        <!-- Machine Data -->
+        <Border Grid.Row="0"
+                Margin="0 0 0 4"
+                BorderBrush="Black"
+                BorderThickness="2"
+                Background="{DynamicResource BrushGroupBox}">
 
-                <Grid RowDefinitions="Auto, Auto" ColumnDefinitions="*, *">
-                    <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="10 5 10 10">
-                        <Label Classes="Input">Name</Label>
-                        <TextBox Name="TxtName" 
-                                 Classes="Input"
-                                 Text="{Binding Machine.Name,
+            <Grid RowDefinitions="Auto, Auto" ColumnDefinitions="*, *">
+                <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="10 5 10 10">
+                    <Label Classes="Input">Name</Label>
+                    <TextBox Name="TxtName"
+                             Classes="Input"
+                             Text="{Binding Machine.Name,
                                  FallbackValue=New machine}" />
-                    </StackPanel>
-                    <StackPanel Grid.Row="1" Grid.Column="0" Margin="10 0 10 10">
-                        <Label Classes="Input">Inputs</Label>
-                        <NumericUpDown Classes="Input"
-                                       FormatString="0"
-                                       Value="{Binding Machine.ItemInputs,
-                                       FallbackValue=1}" />
-                    </StackPanel>
-                    <StackPanel Grid.Row="1" Grid.Column="1" Margin="10 0">
-                        <Label Classes="Input">ByProducts</Label>
-                        <NumericUpDown Classes="Input"
-                                       FormatString="0"
-                                       Value="{Binding Machine.ByProducts,
-                                       FallbackValue=0}" />
-                    </StackPanel>
-                </Grid>
-            </Border>
-
-            <!-- Images -->
-            <Border Grid.Row="1"
-                    Margin="20 0 20 4"
-                    BorderBrush="Black"
-                    BorderThickness="2"
-                    Background="{DynamicResource BrushGroupBox}">
-
-                <ListBox Margin="10"
-                         ItemsSource="{Binding MachineImages,
-                         FallbackValue=xxxxxx}"
-                         SelectedItem="{Binding SelectedMachineImage}"
-                         Background="{DynamicResource BrushGroupBox}">
-                    <ListBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel Orientation="Horizontal" ></WrapPanel>
-                        </ItemsPanelTemplate>
-                    </ListBox.ItemsPanel>
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Image Width="64"
-                                   Margin="-5"
-                                   Source="{Binding Image, 
-                                   FallbackValue={x:Static helper:ImageHelper.DefaultMachine}}" />
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                    <ListBox.Styles>
-                        <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
-                            <Setter Property="Background" Value="{DynamicResource BrushStandardOrange}" />
-                        </Style>
-                    </ListBox.Styles>
-                </ListBox>
-            </Border>
-
-            <!-- Save Cancel Buttons -->
-            <Border Grid.Row="2"
-                    Margin="20 0 20 20"
-                    BorderBrush="Black"
-                    BorderThickness="2"
-                    Background="{DynamicResource BrushGroupBox}">
-
-                <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
-                    <Button Margin="5"
-                            Classes="Dialog"
-                            Command="{Binding SaveMachineCommand}"
-                            Content="Save" />
-                    <Button Classes="Dialog"
-                            Command="{Binding CancelCommand}"
-                            Content="Cancel" />
                 </StackPanel>
-            </Border>
-        </Grid>
-    </controls:FicsitHeaderControl>
-</Window>
+                <StackPanel Grid.Row="1" Grid.Column="0" Margin="10 0 10 10">
+                    <Label Classes="Input">Inputs</Label>
+                    <NumericUpDown Classes="Input"
+                                   FormatString="0"
+                                   Value="{Binding Machine.ItemInputs,
+                                       FallbackValue=1}" />
+                </StackPanel>
+                <StackPanel Grid.Row="1" Grid.Column="1" Margin="10 0">
+                    <Label Classes="Input">ByProducts</Label>
+                    <NumericUpDown Classes="Input"
+                                   FormatString="0"
+                                   Value="{Binding Machine.ByProducts,
+                                       FallbackValue=0}" />
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Images -->
+        <Border Grid.Row="1"
+                BorderBrush="Black"
+                BorderThickness="2"
+                Background="{DynamicResource BrushGroupBox}">
+
+            <ListBox Margin="10"
+                     ItemsSource="{Binding MachineImages,
+                         FallbackValue=xxxxxx}"
+                     SelectedItem="{Binding SelectedMachineImage}"
+                     Background="{DynamicResource BrushGroupBox}">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal"></WrapPanel>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Image Width="64"
+                               Margin="-5"
+                               Source="{Binding Image, 
+                                   FallbackValue={x:Static helper:ImageHelper.DefaultMachine}}" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <ListBox.Styles>
+                    <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+                        <Setter Property="Background" Value="{DynamicResource BrushStandardOrange}" />
+                    </Style>
+                </ListBox.Styles>
+            </ListBox>
+        </Border>
+    </Grid>
+</UserControl>

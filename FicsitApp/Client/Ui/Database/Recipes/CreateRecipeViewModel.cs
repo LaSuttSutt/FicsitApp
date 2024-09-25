@@ -1,20 +1,23 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reactive;
+using Avalonia;
 using Avalonia.Media.Imaging;
 using Client.Shared.DomainModel;
 using Client.Shared.View;
-using Client.Ui.Shared;
+using Client.Ui.Shared.Dialogs;
 using ReactiveUI;
 using Shared.DataAccess;
 using Shared.DomainModel;
 
 namespace Client.Ui.Database.Recipes;
 
-public class CreateRecipeViewModel : ViewModelBase
+public class CreateRecipeViewModel : ViewModelBase, ISaveCancelViewModel
 {
     #region Declarations
+    
+    public string Title { get; } = "FicsitApp - Recipe";
+    public Size Size { get; } = new Size(560, 411);
 
     public Recipe Recipe { get; }
 
@@ -50,12 +53,7 @@ public class CreateRecipeViewModel : ViewModelBase
     public decimal ByProduct1Amount { get; set; }
     public ItemListModel SelectedByProduct2 { get; set; } = null!;
     public decimal ByProduct2Amount { get; set; }
-
-    public ReactiveCommand<Unit, ShowDialogResult> SaveRecipeCommand { get; }
-
-    public ReactiveCommand<Unit, ShowDialogResult> CancelCommand { get; } =
-        ReactiveCommand.Create(() => new ShowDialogResult(DialogResult.Cancel));
-
+    
     #endregion
 
     #region Constructor
@@ -66,12 +64,6 @@ public class CreateRecipeViewModel : ViewModelBase
 
         LoadPageData();
         DoPreSelection();
-
-        SaveRecipeCommand = ReactiveCommand.Create(() =>
-        {
-            var saveDataSuccessful = SaveData();
-            return new ShowDialogResult(saveDataSuccessful ? DialogResult.Ok : DialogResult.Cancel);
-        });
     }
 
     #endregion
@@ -120,7 +112,7 @@ public class CreateRecipeViewModel : ViewModelBase
             LoadIngredient(2, byProducts[1]);
     }
 
-    private bool SaveData()
+    public bool DoSaving()
     {
         if (SelectedMachine == null)
             return false;

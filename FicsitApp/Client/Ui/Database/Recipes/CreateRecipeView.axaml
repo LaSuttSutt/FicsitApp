@@ -1,140 +1,118 @@
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:vm="using:Client.Ui.Database.Recipes"
-        xmlns:controls="using:Client.Ui.Shared.Controls"
-        xmlns:helper="using:Client.Helper"
-        xmlns:shared="using:Client.Shared.DomainModel"
-        mc:Ignorable="d"
-        x:Class="Client.Ui.Database.Recipes.CreateRecipeView"
-        x:DataType="vm:CreateRecipeViewModel"
-        Title="Ficsit App - Machine"
-        Icon="/Assets/Icon.ico"
-        Height="532"
-        Width="600"
-        WindowStartupLocation="CenterOwner"
-        ShowInTaskbar="False"
-        Background="{DynamicResource BrushBackground}"
-        ExtendClientAreaToDecorationsHint="True">
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:Client.Ui.Database.Recipes"
+             xmlns:helper="using:Client.Helper"
+             xmlns:shared="using:Client.Shared.DomainModel"
+             mc:Ignorable="d"
+             x:Class="Client.Ui.Database.Recipes.CreateRecipeView"
+             x:DataType="vm:CreateRecipeViewModel"
+             Width="560"
+             Height="411"
+             Background="{DynamicResource BrushBackground}">
 
-    <controls:FicsitHeaderControl>
-        <Grid RowDefinitions="Auto, *, Auto" ColumnDefinitions="Auto, *" Margin="20">
+    <Grid RowDefinitions="Auto, *" ColumnDefinitions="Auto, *">
 
-            <!-- Recipe Data -->
-            <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
-                    Classes="Group" Margin="0 0 0 4">
-                <StackPanel Orientation="Horizontal">
-                    <StackPanel Margin="10 5 10 10" Width="314">
-                        <Label Classes="Input">Name</Label>
-                        <TextBox Name="TxtName"
-                                 Classes="Input"
-                                 Text="{Binding Recipe.Name,
+        <!-- Recipe Data -->
+        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                Classes="Group" Margin="0 0 0 4">
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Margin="10 5 10 10" Width="314">
+                    <Label Classes="Input">Name</Label>
+                    <TextBox Name="TxtName"
+                             Classes="Input"
+                             Text="{Binding Recipe.Name,
                                  FallbackValue=New recipe}" />
-                    </StackPanel>
-                    <StackPanel Margin="10 5 10 10" Width="200">
-                        <Label Classes="Input">Amount per minute</Label>
-                        <NumericUpDown Classes="Input"
-                                       FormatString="0.00 /min"
-                                       Value="{Binding Recipe.Amount,
+                </StackPanel>
+                <StackPanel Margin="10 5 10 10" Width="200">
+                    <Label Classes="Input">Amount per minute</Label>
+                    <NumericUpDown Classes="Input"
+                                   FormatString="0.00 /min"
+                                   Value="{Binding Recipe.Amount,
                                        FallbackValue=15}" />
-                    </StackPanel>
                 </StackPanel>
-            </Border>
+            </StackPanel>
+        </Border>
 
-            <!-- Machine Images -->
-            <Border Grid.Row="1" Grid.Column="0" Classes="Group" Width="100">
-                <ListBox Margin="10 10 0 10"
-                         ItemsSource="{Binding Machines,
+        <!-- Machine Images -->
+        <Border Grid.Row="1" Grid.Column="0" Classes="Group" Width="100">
+            <ListBox Margin="10 10 0 10"
+                     ItemsSource="{Binding Machines,
                          FallbackValue=xxxxx}"
-                         SelectedItem="{Binding SelectedMachine}"
-                         Background="{DynamicResource BrushGroupBox}">
-                    <ListBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel Margin="0" />
-                        </ItemsPanelTemplate>
-                    </ListBox.ItemsPanel>
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Image Width="64"
-                                   Margin="-5"
-                                   Source="{Binding Item2, 
+                     SelectedItem="{Binding SelectedMachine}"
+                     Background="{DynamicResource BrushGroupBox}">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Margin="0" />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Image Width="64"
+                               Margin="-5"
+                               Source="{Binding Item2, 
                                    FallbackValue={x:Static helper:ImageHelper.DefaultMachine}}" />
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                    <ListBox.Styles>
-                        <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
-                            <Setter Property="Background" Value="{DynamicResource BrushStandardOrange}" />
-                        </Style>
-                    </ListBox.Styles>
-                </ListBox>
-            </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <ListBox.Styles>
+                    <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+                        <Setter Property="Background" Value="{DynamicResource BrushStandardOrange}" />
+                    </Style>
+                </ListBox.Styles>
+            </ListBox>
+        </Border>
 
-            <!-- Ingredients -->
-            <Border Grid.Row="1" Grid.Column="1" Classes="Group" Margin="4 0 0 0">
-                <StackPanel Margin="10 5 10 10" 
-                            IsVisible="{Binding HasMachineSelection}">
-                    <Label Classes="Input">Ingredients</Label>
-                    <StackPanel Classes="List">
-                        <Label Classes="Counter" Content="1" />
-                        <ComboBox Classes="Ingredient" ItemsSource="{Binding Items}"
-                                  SelectedValue="{Binding SelectedIngredient1}"/>
-                        <NumericUpDown Classes="Amount" Value="{Binding Ingredient1Amount}" />
-                    </StackPanel>
-                    <StackPanel Classes="List" IsVisible="{Binding HasIngredient2}">
-                        <Label Classes="Counter" Content="2" />
-                        <ComboBox Classes="Ingredient" ItemsSource="{Binding Items}"
-                                  SelectedValue="{Binding SelectedIngredient2}"/>
-                        <NumericUpDown Classes="Amount" Value="{Binding Ingredient2Amount}" />
-                    </StackPanel>
-                    <StackPanel Classes="List" IsVisible="{Binding HasIngredient3}">
-                        <Label Classes="Counter" Content="3" />
-                        <ComboBox Classes="Ingredient" ItemsSource="{Binding Items}"
-                                  SelectedValue="{Binding SelectedIngredient3}"/>
-                        <NumericUpDown Classes="Amount" Value="{Binding Ingredient3Amount}" />
-                    </StackPanel>
-                    <StackPanel Classes="List" IsVisible="{Binding HasIngredient4}">
-                        <Label Classes="Counter" Content="4" />
-                        <ComboBox Classes="Ingredient" ItemsSource="{Binding Items}"
-                                  SelectedValue="{Binding SelectedIngredient4}"/>
-                        <NumericUpDown Classes="Amount" Value="{Binding Ingredient4Amount}" />
-                    </StackPanel>
-                    
-                    <Label Classes="Input" Margin="0 12 0 0"
-                           IsVisible="{Binding HasByProduct1}"
-                           Content="By Products" />
-                    <StackPanel Classes="List" IsVisible="{Binding HasByProduct1}">
-                        <Label Classes="Counter" Content="1" />
-                        <ComboBox Classes="Ingredient" ItemsSource="{Binding Items}"
-                                  SelectedValue="{Binding SelectedByProduct1}"/>
-                        <NumericUpDown Classes="Amount" Value="{Binding ByProduct1Amount}" />
-                    </StackPanel>
-                    <StackPanel Classes="List" IsVisible="{Binding HasByProduct2}">
-                        <Label Classes="Counter" Content="2" />
-                        <ComboBox Classes="Ingredient" ItemsSource="{Binding Items}"
-                                  SelectedValue="{Binding SelectedByProduct2}"/>
-                        <NumericUpDown Classes="Amount" Value="{Binding ByProduct2Amount}" />
-                    </StackPanel>
+        <!-- Ingredients -->
+        <Border Grid.Row="1" Grid.Column="1" Classes="Group" Margin="4 0 0 0">
+            <StackPanel Margin="10 5 10 10"
+                        IsVisible="{Binding HasMachineSelection}">
+                <Label Classes="Input">Ingredients</Label>
+                <StackPanel Classes="List">
+                    <Label Classes="Counter" Content="1" />
+                    <ComboBox Classes="Ingredient" ItemsSource="{Binding Items}"
+                              SelectedValue="{Binding SelectedIngredient1}" />
+                    <NumericUpDown Classes="Amount" Value="{Binding Ingredient1Amount}" />
                 </StackPanel>
-            </Border>
-
-            <!-- Save Cancel Buttons -->
-            <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Classes="Group" Margin="0 4 0 0">
-
-                <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
-                    <Button Margin="5"
-                            Classes="Dialog"
-                            Command="{Binding SaveRecipeCommand}"
-                            Content="Save" />
-                    <Button Classes="Dialog"
-                            Command="{Binding CancelCommand}"
-                            Content="Cancel" />
+                <StackPanel Classes="List" IsVisible="{Binding HasIngredient2}">
+                    <Label Classes="Counter" Content="2" />
+                    <ComboBox Classes="Ingredient" ItemsSource="{Binding Items}"
+                              SelectedValue="{Binding SelectedIngredient2}" />
+                    <NumericUpDown Classes="Amount" Value="{Binding Ingredient2Amount}" />
                 </StackPanel>
-            </Border>
-        </Grid>
-    </controls:FicsitHeaderControl>
-    
-    <Window.Styles>
+                <StackPanel Classes="List" IsVisible="{Binding HasIngredient3}">
+                    <Label Classes="Counter" Content="3" />
+                    <ComboBox Classes="Ingredient" ItemsSource="{Binding Items}"
+                              SelectedValue="{Binding SelectedIngredient3}" />
+                    <NumericUpDown Classes="Amount" Value="{Binding Ingredient3Amount}" />
+                </StackPanel>
+                <StackPanel Classes="List" IsVisible="{Binding HasIngredient4}">
+                    <Label Classes="Counter" Content="4" />
+                    <ComboBox Classes="Ingredient" ItemsSource="{Binding Items}"
+                              SelectedValue="{Binding SelectedIngredient4}" />
+                    <NumericUpDown Classes="Amount" Value="{Binding Ingredient4Amount}" />
+                </StackPanel>
+
+                <Label Classes="Input" Margin="0 12 0 0"
+                       IsVisible="{Binding HasByProduct1}"
+                       Content="By Products" />
+                <StackPanel Classes="List" IsVisible="{Binding HasByProduct1}">
+                    <Label Classes="Counter" Content="1" />
+                    <ComboBox Classes="Ingredient" ItemsSource="{Binding Items}"
+                              SelectedValue="{Binding SelectedByProduct1}" />
+                    <NumericUpDown Classes="Amount" Value="{Binding ByProduct1Amount}" />
+                </StackPanel>
+                <StackPanel Classes="List" IsVisible="{Binding HasByProduct2}">
+                    <Label Classes="Counter" Content="2" />
+                    <ComboBox Classes="Ingredient" ItemsSource="{Binding Items}"
+                              SelectedValue="{Binding SelectedByProduct2}" />
+                    <NumericUpDown Classes="Amount" Value="{Binding ByProduct2Amount}" />
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+
+    <UserControl.Styles>
         <Style Selector="ComboBox.Ingredient">
             <Setter Property="Width" Value="218" />
             <Setter Property="Height" Value="25" />
@@ -144,18 +122,18 @@
                     <DataTemplate x:DataType="shared:ItemListModel">
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Source="{Binding Image}" Width="20" />
-                            <Label Content="{Binding Item.ShortNameOrName}" 
-                                   Margin="5 0" 
-                                   FontFamily="{DynamicResource Poppins}"/>
+                            <Label Content="{Binding Item.ShortNameOrName}"
+                                   Margin="5 0"
+                                   FontFamily="{DynamicResource Poppins}" />
                         </StackPanel>
                     </DataTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
         <Style Selector="ComboBoxItem:pointerover /template/ ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource BrushStandardOrange}"/>
+            <Setter Property="Background" Value="{DynamicResource BrushStandardOrange}" />
         </Style>
-        
+
         <Style Selector="Label.Counter">
             <Setter Property="FontFamily" Value="{DynamicResource Poppins}" />
             <Setter Property="FontSize" Value="15" />
@@ -163,18 +141,18 @@
             <Setter Property="HorizontalContentAlignment" Value="Center" />
             <Setter Property="Width" Value="18" />
         </Style>
-        
+
         <Style Selector="StackPanel.List">
             <Setter Property="Orientation" Value="Horizontal" />
             <Setter Property="Margin" Value="0 7 0 0" />
             <Setter Property="Spacing" Value="10" />
         </Style>
-        
+
         <Style Selector="NumericUpDown.Amount">
             <Setter Property="Width" Value="175" />
             <Setter Property="FormatString" Value="0.00 /min" />
             <Setter Property="Value" Value="30" />
         </Style>
-        
-    </Window.Styles>
-</Window>
+
+    </UserControl.Styles>
+</UserControl>

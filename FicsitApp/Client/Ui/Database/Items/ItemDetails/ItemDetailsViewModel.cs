@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
-using System.Reactive.Linq;
 using System.Windows.Input;
 using Avalonia.Media.Imaging;
 using Client.Helper;
@@ -11,6 +10,7 @@ using Client.Shared.DomainModel;
 using Client.Shared.View;
 using Client.Ui.Database.Recipes;
 using Client.Ui.Shared;
+using Client.Ui.Shared.Dialogs;
 using ReactiveUI;
 using Shared.DataAccess;
 using Shared.DomainModel;
@@ -26,8 +26,6 @@ public class ItemDetailsViewModel : ViewModelBase
     
     public ReactiveCommand<RecipeDetailViewModel, Unit> OnEditRecipe { get; }
     public ReactiveCommand<RecipeDetailViewModel, Unit> OnDeleteRecipe { get; }
-    
-    public Interaction<CreateRecipeViewModel, ShowDialogResult> ShowDialog { get; }
 
     public Guid ItemId
     {
@@ -57,7 +55,6 @@ public class ItemDetailsViewModel : ViewModelBase
         OnEditRecipe = ReactiveCommand.Create<RecipeDetailViewModel>(EditRecipe);
         OnDeleteRecipe = ReactiveCommand.Create<RecipeDetailViewModel>(DeleteRecipe);
         
-        ShowDialog = new Interaction<CreateRecipeViewModel, ShowDialogResult>();
         AddRecipeCommand = ReactiveCommand.CreateFromTask(async () =>
         {
             var recipe = new Recipe
@@ -66,9 +63,9 @@ public class ItemDetailsViewModel : ViewModelBase
             };
 
             var viewModel = new CreateRecipeViewModel(recipe);
-            var result = await ShowDialog.Handle(viewModel);
+            var result = await SaveCancelDialog.Show<DatabaseWindow>(viewModel);
             
-            if (result.Result == DialogResult.Ok)
+            if (result == DialogResult.Ok)
             {
                 DataAccess.AddEntity(recipe);
                 Recipes.Add(new RecipeDetailViewModel(recipe.Id));
@@ -121,9 +118,9 @@ public class ItemDetailsViewModel : ViewModelBase
 
         var recipeClone = recipe.Clone();
         var viewModel = new CreateRecipeViewModel(recipeClone);
-        var result = await ShowDialog.Handle(viewModel);
+        var result = await SaveCancelDialog.Show<DatabaseWindow>(viewModel);
 
-        if (result.Result != DialogResult.Ok) return;
+        if (result != DialogResult.Ok) return;
 
         recipe.Update(recipeClone);
         DataAccess.UpdateEntity(recipe);

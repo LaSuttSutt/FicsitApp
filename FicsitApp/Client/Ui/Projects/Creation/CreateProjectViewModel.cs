@@ -1,17 +1,21 @@
 ﻿using Avalonia;
-using Client.Ui.Shared;
+using Client.Shared.View;
+using Client.Ui.Shared.Dialogs;
 using Shared.DomainModel;
 
 namespace Client.Ui.Projects.Creation;
 
-public class CreateProjectViewModel(Project project) : DialogWindowModel
+public class CreateProjectViewModel(Project project) : ViewModelBase, ISaveCancelViewModel
 {
-    public Project Project { get; set; } = project;
+    public Project Project { get; } = project;
 
-    public override Size Size { get; set; } = new Size(295, 85);
+    public Size Size { get; set; } = new Size(295, 85);
 
-    public override void DoSaving()
+    public string Title { get; set; } = "Ficsit App - Project";
+
+    public bool DoSaving()
     {
-        // Nothing to to here...
+        // Nothing to do here
+        return true;
     }
 }

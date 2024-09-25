@@ -2,11 +2,11 @@
 using Client.Shared.View;
 using ReactiveUI;
 
-namespace Client.Ui.Shared;
+namespace Client.Ui.Shared.Dialogs;
 
-public class DialogWindowViewModel(ViewModelBase viewModel) : ViewModelBase
+public class SaveCancelDialogModel(ISaveCancelViewModel saveCancelViewModel)
 {
-    public ViewModelBase ViewModel { get; set; } = viewModel;
+    public ViewModelBase ViewModel { get; set; } = (ViewModelBase)saveCancelViewModel;
     
     public ReactiveCommand<Unit, ShowDialogResult> SaveCommand { get; } =
         ReactiveCommand.Create(() => new ShowDialogResult(DialogResult.Ok));

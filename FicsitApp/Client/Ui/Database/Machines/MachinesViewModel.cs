@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
-using System.Reactive.Linq;
 using System.Windows.Input;
 using Client.Shared.DomainModel;
 using Client.Shared.View;
 using Client.Ui.Database.Machines.Creation;
 using Client.Ui.Database.Machines.MachinesList;
 using Client.Ui.Shared;
+using Client.Ui.Shared.Dialogs;
 using ReactiveUI;
 using Shared.DataAccess;
 using Shared.DomainModel;
@@ -18,23 +18,20 @@ public class MachinesViewModel : NavigationViewModel
     public MachinesListViewModel ListViewModel { get; } = new();
     public ICommand AddMachineCommand { get; }
     
-    public Interaction<CreateMachineViewModel, ShowDialogResult> ShowDialog { get; }
-    
     public MachinesViewModel()
     {
         ListViewModel.OnEditMachineClicked += ListViewModelOnOnEditMachineClicked;
         ListViewModel.OnDeleteMachineClicked += ListViewModelOnOnDeleteMachineClicked;
         Title = "Machines";
         
-        ShowDialog = new Interaction<CreateMachineViewModel, ShowDialogResult>();
         AddMachineCommand = ReactiveCommand.CreateFromTask(async () =>
         {
             var machine = new Machine();
             
             var viewModel = new CreateMachineViewModel(machine);
-            var result = await ShowDialog.Handle(viewModel);
+            var result = await SaveCancelDialog.Show<DatabaseWindow>(viewModel);
             
-            if (result.Result == DialogResult.Ok)
+            if (result == DialogResult.Ok)
             {
                 DataAccess.AddEntity(machine);
                 ListViewModel.Machines.Add(new MachinesEntryViewModel(machine.Id));
@@ -49,9 +46,9 @@ public class MachinesViewModel : NavigationViewModel
         
         var machineClone = machine.Clone();
         var viewModel = new CreateMachineViewModel(machineClone);
-        var result = await ShowDialog.Handle(viewModel);
+        var result = await SaveCancelDialog.Show<DatabaseWindow>(viewModel);
 
-        if (result.Result != DialogResult.Ok) return;
+        if (result != DialogResult.Ok) return;
         
         machine.Update(machineClone);
         DataAccess.UpdateEntity(machine);
