@@ -5,7 +5,6 @@
              xmlns:vm="clr-namespace:Client.Ui.Projects.Planning"
              xmlns:helper="clr-namespace:Client.Helper"
              xmlns:shared="clr-namespace:Client.Shared.DomainModel"
-             xmlns:dm="clr-namespace:Shared.DomainModel;assembly=Shared"
              mc:Ignorable="d" d:DesignWidth="1024" d:DesignHeight="450"
              x:Class="Client.Ui.Projects.Planning.PlanningView"
              x:DataType="vm:PlanningViewModel"
@@ -19,9 +18,6 @@
                 <ComboBox Classes="Recipe"
                           ItemsSource="{Binding Recipes}"
                           SelectedValue="{Binding SelectedRecipe}" />
-                <Image Classes="Small"
-                       Source="{Binding MachineImage,
-                       FallbackValue={x:Static helper:ImageHelper.DefaultMachine}}" />
                 <NumericUpDown Width="120" FormatString="0.00" Increment="1"
                                Value="{Binding MachineCount }" />
                 <NumericUpDown Width="160" FormatString="0.00" InnerRightContent="%" Increment="1"
@@ -57,9 +53,10 @@
             <Setter Property="Padding" Value="5 0" />
             <Setter Property="ItemTemplate">
                 <Setter.Value>
-                    <DataTemplate x:DataType="dm:Recipe">
+                    <DataTemplate x:DataType="shared:RecipeListModel">
                         <StackPanel Orientation="Horizontal" Margin="0">
-                            <Label Content="{Binding Name}"
+                            <Image Source="{Binding Image}" Width="20" />
+                            <Label Content="{Binding Recipe.Name}"
                                    Margin="5 0"
                                    FontFamily="{DynamicResource Poppins}" />
                         </StackPanel>
