@@ -2,12 +2,73 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="using:Client.Ui.Projects.Planning"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:vm="clr-namespace:Client.Ui.Projects.Planning"
+             xmlns:helper="clr-namespace:Client.Helper"
+             xmlns:shared="clr-namespace:Client.Shared.DomainModel"
+             xmlns:dm="clr-namespace:Shared.DomainModel;assembly=Shared"
+             mc:Ignorable="d" d:DesignWidth="1024" d:DesignHeight="450"
              x:Class="Client.Ui.Projects.Planning.PlanningView"
              x:DataType="vm:PlanningViewModel"
              Background="{DynamicResource BrushBackground}">
     <Border Classes="Group">
-        <Button Command="{Binding DialogCheck}">Check</Button>
+        <StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="5" Spacing="10">
+                <ComboBox Classes="Item"
+                          ItemsSource="{Binding Items}"
+                          SelectedValue="{Binding SelectedItem}" />
+                <ComboBox Classes="Recipe"
+                          ItemsSource="{Binding Recipes}"
+                          SelectedValue="{Binding SelectedRecipe}" />
+                <Image Classes="Small"
+                       Source="{Binding MachineImage,
+                       FallbackValue={x:Static helper:ImageHelper.DefaultMachine}}" />
+                <NumericUpDown Width="120" FormatString="0.00" Increment="1"
+                               Value="{Binding MachineCount }" />
+                <NumericUpDown Width="160" FormatString="0.00" InnerRightContent="%" Increment="1"
+                               Value="{Binding Workload}"/>
+                <NumericUpDown Width="100" ShowButtonSpinner="False" FormatString="0.00" IsEnabled="false"
+                               InnerRightContent="/min" Increment="1"
+                               Value="{Binding ItemAmount}"/>
+            </StackPanel>
+        </StackPanel>
     </Border>
+
+    <UserControl.Styles>
+        <Style Selector="ComboBox.Item">
+            <Setter Property="Width" Value="200" />
+            <Setter Property="Height" Value="25" />
+            <Setter Property="Padding" Value="5 0" />
+            <Setter Property="ItemTemplate">
+                <Setter.Value>
+                    <DataTemplate x:DataType="shared:ItemListModel">
+                        <StackPanel Orientation="Horizontal" Margin="0">
+                            <Image Source="{Binding Image}" Width="20" />
+                            <Label Content="{Binding Item.ShortNameOrName}"
+                                   Margin="5 0"
+                                   FontFamily="{DynamicResource Poppins}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style Selector="ComboBox.Recipe">
+            <Setter Property="Width" Value="200" />
+            <Setter Property="Height" Value="25" />
+            <Setter Property="Padding" Value="5 0" />
+            <Setter Property="ItemTemplate">
+                <Setter.Value>
+                    <DataTemplate x:DataType="dm:Recipe">
+                        <StackPanel Orientation="Horizontal" Margin="0">
+                            <Label Content="{Binding Name}"
+                                   Margin="5 0"
+                                   FontFamily="{DynamicResource Poppins}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style Selector="ComboBoxItem:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource BrushStandardOrange}" />
+        </Style>
+    </UserControl.Styles>
 </UserControl>

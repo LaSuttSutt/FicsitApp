@@ -1,4 +1,5 @@
-﻿using Avalonia.Media.Imaging;
+﻿using System.Collections.Generic;
+using Avalonia.Media.Imaging;
 using Client.Helper;
 using Shared.DomainModel;
 
@@ -30,5 +31,12 @@ public static class ItemExtensions
         item.ImageName = clone.ImageName;
         item.ShortName = clone.ShortName;
         item.IsResource = clone.IsResource;
+    }
+
+    public static List<ItemListModel> ToItemList(this List<Item> items)
+    {
+        var list = new List<ItemListModel>();
+        items.ForEach(i => list.Add(new ItemListModel(i, i.Image())));
+        return list;
     }
 }

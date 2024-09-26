@@ -1,11 +1,11 @@
-﻿using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
+﻿using Avalonia.Controls;
 
 namespace Client.Ui.Projects.Planning;
 
 public partial class PlanningView : UserControl
 {
+    private PlanningViewModel? Vm => DataContext as PlanningViewModel;
+    
     public PlanningView()
     {
         InitializeComponent();
