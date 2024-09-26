@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Avalonia.Media.Imaging;
-using Client.Helper;
 using Client.Shared.DomainModel;
 using Client.Shared.View;
 using ReactiveUI;
@@ -95,8 +93,7 @@ public class PlanningViewModel : ViewModelBase
     private void SelectedRecipeChanged()
     {
         if (SelectedRecipe == null) return;
-
-        var machine = DataAccess.GetEntity<Machine>(SelectedRecipe.Recipe.MachineId);
+        
         MachineCount = 1;
         Workload = 100;
         ItemAmount = SelectedRecipe.Recipe.Amount;
