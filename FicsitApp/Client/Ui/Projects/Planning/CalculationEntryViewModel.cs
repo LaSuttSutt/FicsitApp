@@ -1,19 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using Client.Shared.DomainModel;
+using Client.Shared.View;
+using ReactiveUI;
 using Shared.DataAccess;
 using Shared.DomainModel;
 
-namespace Client.Shared.DomainModel;
+namespace Client.Ui.Projects.Planning;
 
-public class CalculationEntryModel
+public class CalculationEntryViewModel : ViewModelBase
 {
     #region Declarations
-
+    
     public event EventHandler? EntryHasChanged;
     public ItemListModel ItemModel { get; set; }
-    public List<RecipeListModel> Recipes { get; set; }
-    private RecipeListModel _selectedRecipe;
-    public RecipeListModel SelectedRecipe
+    public List<RecipeListModel> Recipes { get; set; } = [];
+    private RecipeListModel? _selectedRecipe;
+    public RecipeListModel? SelectedRecipe
     {
         get => _selectedRecipe;
         set
@@ -63,11 +66,20 @@ public class CalculationEntryModel
     
     #region C'tor
 
-    public CalculationEntryModel(Item item, RecipeListModel selectedRecipe)
+    public CalculationEntryViewModel()
     {
-        _selectedRecipe = selectedRecipe;
+        ItemModel = null!;
+        Recipes = null!;
+        _selectedRecipe = null!;
+    }
+
+    public CalculationEntryViewModel(Item item)
+    {
         ItemModel = item.ToItemListModel();
+        if (item.IsResource) return;
+        
         Recipes = DataAccess.GetEntities<Recipe>(r => r.ItemId == ItemModel.Item.Id).ToRecipeList();
+        _selectedRecipe = Recipes[0];
     }
     
     #endregion
@@ -76,6 +88,7 @@ public class CalculationEntryModel
 
     private void SelectedRecipeChanged()
     {
+        if (SelectedRecipe == null) return;
         _machineCount = 1;
         _workload = 100;
         Amount = SelectedRecipe.Recipe.Amount;
@@ -87,6 +100,7 @@ public class CalculationEntryModel
     {
         Amount = Math.Round(MachineCount * SelectedRecipe.Recipe.Amount * Workload / 100.0m, 2,
             MidpointRounding.AwayFromZero);
+        this.RaisePropertyChanged(nameof(Amount));
     }
 
     private void RaiseEntryHasChanged()

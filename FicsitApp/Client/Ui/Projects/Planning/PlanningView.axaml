@@ -9,7 +9,7 @@
              x:Class="Client.Ui.Projects.Planning.PlanningView"
              x:DataType="vm:PlanningViewModel"
              Background="{DynamicResource BrushBackground}">
-    <Border Classes="Group">
+    <Border Classes="BorderGroup">
         <StackPanel>
             <StackPanel Orientation="Horizontal" Margin="5" Spacing="10">
                 <ComboBox Classes="Item"
@@ -26,6 +26,14 @@
                                InnerRightContent="/min" Increment="1"
                                Value="{Binding ItemAmount}"/>
             </StackPanel>
+            <Border BorderThickness="1" BorderBrush="Black" />
+            <ItemsControl ItemsSource="{Binding NeededParts, FallbackValue=xxx}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <vm:CalculationEntryView />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </StackPanel>
     </Border>
 

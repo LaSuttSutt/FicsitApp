@@ -10,7 +10,7 @@
     
     <Grid RowDefinitions="*, Auto">
         
-        <Border Grid.Row="0" Classes="Group">
+        <Border Grid.Row="0" Classes="BorderGroup">
             <ListBox ItemsSource="{Binding Items, FallbackValue=AAA}"
                      SelectedValue="{Binding SelectedItem}"
                      Background="{DynamicResource BrushGroupBox}" MinWidth="250">
@@ -22,12 +22,12 @@
                                         Orientation="Horizontal" 
                                         HorizontalAlignment="Right" 
                                         VerticalAlignment="Top">
-                                <Button Margin="3 5" Classes="List"
+                                <Button Margin="3 5" Classes="LblList"
                                         Command="{Binding $parent[ListBox].((vm:DbItemListViewModel)DataContext).OnEditItem, FallbackValue=x}"
                                         CommandParameter="{Binding}">
                                     <PathIcon Data="{StaticResource EditRegular}" />
                                 </Button>
-                                <Button Margin="0 0 5 0" Classes="List"
+                                <Button Margin="0 0 5 0" Classes="LblList"
                                         Command="{Binding $parent[ListBox].((vm:DbItemListViewModel)DataContext).OnDeleteItem, FallbackValue=x}"
                                         CommandParameter="{Binding}">
                                     <PathIcon Data="{StaticResource DeleteRegular}" />
@@ -50,7 +50,7 @@
             </ListBox>
         </Border>
         
-        <Border Grid.Row="1" Classes="Group" Margin="0 4 0 0">
+        <Border Grid.Row="1" Classes="BorderGroup" Margin="0 4 0 0">
             <StackPanel Orientation="Horizontal">
                 <Button Margin="4 4 10 4"
                         Width="35" 

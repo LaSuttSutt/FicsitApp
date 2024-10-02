@@ -20,15 +20,15 @@
             </Image>
             <StackPanel>
                 <TextBlock Text="{Binding Name, FallbackValue=Test-Item}" 
-                           Classes="MachineEntryTitle"
+                           Classes="TxtMachineEntryTitle"
                            Margin="10 16 0 0"/>
                 <StackPanel Orientation="Horizontal" Margin="12 0">
-                    <TextBlock Text="Inputs: " Classes="MachineEntryBody"/>
+                    <TextBlock Text="Inputs: " Classes="TxtMachineEntryBody"/>
                     <TextBlock Text="{Binding Inputs, FallbackValue=1}" 
-                               Classes="MachineEntryBody"/>
-                    <TextBlock Text="ByProducts: " Classes="MachineEntryBody" Margin="20 0 0 0"/>
+                               Classes="TxtMachineEntryBody"/>
+                    <TextBlock Text="ByProducts: " Classes="TxtMachineEntryBody" Margin="20 0 0 0"/>
                     <TextBlock Text="{Binding ByProducts, FallbackValue=0}" 
-                               Classes="MachineEntryBody"/>
+                               Classes="TxtMachineEntryBody"/>
                 </StackPanel>
             </StackPanel>
         </StackPanel>

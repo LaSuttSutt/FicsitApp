@@ -12,20 +12,20 @@
     <Border BorderThickness="2" BorderBrush="Black">
         <WrapPanel Background="{DynamicResource BrushGroupBox}">
             <StackPanel Margin="20">
-                <Button Classes="NavBtn"
+                <Button Classes="BtnNavigation"
                         Command="{Binding OnNavButtonClicked}"
                         CommandParameter="{Binding ItemsViewModel}">
-                    <Image Classes="Standard" Source="{x:Static helper:ImageHelper.DefaultItem}" />
+                    <Image Classes="ImgStandard" Source="{x:Static helper:ImageHelper.DefaultItem}" />
                 </Button>
-                <TextBlock Text="Items" Classes="NavBtn" />
+                <TextBlock Text="Items" Classes="TxtNavBtn" />
             </StackPanel>
             <StackPanel Margin="0 20 20 20">
-                <Button Classes="NavBtn"
+                <Button Classes="BtnNavigation"
                         Command="{Binding OnNavButtonClicked}"
                         CommandParameter="{Binding MachinesViewModel}">
-                    <Image Classes="Standard" Source="{x:Static helper:ImageHelper.DefaultMachine}" />
+                    <Image Classes="ImgStandard" Source="{x:Static helper:ImageHelper.DefaultMachine}" />
                 </Button>
-                <TextBlock Text="Machines" Classes="NavBtn" />
+                <TextBlock Text="Machines" Classes="TxtNavBtn" />
             </StackPanel>
         </WrapPanel>
     </Border>

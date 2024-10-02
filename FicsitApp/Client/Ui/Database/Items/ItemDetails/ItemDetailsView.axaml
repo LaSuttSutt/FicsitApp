@@ -13,7 +13,7 @@
           IsVisible="{Binding ItemIdNotEmpty}">
 
         <!-- Header -->
-        <Border Grid.Row="0" Classes="Group" Margin="0 0 0 4">
+        <Border Grid.Row="0" Classes="BorderGroup" Margin="0 0 0 4">
             <StackPanel Orientation="Horizontal" Background="{DynamicResource BrushStandardOrange}">
                 <Image Margin="10 5 10 8"
                        Source="{Binding Image,
@@ -33,22 +33,22 @@
         </Border>
 
         <!-- Header for Resources or Recipes -->
-        <Border Grid.Row="1" Classes="Group" Margin="0 0 0 4">
+        <Border Grid.Row="1" Classes="BorderGroup" Margin="0 0 0 4">
             <StackPanel>
                 <TextBlock Text="Recipes"
-                           Classes="Add"
+                           Classes="TxtAdd"
                            Margin="5 4"
                            IsVisible="{Binding !IsResource, FallbackValue=true}" />
 
                 <TextBlock Text="Resource Node"
-                           Classes="Add"
+                           Classes="TxtAdd"
                            Margin="5 4"
                            IsVisible="{Binding IsResource, FallbackValue=false}" />
             </StackPanel>
         </Border>
 
         <!-- Recipes, if not resource -->
-        <Border Grid.Row="2" Classes="Group" Margin="0 0 0 4"
+        <Border Grid.Row="2" Classes="BorderGroup" Margin="0 0 0 4"
                 IsVisible="{Binding !IsResource, FallbackValue=true}">
             <ListBox ItemsSource="{Binding Recipes, 
                      FallbackValue={x:Static vm:ItemDetailsViewModel.TestRecipes}}"
@@ -61,12 +61,12 @@
                                         Orientation="Horizontal" 
                                         HorizontalAlignment="Right" 
                                         VerticalAlignment="Top">
-                                <Button Margin="3 5" Classes="List"
+                                <Button Margin="3 5" Classes="LblList"
                                         Command="{Binding $parent[ListBox].((vm:ItemDetailsViewModel)DataContext).OnEditRecipe, FallbackValue=x}"
                                         CommandParameter="{Binding}">
                                     <PathIcon Data="{StaticResource EditRegular}" />
                                 </Button>
-                                <Button Margin="0 0 5 0" Classes="List"
+                                <Button Margin="0 0 5 0" Classes="LblList"
                                         Command="{Binding $parent[ListBox].((vm:ItemDetailsViewModel)DataContext).OnDeleteRecipe, FallbackValue=x}"
                                         CommandParameter="{Binding}">
                                     <PathIcon Data="{StaticResource DeleteRegular}" />
@@ -91,7 +91,7 @@
         </Border>
 
         <!-- Add Recipes, if not resource -->
-        <Border Grid.Row="3" Classes="Group"
+        <Border Grid.Row="3" Classes="BorderGroup"
                 IsVisible="{Binding !IsResource, FallbackValue=true}">
             <StackPanel Orientation="Horizontal">
                 <Button Margin="4 4 10 4"
@@ -106,7 +106,7 @@
                     </PathIcon>
                 </Button>
                 <TextBlock Text="add recipe"
-                           Classes="Add"
+                           Classes="TxtAdd"
                            Margin="0 3 0 0">
                 </TextBlock>
             </StackPanel>

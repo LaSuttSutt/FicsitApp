@@ -16,18 +16,18 @@
 
         <!-- Recipe Data -->
         <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
-                Classes="Group" Margin="0 0 0 4">
+                Classes="BorderGroup" Margin="0 0 0 4">
             <StackPanel Orientation="Horizontal">
                 <StackPanel Margin="10 5 10 10" Width="314">
-                    <Label Classes="Input">Name</Label>
+                    <Label Classes="LblInput">Name</Label>
                     <TextBox Name="TxtName"
-                             Classes="Input"
+                             Classes="TxtInput"
                              Text="{Binding Recipe.Name,
                                  FallbackValue=New recipe}" />
                 </StackPanel>
                 <StackPanel Margin="10 5 10 10" Width="200">
-                    <Label Classes="Input">Amount per minute</Label>
-                    <NumericUpDown Classes="Input"
+                    <Label Classes="LblInput">Amount per minute</Label>
+                    <NumericUpDown Classes="NumInput"
                                    FormatString="0.00 /min"
                                    Value="{Binding Recipe.Amount,
                                        FallbackValue=15}" />
@@ -36,7 +36,7 @@
         </Border>
 
         <!-- Machine Images -->
-        <Border Grid.Row="1" Grid.Column="0" Classes="Group" Width="100">
+        <Border Grid.Row="1" Grid.Column="0" Classes="BorderGroup" Width="100">
             <ListBox Margin="10 10 0 10"
                      ItemsSource="{Binding Machines,
                          FallbackValue=xxxxx}"
@@ -64,45 +64,45 @@
         </Border>
 
         <!-- Ingredients -->
-        <Border Grid.Row="1" Grid.Column="1" Classes="Group" Margin="4 0 0 0">
+        <Border Grid.Row="1" Grid.Column="1" Classes="BorderGroup" Margin="4 0 0 0">
             <StackPanel Margin="10 5 10 10"
                         IsVisible="{Binding HasMachineSelection}">
-                <Label Classes="Input">Ingredients</Label>
-                <StackPanel Classes="List">
+                <Label Classes="LblInput">Ingredients</Label>
+                <StackPanel Classes="LblList">
                     <Label Classes="Counter" Content="1" />
                     <ComboBox Classes="Ingredient" ItemsSource="{Binding Items}"
                               SelectedValue="{Binding SelectedIngredient1}" />
                     <NumericUpDown Classes="Amount" Value="{Binding Ingredient1Amount}" />
                 </StackPanel>
-                <StackPanel Classes="List" IsVisible="{Binding HasIngredient2}">
+                <StackPanel Classes="LblList" IsVisible="{Binding HasIngredient2}">
                     <Label Classes="Counter" Content="2" />
                     <ComboBox Classes="Ingredient" ItemsSource="{Binding Items}"
                               SelectedValue="{Binding SelectedIngredient2}" />
                     <NumericUpDown Classes="Amount" Value="{Binding Ingredient2Amount}" />
                 </StackPanel>
-                <StackPanel Classes="List" IsVisible="{Binding HasIngredient3}">
+                <StackPanel Classes="LblList" IsVisible="{Binding HasIngredient3}">
                     <Label Classes="Counter" Content="3" />
                     <ComboBox Classes="Ingredient" ItemsSource="{Binding Items}"
                               SelectedValue="{Binding SelectedIngredient3}" />
                     <NumericUpDown Classes="Amount" Value="{Binding Ingredient3Amount}" />
                 </StackPanel>
-                <StackPanel Classes="List" IsVisible="{Binding HasIngredient4}">
+                <StackPanel Classes="LblList" IsVisible="{Binding HasIngredient4}">
                     <Label Classes="Counter" Content="4" />
                     <ComboBox Classes="Ingredient" ItemsSource="{Binding Items}"
                               SelectedValue="{Binding SelectedIngredient4}" />
                     <NumericUpDown Classes="Amount" Value="{Binding Ingredient4Amount}" />
                 </StackPanel>
 
-                <Label Classes="Input" Margin="0 12 0 0"
+                <Label Classes="LblInput" Margin="0 12 0 0"
                        IsVisible="{Binding HasByProduct1}"
                        Content="By Products" />
-                <StackPanel Classes="List" IsVisible="{Binding HasByProduct1}">
+                <StackPanel Classes="LblList" IsVisible="{Binding HasByProduct1}">
                     <Label Classes="Counter" Content="1" />
                     <ComboBox Classes="Ingredient" ItemsSource="{Binding Items}"
                               SelectedValue="{Binding SelectedByProduct1}" />
                     <NumericUpDown Classes="Amount" Value="{Binding ByProduct1Amount}" />
                 </StackPanel>
-                <StackPanel Classes="List" IsVisible="{Binding HasByProduct2}">
+                <StackPanel Classes="LblList" IsVisible="{Binding HasByProduct2}">
                     <Label Classes="Counter" Content="2" />
                     <ComboBox Classes="Ingredient" ItemsSource="{Binding Items}"
                               SelectedValue="{Binding SelectedByProduct2}" />

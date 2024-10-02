@@ -20,7 +20,7 @@
         <Grid ColumnDefinitions="*, Auto" RowDefinitions="*, Auto">
 
             <!-- Project-List -->
-            <Border Grid.Row="0" Grid.Column="0" Classes="Group" Margin="20 20 20 4">
+            <Border Grid.Row="0" Grid.Column="0" Classes="BorderGroup" Margin="20 20 20 4">
                 <ListBox Background="{DynamicResource BrushGroupBox}"
                          ItemsSource="{Binding Projects}">
                     <ListBox.ItemTemplate>
@@ -28,24 +28,24 @@
                             <Border BorderThickness="0 0 0 1" BorderBrush="Black"
                                     Margin="-12 -9 -12 -12">
                                 <Grid>
-                                    <Label Classes="List" Margin="7"
+                                    <Label Classes="LblList" Margin="7"
                                            Content="{Binding Name}" />
 
                                     <StackPanel Name="EditPanel"
                                                 Orientation="Horizontal"
                                                 HorizontalAlignment="Right"
                                                 VerticalAlignment="Top">
-                                        <Button Margin="3 5" Classes="List"
+                                        <Button Margin="3 5" Classes="LblList"
                                                 Command="{Binding $parent[ListBox].((vm:MainWindowViewModel)DataContext).OpenProjectWindowCommand, FallbackValue=x}"
                                                 CommandParameter="{Binding}">
                                             <PathIcon Data="{StaticResource OpenRegular}" />
                                         </Button>
-                                        <Button Margin="0 0 5 0" Classes="List"
+                                        <Button Margin="0 0 5 0" Classes="LblList"
                                                 Command="{Binding $parent[ListBox].((vm:MainWindowViewModel)DataContext).EditProjectCommand, FallbackValue=x}"
                                                 CommandParameter="{Binding}">
                                             <PathIcon Data="{StaticResource EditRegular}" />
                                         </Button>
-                                        <Button Margin="0 0 5 0" Classes="List"
+                                        <Button Margin="0 0 5 0" Classes="LblList"
                                                 Command="{Binding $parent[ListBox].((vm:MainWindowViewModel)DataContext).DeleteProjectCommand, FallbackValue=x}"
                                                 CommandParameter="{Binding}">
                                             <PathIcon Data="{StaticResource DeleteRegular}" />
@@ -70,7 +70,7 @@
             </Border>
 
             <!-- Project add -->
-            <Border Grid.Row="1" Grid.Column="0" Classes="Group" Margin="20 0 20 20">
+            <Border Grid.Row="1" Grid.Column="0" Classes="BorderGroup" Margin="20 0 20 20">
                 <StackPanel Orientation="Horizontal">
                     <Button Margin="4 4 10 4"
                             Width="35"
@@ -84,21 +84,21 @@
                         </PathIcon>
                     </Button>
                     <TextBlock Text="add project"
-                               Classes="Add"
+                               Classes="TxtAdd"
                                Margin="0 3 0 0">
                     </TextBlock>
                 </StackPanel>
             </Border>
 
             <!-- Data-Management -->
-            <Border Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Classes="Group" Margin="0 20 20 20">
+            <Border Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Classes="BorderGroup" Margin="0 20 20 20">
                 <StackPanel>
                     <StackPanel Margin="20">
-                        <Button Classes="NavBtn"
+                        <Button Classes="BtnNavigation"
                                 Command="{Binding OpenDatabaseWindowCommand}">
-                            <Image Classes="Standard" Source="avares://Client/Assets/ImageDb/HardDrive.png" />
+                            <Image Classes="ImgStandard" Source="avares://Client/Assets/ImageDb/HardDrive.png" />
                         </Button>
-                        <TextBlock Text="Database" Classes="NavBtn" />
+                        <TextBlock Text="Database" Classes="TxtNavBtn" />
                     </StackPanel>
                 </StackPanel>
             </Border>

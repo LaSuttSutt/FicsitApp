@@ -2,14 +2,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
         <Border Padding="20">
-            <Button Classes="List" Margin="5 3">
+            <Button Classes="BtnList" Margin="5 3">
                 <PathIcon Data="{StaticResource EditRegular}"></PathIcon>
             </Button>
         </Border>
     </Design.PreviewWith>
 
     <!-- Navigation Button -->
-    <Style Selector="Button.NavBtn">
+    <Style Selector="Button.BtnNavigation">
         <Setter Property="Width" Value="100" />
         <Setter Property="Height" Value="100" />
         <Setter Property="BorderBrush" Value="Black" />
@@ -18,20 +18,20 @@
         <Setter Property="Margin" Value="0 0 0 3" />
     </Style>
     
-    <Style Selector="Button.NavBtn:pointerover /template/ ContentPresenter">
+    <Style Selector="Button.BtnNavigation:pointerover /template/ ContentPresenter">
         <Setter Property="Background" Value="{DynamicResource BrushStandardOrange}" />
         <Setter Property="BorderBrush" Value="Black" />
     </Style>
     
     <!-- Dialog Button -->
-    <Style Selector="Button.Dialog">
+    <Style Selector="Button.BtnDialog">
         <Setter Property="FontFamily" Value="{DynamicResource Poppins}" />
         <Setter Property="FontSize" Value="15" />
         <Setter Property="Padding" Value="8 3" />
         <Setter Property="BorderBrush" Value="Black" />
     </Style>
     
-    <Style Selector="Button.Dialog:pointerover /template/ ContentPresenter">
+    <Style Selector="Button.BtnDialog:pointerover /template/ ContentPresenter">
         <Setter Property="Background" Value="{DynamicResource BrushStandardOrange}" />
         <Setter Property="BorderBrush" Value="Black" />
     </Style>
@@ -42,15 +42,15 @@
     </Style>
     
     <!--  ListItem Buttons -->
-    <Style Selector="Button.List">
+    <Style Selector="Button.BtnList">
         <Setter Property="Background" Value="{DynamicResource BrushBackground}" />
     </Style>
     
-    <Style Selector="Button.List:pointerover /template/ ContentPresenter">
+    <Style Selector="Button.BtnList:pointerover /template/ ContentPresenter">
         <Setter Property="Background" Value="DimGray" />
     </Style>
     
-    <Style Selector="Button.List PathIcon">
+    <Style Selector="Button.BtnList PathIcon">
         <Setter Property="Foreground" Value="{DynamicResource BrushStandardOrange}" />
     </Style>
     

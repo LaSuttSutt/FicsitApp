@@ -2,12 +2,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
         <Border Padding="20">
-            <Image Source="avares://Client/Assets/Items/ReinforcedIronPlate.png" Classes="Small"></Image>
+            <Image Source="avares://Client/Assets/Items/ReinforcedIronPlate.png" Classes="ImgSmall"></Image>
         </Border>
     </Design.PreviewWith>
 
     <!-- Image original with shadow -->
-    <Style Selector="Image.Standard">
+    <Style Selector="Image.ImgStandard">
         <Setter Property="Width" Value="64" />
         <Setter Property="Effect">
             <DropShadowEffect OffsetX="0" BlurRadius="10"></DropShadowEffect>
@@ -15,7 +15,7 @@
     </Style>
     
     <!-- Image small with shadow -->
-    <Style Selector="Image.Small">
+    <Style Selector="Image.ImgSmall">
         <Setter Property="Width" Value="32" />
         <Setter Property="Effect">
             <DropShadowEffect OffsetX="0" BlurRadius="5" OffsetY="3" Color="DimGray"></DropShadowEffect>

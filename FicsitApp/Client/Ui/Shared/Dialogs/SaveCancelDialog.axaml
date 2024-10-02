@@ -21,14 +21,14 @@
                                          Content="{Binding ViewModel}" />
 
             <!-- Save Cancel Buttons -->
-            <Border Grid.Row="1" Classes="Group" Margin="20 0 20 20">
+            <Border Grid.Row="1" Classes="BorderGroup" Margin="20 0 20 20">
 
                 <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
                     <Button Margin="5"
-                            Classes="Dialog"
+                            Classes="BtnDialog"
                             Command="{Binding SaveCommand}"
                             Content="Save" />
-                    <Button Classes="Dialog"
+                    <Button Classes="BtnDialog"
                             Command="{Binding CancelCommand}"
                             Content="Cancel" />
                 </StackPanel>

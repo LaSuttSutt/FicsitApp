@@ -10,11 +10,11 @@
              x:DataType="vm:CreateProjectViewModel">
     
     <!-- Project Data -->
-    <Border Classes="Group" >
+    <Border Classes="BorderGroup" >
         <StackPanel Margin="10 5 10 10">
-            <Label Classes="Input">Name</Label>
+            <Label Classes="LblInput">Name</Label>
             <TextBox Name="TxtName" 
-                     Classes="Input"
+                     Classes="TxtInput"
                      Text="{Binding Project.Name,
                                  FallbackValue=New project}" />
         </StackPanel>

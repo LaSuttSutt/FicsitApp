@@ -14,25 +14,25 @@
     <Grid RowDefinitions="Auto, *">
 
         <!-- Item Data -->
-        <Border Grid.Row="0" Margin="0 0 0 4" Classes="Group">
+        <Border Grid.Row="0" Margin="0 0 0 4" Classes="BorderGroup">
             <Grid RowDefinitions="Auto, Auto" ColumnDefinitions="*, Auto">
                 <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
                             Margin="10 5 10 10">
-                    <Label Classes="Input">Name</Label>
+                    <Label Classes="LblInput">Name</Label>
                     <TextBox Name="TxtName"
-                             Classes="Input"
+                             Classes="TxtInput"
                              Text="{Binding Item.Name,
                                  FallbackValue=New item}" />
                 </StackPanel>
                 <StackPanel Grid.Row="1" Grid.Column="0"
                             Margin="10 0 10 10">
-                    <Label Classes="Input">Short Name</Label>
-                    <TextBox Classes="Input"
+                    <Label Classes="LblInput">Short Name</Label>
+                    <TextBox Classes="TxtInput"
                              Text="{Binding Item.ShortName}" />
                 </StackPanel>
                 <StackPanel Grid.Row="1" Grid.Column="1"
                             Margin="10 0 15 0">
-                    <Label Classes="Input">Is Rescource</Label>
+                    <Label Classes="LblInput">Is Rescource</Label>
                     <CheckBox HorizontalAlignment="Center"
                               Margin="0"
                               IsChecked="{Binding Item.IsResource}" />
@@ -41,7 +41,7 @@
         </Border>
 
         <!-- Item Image -->
-        <Border Grid.Row="1" Classes="Group">
+        <Border Grid.Row="1" Classes="BorderGroup">
             <ListBox Margin="10"
                      ItemsSource="{Binding ItemImages,
                          FallbackValue=xxxxxx}"

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Client.Shared.DomainModel;
 using Client.Shared.View;
@@ -65,6 +66,8 @@ public class PlanningViewModel : ViewModelBase
         }
     }
 
+    public ObservableCollection<CalculationEntryViewModel> NeededParts { get; } = [];
+
     #endregion
 
     #region C'tors
@@ -93,11 +96,12 @@ public class PlanningViewModel : ViewModelBase
     private void SelectedRecipeChanged()
     {
         if (SelectedRecipe == null) return;
-        
+
         MachineCount = 1;
         Workload = 100;
         ItemAmount = SelectedRecipe.Recipe.Amount;
-        
+        RecalculateNeededParts();
+
         this.RaisePropertyChanged(nameof(MachineCount));
         this.RaisePropertyChanged(nameof(Workload));
         this.RaisePropertyChanged(nameof(ItemAmount));
@@ -109,6 +113,19 @@ public class PlanningViewModel : ViewModelBase
         ItemAmount = Math.Round(MachineCount * SelectedRecipe.Recipe.Amount * Workload / 100.0m, 2,
             MidpointRounding.AwayFromZero);
         this.RaisePropertyChanged(nameof(ItemAmount));
+    }
+
+    private void RecalculateNeededParts()
+    {
+        if (SelectedItem == null || SelectedRecipe == null) return;
+        NeededParts.Clear();
+        var ingredients = DataAccess.GetEntities<Ingredient>(i => i.RecipeId == SelectedRecipe.Recipe.Id);
+        ingredients.ForEach(i =>
+        {
+            var item = DataAccess.GetEntity<Item>(i.ItemId);
+            if (item == null) throw new Exception("Item not found");
+            NeededParts.Add(new CalculationEntryViewModel(item));
+        });
     }
 
     #endregion
