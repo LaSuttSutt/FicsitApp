@@ -33,6 +33,11 @@ public static class ItemExtensions
         item.IsResource = clone.IsResource;
     }
 
+    public static ItemListModel ToItemListModel(this Item item)
+    {
+        return new ItemListModel(item, item.Image());
+    }
+
     public static List<ItemListModel> ToItemList(this List<Item> items)
     {
         var list = new List<ItemListModel>();
