@@ -3,7 +3,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:Client.Ui.Projects.Planning"
-             xmlns:helper="clr-namespace:Client.Helper"
              xmlns:shared="clr-namespace:Client.Shared.DomainModel"
              mc:Ignorable="d" d:DesignWidth="1024" d:DesignHeight="450"
              x:Class="Client.Ui.Projects.Planning.PlanningView"

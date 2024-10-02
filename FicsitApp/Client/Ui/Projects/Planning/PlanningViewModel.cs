@@ -120,11 +120,20 @@ public class PlanningViewModel : ViewModelBase
         if (SelectedItem == null || SelectedRecipe == null) return;
         NeededParts.Clear();
         var ingredients = DataAccess.GetEntities<Ingredient>(i => i.RecipeId == SelectedRecipe.Recipe.Id);
+        var mainIngredients = new List<CalculationEntryViewModel>();
+        var subIngredients = new List<CalculationEntryViewModel>();
         ingredients.ForEach(i =>
         {
             var item = DataAccess.GetEntity<Item>(i.ItemId);
             if (item == null) throw new Exception("Item not found");
-            NeededParts.Add(new CalculationEntryViewModel(item));
+            var recipes = DataAccess.GetEntities<Recipe>(r => r.ItemId == item.Id).ToRecipeList();
+            if (!item.IsResource)
+                mainIngredients.Add(new CalculationEntryViewModel(item, recipes));
+        });
+        
+        ingredients.ForEach(i =>
+        {
+            
         });
     }
 

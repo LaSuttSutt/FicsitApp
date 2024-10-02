@@ -73,12 +73,12 @@ public class CalculationEntryViewModel : ViewModelBase
         _selectedRecipe = null!;
     }
 
-    public CalculationEntryViewModel(Item item)
+    public CalculationEntryViewModel(Item item, List<RecipeListModel> itemRecipes) 
     {
         ItemModel = item.ToItemListModel();
         if (item.IsResource) return;
-        
-        Recipes = DataAccess.GetEntities<Recipe>(r => r.ItemId == ItemModel.Item.Id).ToRecipeList();
+
+        Recipes = itemRecipes;
         _selectedRecipe = Recipes[0];
     }
     
@@ -98,6 +98,8 @@ public class CalculationEntryViewModel : ViewModelBase
     
     private void CalculateAmount()
     {
+        if (SelectedRecipe == null)
+            return;
         Amount = Math.Round(MachineCount * SelectedRecipe.Recipe.Amount * Workload / 100.0m, 2,
             MidpointRounding.AwayFromZero);
         this.RaisePropertyChanged(nameof(Amount));
