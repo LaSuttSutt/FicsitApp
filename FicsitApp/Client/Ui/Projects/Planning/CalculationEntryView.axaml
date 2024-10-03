@@ -20,7 +20,7 @@
                FallbackValue={x:Static helper:ImageHelper.DefaultItem}}" />
         <Label Classes="ItemLabel" 
                IsVisible="{Binding !IsPrimaryItem, FallbackValue=false}"
-               Content="{Binding SelectedItem.Item.Name, 
+               Content="{Binding SelectedItem.Item.ShortNameOrName, 
                FallbackValue=Iron Ingot}" />
         
         <ComboBox Classes="Recipe"
@@ -28,12 +28,26 @@
                   ItemsSource="{Binding Recipes}"
                   SelectedValue="{Binding SelectedRecipe}" />
         <NumericUpDown Width="120" FormatString="0.00" InnerRightContent="" Increment="1"
-                       Value="{Binding MachineCount }" />
-        <NumericUpDown Width="160" FormatString="0.00" InnerRightContent="%" Increment="1"
-                       Value="{Binding Workload}"/>
+                       Value="{Binding MachineCount,
+                       Converter={x:Static vm:CalculationEntryViewModel.NumericUpDownConverter}}" />
+        <NumericUpDown Width="160" FormatString="0.00" InnerRightContent="%" Increment="10"
+                       Value="{Binding Workload,
+                       Converter={x:Static vm:CalculationEntryViewModel.NumericUpDownConverter}}"/>
         <NumericUpDown Width="100" ShowButtonSpinner="False" FormatString="0.00" IsEnabled="false"
                        InnerRightContent="/min" Increment="1"
                        Value="{Binding Amount}"/>
+        <StackPanel Orientation="Horizontal" IsVisible="{Binding !IsPrimaryItem}">
+            <Label Classes="LblInput" 
+                   Classes.Over="{Binding Overproduction}"
+                   Classes.Under="{Binding Underproduction}"
+                   VerticalAlignment="Center" 
+                   Content="{Binding Difference, FallbackValue=12}" />
+            <Label Classes="LblInput" 
+                   Classes.Over="{Binding Overproduction}"
+                   Classes.Under="{Binding Underproduction}"
+                   VerticalAlignment="Center"
+                   Content="/min" />
+        </StackPanel>
     </StackPanel>
     
     <UserControl.Styles>
@@ -81,6 +95,13 @@
             <Setter Property="FontSize" Value="16" />
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="Width" Value="158" />
+        </Style>
+        
+        <Style Selector="Label.Over">
+            <Setter Property="Foreground" Value="ForestGreen" />
+        </Style>
+        <Style Selector="Label.Under">
+            <Setter Property="Foreground" Value="Firebrick" />
         </Style>
     </UserControl.Styles>
 </UserControl>

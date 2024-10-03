@@ -27,6 +27,11 @@ public static class DataAccess
         return DbContext.Set<T>().Find(id);
     }
 
+    public static T GetEntity<T>(Expression<Func<T, bool>> clause) where T : class
+    {
+        return DbContext.Set<T>().Single(clause);
+    }
+
     public static void AddEntity<T>(T entity) where T : class
     {
         DbContext.Set<T>().Add(entity);

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Shared.DataAccess;
@@ -15,9 +16,10 @@ public class CalculationLogic
     {
         SubItems.Clear();
         FindIngredientsForItem(mainItem);
+        RecalculateRequiredItems();
     }
 
-    private void SubItemRecipeChanged(CalculationEntryViewModel subItem)
+    public void SubItemRecipeChanged(CalculationEntryViewModel subItem)
     {
         if (subItem.SelectedRecipe == null) return;
         RemoveUsage(subItem);
@@ -27,6 +29,29 @@ public class CalculationLogic
         {
             SubItems.Remove(itemToDelete);
             UsageMapping.Remove(itemToDelete);
+        }
+        RecalculateRequiredItems();
+    }
+    
+    public void RecalculateRequiredItems()
+    {
+        foreach (var item in UsageMapping.Keys)
+        {
+            if (item.SelectedItem == null) continue;
+            var neededAmount = 0m;
+            
+            foreach (var masterItem in UsageMapping[item])
+            {
+                if (masterItem.SelectedRecipe == null) continue;
+                var ingredient = DataAccess.GetEntity<Ingredient>(i =>
+                    i.RecipeId == masterItem.SelectedRecipe.Recipe.Id && i.ItemId == item.SelectedItem.Item.Id);
+
+                var amount = Math.Round(ingredient.Amount * masterItem.MachineCount * masterItem.Workload / 100, 2,
+                    MidpointRounding.AwayFromZero);
+                neededAmount += amount;
+            }
+            
+            item.SetRequirement(neededAmount);
         }
     }
 
@@ -52,6 +77,7 @@ public class CalculationLogic
 
             var newItem = new CalculationEntryViewModel(subItem);
             newItem.SelectedRecipeChanged += (s, entry) => SubItemRecipeChanged(entry);
+            newItem.RecalculationNeeded += (s, entry) => RecalculateRequiredItems();
             UsageMapping.Add(newItem, [item]);
             newEntrees.Add(newItem);
             SubItems.Add(newItem);

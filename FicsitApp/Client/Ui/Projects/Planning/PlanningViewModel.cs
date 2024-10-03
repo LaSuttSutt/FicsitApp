@@ -19,7 +19,12 @@ public class PlanningViewModel : ViewModelBase
     public PlanningViewModel()
     {
         CalculationLogic.InitialCalculation(MainItemViewModel);
-        MainItemViewModel.SelectedItemChanged += (s, item) => CalculationLogic.InitialCalculation(MainItemViewModel);
+        MainItemViewModel.SelectedItemChanged += (s, item) => 
+            CalculationLogic.InitialCalculation(MainItemViewModel);
+        MainItemViewModel.SelectedRecipeChanged += (s, item) => 
+            CalculationLogic.SubItemRecipeChanged(item);
+        MainItemViewModel.RecalculationNeeded += (s, item) =>
+            CalculationLogic.RecalculateRequiredItems();
     }
 
     #endregion

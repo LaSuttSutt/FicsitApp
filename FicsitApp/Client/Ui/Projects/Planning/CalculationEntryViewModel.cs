@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Client.Shared.DomainModel;
 using Client.Shared.View;
+using Client.Ui.Shared.Binding;
 using ReactiveUI;
 using Shared.DataAccess;
 using Shared.DomainModel;
@@ -17,15 +18,20 @@ public class CalculationEntryViewModel : ViewModelBase
     private RecipeListModel? _selectedRecipe;
     private decimal _machineCount;
     private decimal _workload;
-    private decimal _requirement;
     
+    public static NullBlockerConverter NumericUpDownConverter { get; } = new();
     public event EventHandler? SelectedItemChanged;
     public event EventHandler<CalculationEntryViewModel>? SelectedRecipeChanged;
+    public event EventHandler<CalculationEntryViewModel>? RecalculationNeeded;
+    
     public List<ItemListModel> Items { get; }
     public List<RecipeListModel> Recipes { get; set; }
     public decimal Amount { get; set; }
+    private decimal Requirement { get; set; }
     public decimal Difference { get; set; }
     public bool IsPrimaryItem { get; }
+    public bool Overproduction => Difference > 0;
+    public bool Underproduction => Difference < 0;
 
     public ItemListModel? SelectedItem
     {
@@ -56,6 +62,7 @@ public class CalculationEntryViewModel : ViewModelBase
         {
             this.RaiseAndSetIfChanged(ref _machineCount, value);
             OnCalculateAmount();
+            RecalculationNeeded?.Invoke(this, this);
         }
     }
 
@@ -66,16 +73,7 @@ public class CalculationEntryViewModel : ViewModelBase
         {
             this.RaiseAndSetIfChanged(ref _workload, value);
             OnCalculateAmount();
-        }
-    }
-
-    public decimal Requirement
-    {
-        get => _requirement;
-        set
-        {
-            this.RaiseAndSetIfChanged(ref _requirement, value);
-            Difference = value - _requirement;
+            RecalculationNeeded?.Invoke(this, this);
         }
     }
 
@@ -105,6 +103,19 @@ public class CalculationEntryViewModel : ViewModelBase
 
     #endregion
 
+    #region Public Methods
+
+    public void SetRequirement(decimal requirement)
+    {
+        Requirement = requirement;
+        Difference = Amount - Requirement;
+        this.RaisePropertyChanged(nameof(Overproduction));
+        this.RaisePropertyChanged(nameof(Underproduction));
+        this.RaisePropertyChanged(nameof(Difference));
+    }
+
+    #endregion
+
     #region Private Methods
 
     private void OnSelectedItemChanged()
@@ -125,7 +136,7 @@ public class CalculationEntryViewModel : ViewModelBase
         _machineCount = 1;
         _workload = 100;
         Amount = SelectedRecipe.Recipe.Amount;
-        Difference = Requirement - Amount;
+        Difference = Amount - Requirement;
         
         this.RaisePropertyChanged(nameof(MachineCount));
         this.RaisePropertyChanged(nameof(Workload));
