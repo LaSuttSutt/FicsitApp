@@ -7,15 +7,27 @@
              x:DataType="vm:CalculationEntryViewModel">
 
     <StackPanel Orientation="Horizontal" Margin="5" Spacing="10">
+        <!-- If it is a primary Item, you can change the item -->
+        <ComboBox Classes="Item"
+                  IsVisible="{Binding IsPrimaryItem, FallbackValue=true}"
+                  ItemsSource="{Binding Items}"
+                  SelectedValue="{Binding SelectedItem}" />
+        
+        <!-- otherwise not -->
         <Image Classes="ImgSmall"
-               Source="{Binding ItemModel.Image, 
+               IsVisible="{Binding !IsPrimaryItem, FallbackValue=false}"
+               Source="{Binding SelectedItem.Image, 
                FallbackValue={x:Static helper:ImageHelper.DefaultItem}}" />
-        <Label Classes="ItemLabel" Content="{Binding ItemModel.Item.Name, FallbackValue=Iron Ingot}" />
+        <Label Classes="ItemLabel" 
+               IsVisible="{Binding !IsPrimaryItem, FallbackValue=false}"
+               Content="{Binding SelectedItem.Item.Name, 
+               FallbackValue=Iron Ingot}" />
+        
         <ComboBox Classes="Recipe"
-                  IsEnabled="{Binding !ItemModel.Item.IsResource}"
+                  IsEnabled="{Binding !SelectedItem.Item.IsResource}"
                   ItemsSource="{Binding Recipes}"
                   SelectedValue="{Binding SelectedRecipe}" />
-        <NumericUpDown Width="120" FormatString="0.00" Increment="1"
+        <NumericUpDown Width="120" FormatString="0.00" InnerRightContent="" Increment="1"
                        Value="{Binding MachineCount }" />
         <NumericUpDown Width="160" FormatString="0.00" InnerRightContent="%" Increment="1"
                        Value="{Binding Workload}"/>
@@ -25,12 +37,26 @@
     </StackPanel>
     
     <UserControl.Styles>
-        <Style Selector="Label.ItemLabel">
-            <Setter Property="FontFamily" Value="{DynamicResource Poppins}" />
-            <Setter Property="FontSize" Value="16" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="Width" Value="158" />
+        <!-- ComboBox.Item -->
+        <Style Selector="ComboBox.Item">
+            <Setter Property="Width" Value="200" />
+            <Setter Property="Height" Value="25" />
+            <Setter Property="Padding" Value="5 0" />
+            <Setter Property="ItemTemplate">
+                <Setter.Value>
+                    <DataTemplate x:DataType="shared:ItemListModel">
+                        <StackPanel Orientation="Horizontal" Margin="0">
+                            <Image Source="{Binding Image}" Width="20" />
+                            <Label Content="{Binding Item.ShortNameOrName}"
+                                   Margin="5 0"
+                                   FontFamily="{DynamicResource Poppins}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
+        
+        <!-- ComboBox.Recipe -->
         <Style Selector="ComboBox.Recipe">
             <Setter Property="Width" Value="200" />
             <Setter Property="Height" Value="25" />
@@ -47,6 +73,14 @@
                     </DataTemplate>
                 </Setter.Value>
             </Setter>
+        </Style>
+        
+        <!-- Label.ItemLabel -->
+        <Style Selector="Label.ItemLabel">
+            <Setter Property="FontFamily" Value="{DynamicResource Poppins}" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Width" Value="158" />
         </Style>
     </UserControl.Styles>
 </UserControl>

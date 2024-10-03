@@ -28,13 +28,31 @@ public static class ImageHelper
 
     public static void Initialize()
     {
-        InitImagePart(ItemImages, "./_ImgItems");
-        InitImagePart(MachineImages, "./_ImgMachines");
+        var itemImages =
+            AssetLoader.GetAssets(new Uri("avares://Client/Assets/Items/"), new Uri("avares://Client/")).ToList();
+        var machineImages =
+            AssetLoader.GetAssets(new Uri("avares://Client/Assets/Machines/"), new Uri("avares://Client/")).ToList();
+
+        
+        InitImagePart(ItemImages, "./_ImgItems", itemImages);
+        InitImagePart(MachineImages, "./_ImgMachines", machineImages);
     }
 
-    private static void InitImagePart(List<FicsitImage> imgList, string relativeFolderPath)
+    private static void InitImagePart(List<FicsitImage> imgList, string relativeFolderPath, List<Uri> assetImages)
     {
         var directory = Directory.CreateDirectory(relativeFolderPath);
+        
+        // Sync Assets/Folder
+        foreach (var uri in assetImages)
+        {
+            var fileName = uri.Segments[^1];
+            if (directory.GetFiles().Any(fi => fi.Name == fileName))
+                continue;
+            
+            Bitmap bitmap = new(AssetLoader.Open(uri));
+            bitmap.Save(directory.FullName + "\\" + fileName);
+        }
+        
         foreach (var imgFile in directory.GetFiles("*.png").OrderBy(fi => fi.Name))
         {
             var image = new Bitmap(imgFile.FullName);

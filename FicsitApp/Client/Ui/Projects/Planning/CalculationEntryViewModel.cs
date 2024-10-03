@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Client.Shared.DomainModel;
 using Client.Shared.View;
 using ReactiveUI;
@@ -11,104 +12,137 @@ namespace Client.Ui.Projects.Planning;
 public class CalculationEntryViewModel : ViewModelBase
 {
     #region Declarations
-    
-    public event EventHandler? EntryHasChanged;
-    public ItemListModel ItemModel { get; set; }
-    public List<RecipeListModel> Recipes { get; set; } = [];
+
+    private ItemListModel? _selectedItem;
     private RecipeListModel? _selectedRecipe;
+    private decimal _machineCount;
+    private decimal _workload;
+    private decimal _requirement;
+    
+    public event EventHandler? SelectedItemChanged;
+    public event EventHandler<CalculationEntryViewModel>? SelectedRecipeChanged;
+    public List<ItemListModel> Items { get; }
+    public List<RecipeListModel> Recipes { get; set; }
+    public decimal Amount { get; set; }
+    public decimal Difference { get; set; }
+    public bool IsPrimaryItem { get; }
+
+    public ItemListModel? SelectedItem
+    {
+        get => _selectedItem;
+        set
+        {
+            if (value == null) return;
+            this.RaiseAndSetIfChanged(ref _selectedItem, value);
+            OnSelectedItemChanged();
+        }
+    }
+
     public RecipeListModel? SelectedRecipe
     {
         get => _selectedRecipe;
         set
         {
-            _selectedRecipe = value;
-            SelectedRecipeChanged();
+            if (value == null) return;
+            this.RaiseAndSetIfChanged(ref _selectedRecipe, value);
+            OnSelectedRecipeChanged();
         }
     }
 
-    private decimal _machineCount;
     public decimal MachineCount
     {
         get => _machineCount;
         set
         {
-            _machineCount = value;
-            CalculateAmount();
+            this.RaiseAndSetIfChanged(ref _machineCount, value);
+            OnCalculateAmount();
         }
     }
 
-    private decimal _workload;
-    public decimal Workload 
-    { 
+    public decimal Workload
+    {
         get => _workload;
         set
         {
-            _workload = value;
-            CalculateAmount();
-        } 
+            this.RaiseAndSetIfChanged(ref _workload, value);
+            OnCalculateAmount();
+        }
     }
 
-    private decimal _requirement;
     public decimal Requirement
     {
         get => _requirement;
         set
         {
-            _requirement = value;
+            this.RaiseAndSetIfChanged(ref _requirement, value);
             Difference = value - _requirement;
         }
     }
 
-    public decimal Amount { get; set; }
-    public decimal Difference { get; set; }
-
     #endregion
-    
+
     #region C'tor
 
     public CalculationEntryViewModel()
     {
-        ItemModel = null!;
-        Recipes = null!;
-        _selectedRecipe = null!;
+        Items = DataAccess.GetEntities<Item>(i => !i.IsResource).ToItemList();
+        SelectedItem = Items.First();
+        IsPrimaryItem = true;
+        
+        Recipes = DataAccess.GetEntities<Recipe>(r => r.ItemId == SelectedItem.Item.Id).ToRecipeList();
+        SelectedRecipe = Recipes[0];
     }
 
-    public CalculationEntryViewModel(Item item, List<RecipeListModel> itemRecipes) 
+    public CalculationEntryViewModel(Item item)
     {
-        ItemModel = item.ToItemListModel();
-        if (item.IsResource) return;
+        Items = [];
+        SelectedItem = item.ToItemListModel();
+        IsPrimaryItem = false;
 
-        Recipes = itemRecipes;
-        _selectedRecipe = Recipes[0];
+        Recipes = DataAccess.GetEntities<Recipe>(r => r.ItemId == item.Id).ToRecipeList();
+        SelectedRecipe = Recipes[0];
     }
-    
+
     #endregion
-    
+
     #region Private Methods
 
-    private void SelectedRecipeChanged()
+    private void OnSelectedItemChanged()
+    {
+        if (SelectedItem == null) return;
+        
+        Recipes = DataAccess.GetEntities<Recipe>(r => r.ItemId == SelectedItem.Item.Id).ToRecipeList();
+        this.RaisePropertyChanged(nameof(Recipes));
+        SelectedRecipe = Recipes[0];
+        
+        SelectedItemChanged?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void OnSelectedRecipeChanged()
     {
         if (SelectedRecipe == null) return;
+        
         _machineCount = 1;
         _workload = 100;
         Amount = SelectedRecipe.Recipe.Amount;
         Difference = Requirement - Amount;
-        RaiseEntryHasChanged();
+        
+        this.RaisePropertyChanged(nameof(MachineCount));
+        this.RaisePropertyChanged(nameof(Workload));
+        this.RaisePropertyChanged(nameof(Amount));
+        this.RaisePropertyChanged(nameof(Difference));
+        
+        SelectedRecipeChanged?.Invoke(this, this);
     }
-    
-    private void CalculateAmount()
+
+    private void OnCalculateAmount()
     {
-        if (SelectedRecipe == null)
-            return;
+        if (SelectedRecipe == null) return;
+        
         Amount = Math.Round(MachineCount * SelectedRecipe.Recipe.Amount * Workload / 100.0m, 2,
             MidpointRounding.AwayFromZero);
         this.RaisePropertyChanged(nameof(Amount));
     }
 
-    private void RaiseEntryHasChanged()
-    {
-        EntryHasChanged?.Invoke(this, EventArgs.Empty);
-    }
-    
     #endregion
 }

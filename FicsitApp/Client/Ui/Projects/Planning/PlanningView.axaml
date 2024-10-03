@@ -10,21 +10,7 @@
              Background="{DynamicResource BrushBackground}">
     <Border Classes="BorderGroup">
         <StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="5" Spacing="10">
-                <ComboBox Classes="Item"
-                          ItemsSource="{Binding Items}"
-                          SelectedValue="{Binding SelectedItem}" />
-                <ComboBox Classes="Recipe"
-                          ItemsSource="{Binding Recipes}"
-                          SelectedValue="{Binding SelectedRecipe}" />
-                <NumericUpDown Width="120" FormatString="0.00" Increment="1"
-                               Value="{Binding MachineCount }" />
-                <NumericUpDown Width="160" FormatString="0.00" InnerRightContent="%" Increment="1"
-                               Value="{Binding Workload}"/>
-                <NumericUpDown Width="100" ShowButtonSpinner="False" FormatString="0.00" IsEnabled="false"
-                               InnerRightContent="/min" Increment="1"
-                               Value="{Binding ItemAmount}"/>
-            </StackPanel>
+            <vm:CalculationEntryView DataContext="{Binding MainItemViewModel}" />
             <Border BorderThickness="1" BorderBrush="Black" />
             <ItemsControl ItemsSource="{Binding NeededParts, FallbackValue=xxx}">
                 <ItemsControl.ItemTemplate>
@@ -35,44 +21,4 @@
             </ItemsControl>
         </StackPanel>
     </Border>
-
-    <UserControl.Styles>
-        <Style Selector="ComboBox.Item">
-            <Setter Property="Width" Value="200" />
-            <Setter Property="Height" Value="25" />
-            <Setter Property="Padding" Value="5 0" />
-            <Setter Property="ItemTemplate">
-                <Setter.Value>
-                    <DataTemplate x:DataType="shared:ItemListModel">
-                        <StackPanel Orientation="Horizontal" Margin="0">
-                            <Image Source="{Binding Image}" Width="20" />
-                            <Label Content="{Binding Item.ShortNameOrName}"
-                                   Margin="5 0"
-                                   FontFamily="{DynamicResource Poppins}" />
-                        </StackPanel>
-                    </DataTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style Selector="ComboBox.Recipe">
-            <Setter Property="Width" Value="200" />
-            <Setter Property="Height" Value="25" />
-            <Setter Property="Padding" Value="5 0" />
-            <Setter Property="ItemTemplate">
-                <Setter.Value>
-                    <DataTemplate x:DataType="shared:RecipeListModel">
-                        <StackPanel Orientation="Horizontal" Margin="0">
-                            <Image Source="{Binding Image}" Width="20" />
-                            <Label Content="{Binding Recipe.Name}"
-                                   Margin="5 0"
-                                   FontFamily="{DynamicResource Poppins}" />
-                        </StackPanel>
-                    </DataTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style Selector="ComboBoxItem:pointerover /template/ ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource BrushStandardOrange}" />
-        </Style>
-    </UserControl.Styles>
 </UserControl>
