@@ -15,7 +15,7 @@ namespace Client.Ui.Database.Recipes;
 public class CreateRecipeViewModel : ViewModelBase, ISaveCancelViewModel
 {
     #region Declarations
-    
+
     public string Title { get; } = "FicsitApp - Recipe";
     public Size Size { get; } = new Size(560, 411);
 
@@ -53,7 +53,7 @@ public class CreateRecipeViewModel : ViewModelBase, ISaveCancelViewModel
     public decimal ByProduct1Amount { get; set; }
     public ItemListModel SelectedByProduct2 { get; set; } = null!;
     public decimal ByProduct2Amount { get; set; }
-    
+
     #endregion
 
     #region Constructor
@@ -72,7 +72,7 @@ public class CreateRecipeViewModel : ViewModelBase, ISaveCancelViewModel
 
     private void LoadPageData()
     {
-        var items = DataAccess.GetEntities<Item>(i => i.Id != Recipe.ItemId).ToList();
+        var items = DataAccess.GetEntities<Item>(i => i.Id != Recipe.ItemId).OrderBy(i => i.ShortNameOrName).ToList();
         items.ForEach(i => Items.Add(new ItemListModel(i, i.Image())));
 
         var machines = DataAccess.GetEntities<Machine>();
@@ -96,7 +96,7 @@ public class CreateRecipeViewModel : ViewModelBase, ISaveCancelViewModel
         SelectedIngredient4 = Items.First();
         SelectedByProduct1 = Items.First();
         SelectedByProduct2 = Items.First();
-        
+
         if (ingredients.Count > 0)
             LoadIngredient(1, ingredients[0]);
         if (ingredients.Count > 1)

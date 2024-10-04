@@ -32,7 +32,6 @@ public static class ImageHelper
             AssetLoader.GetAssets(new Uri("avares://Client/Assets/Items/"), new Uri("avares://Client/")).ToList();
         var machineImages =
             AssetLoader.GetAssets(new Uri("avares://Client/Assets/Machines/"), new Uri("avares://Client/")).ToList();
-
         
         InitImagePart(ItemImages, "./_ImgItems", itemImages);
         InitImagePart(MachineImages, "./_ImgMachines", machineImages);
@@ -50,7 +49,7 @@ public static class ImageHelper
                 continue;
             
             Bitmap bitmap = new(AssetLoader.Open(uri));
-            bitmap.Save(directory.FullName + "\\" + fileName);
+            bitmap.Save(directory.FullName + "/" + fileName);
         }
         
         foreach (var imgFile in directory.GetFiles("*.png").OrderBy(fi => fi.Name))
