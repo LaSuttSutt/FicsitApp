@@ -36,6 +36,7 @@ public class MainWindowViewModel : ViewModelBase
         ImageHelper.Initialize();
         DataAccess.Initialize();
         //DataAccess.ExportItemDatabase("../../../../Shared/TestData/");
+        LoadProjects();
         
         OpenProjectWindowCommand = ReactiveCommand.Create<Project>(OpenProjectDialog);
         OpenDatabaseWindowCommand = ReactiveCommand.CreateFromTask(async () =>
