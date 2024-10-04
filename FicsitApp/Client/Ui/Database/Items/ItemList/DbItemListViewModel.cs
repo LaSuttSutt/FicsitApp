@@ -70,7 +70,7 @@ public class DbItemListViewModel : ViewModelBase
     public void ReloadData()
     {
         Items.Clear();
-        foreach (var item in DataAccess.GetEntities<Item>())
+        foreach (var item in DataAccess.GetEntities<Item>().OrderBy(i => i.Name))
         {
             Items.Add(new DbItemListEntryViewModel(item.Id));
         }

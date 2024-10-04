@@ -18,12 +18,12 @@ public class CalculationEntryViewModel : ViewModelBase
     private RecipeListModel? _selectedRecipe;
     private decimal _machineCount;
     private decimal _workload;
-    
+
     public static NullBlockerConverter NumericUpDownConverter { get; } = new();
     public event EventHandler? SelectedItemChanged;
     public event EventHandler<CalculationEntryViewModel>? SelectedRecipeChanged;
     public event EventHandler<CalculationEntryViewModel>? RecalculationNeeded;
-    
+
     public List<ItemListModel> Items { get; }
     public List<RecipeListModel> Recipes { get; set; }
     public decimal Amount { get; set; }
@@ -83,11 +83,12 @@ public class CalculationEntryViewModel : ViewModelBase
 
     public CalculationEntryViewModel()
     {
-        Items = DataAccess.GetEntities<Item>(i => !i.IsResource).ToItemList();
+        Items = DataAccess.GetEntities<Item>(i => !i.IsResource).OrderBy(i => i.ShortNameOrName).ToList().ToItemList();
         SelectedItem = Items.First();
         IsPrimaryItem = true;
-        
-        Recipes = DataAccess.GetEntities<Recipe>(r => r.ItemId == SelectedItem.Item.Id).ToRecipeList();
+
+        Recipes = DataAccess.GetEntities<Recipe>(r => r.ItemId == SelectedItem.Item.Id).OrderByDescending(r => r.Name)
+            .ToList().ToRecipeList();
         SelectedRecipe = Recipes[0];
     }
 
@@ -97,7 +98,8 @@ public class CalculationEntryViewModel : ViewModelBase
         SelectedItem = item.ToItemListModel();
         IsPrimaryItem = false;
 
-        Recipes = DataAccess.GetEntities<Recipe>(r => r.ItemId == item.Id).ToRecipeList();
+        Recipes = DataAccess.GetEntities<Recipe>(r => r.ItemId == item.Id).OrderByDescending(r => r.Name).ToList()
+            .ToRecipeList();
         SelectedRecipe = Recipes[0];
     }
 
@@ -121,35 +123,35 @@ public class CalculationEntryViewModel : ViewModelBase
     private void OnSelectedItemChanged()
     {
         if (SelectedItem == null) return;
-        
+
         Recipes = DataAccess.GetEntities<Recipe>(r => r.ItemId == SelectedItem.Item.Id).ToRecipeList();
         this.RaisePropertyChanged(nameof(Recipes));
         SelectedRecipe = Recipes[0];
-        
+
         SelectedItemChanged?.Invoke(this, EventArgs.Empty);
     }
 
     private void OnSelectedRecipeChanged()
     {
         if (SelectedRecipe == null) return;
-        
+
         _machineCount = 1;
         _workload = 100;
         Amount = SelectedRecipe.Recipe.Amount;
         Difference = Amount - Requirement;
-        
+
         this.RaisePropertyChanged(nameof(MachineCount));
         this.RaisePropertyChanged(nameof(Workload));
         this.RaisePropertyChanged(nameof(Amount));
         this.RaisePropertyChanged(nameof(Difference));
-        
+
         SelectedRecipeChanged?.Invoke(this, this);
     }
 
     private void OnCalculateAmount()
     {
         if (SelectedRecipe == null) return;
-        
+
         Amount = Math.Round(MachineCount * SelectedRecipe.Recipe.Amount * Workload / 100.0m, 2,
             MidpointRounding.AwayFromZero);
         this.RaisePropertyChanged(nameof(Amount));

@@ -13,7 +13,6 @@ using DynamicData;
 using ReactiveUI;
 using Shared.DataAccess;
 using Shared.DomainModel;
-using Shared.TestData;
 
 namespace Client.Ui.MainView;
 
@@ -35,9 +34,7 @@ public class MainWindowViewModel : ViewModelBase
     public MainWindowViewModel()
     {
         ImageHelper.Initialize();
-        ItemDatabase.Initialize();
         DataAccess.Initialize();
-        
         LoadProjects();
         
         OpenProjectWindowCommand = ReactiveCommand.Create<Project>(OpenProjectDialog);

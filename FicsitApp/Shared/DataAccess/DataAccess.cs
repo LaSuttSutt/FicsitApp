@@ -55,4 +55,14 @@ public static class DataAccess
         DbContext.Set<T>().RemoveRange(entities);
         DbContext.SaveChanges();
     }
+
+    public static void ExportItemDatabase(string filePath)
+    {
+        DbContext.ExportItemDatabase(filePath);
+    }
+
+    public static void ImportItemDatabase(string filePath)
+    {
+        DbContext.ImportItemDatabase(filePath);
+    }
 }
