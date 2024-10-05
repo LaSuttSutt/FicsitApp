@@ -1,4 +1,5 @@
-﻿<UserControl xmlns="https://github.com/avaloniaui"
+﻿<UserControl Name="MyControl" 
+             xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -26,6 +27,36 @@
                     <Image Classes="ImgStandard" Source="{x:Static helper:ImageHelper.DefaultMachine}" />
                 </Button>
                 <TextBlock Text="Machines" Classes="TxtNavBtn" />
+            </StackPanel>
+            <StackPanel Margin="0 20 20 20">
+                <Button Classes="BtnNavigation"
+                        Command="{Binding OnDbExportClicked}"
+                        CommandParameter="{Binding #MyControl}">
+                    <Grid>
+                        <Image Classes="ImgStandard" Source="avares://Client/Assets/ImageDb/HardDrive.png" Width="55" />
+                        <PathIcon Data="{DynamicResource ExportRegular}" VerticalAlignment="Bottom"  HorizontalAlignment="Left">
+                            <PathIcon.Effect>
+                                <DropShadowEffect />
+                            </PathIcon.Effect>
+                        </PathIcon>
+                    </Grid>
+                </Button>
+                <TextBlock Text="Export DB" Classes="TxtNavBtn" />
+            </StackPanel>
+            <StackPanel Margin="0 20 20 20">
+                <Button Classes="BtnNavigation"
+                        Command="{Binding OnDbImportClicked}"
+                        CommandParameter="{Binding #MyControl}">
+                    <Grid>
+                        <Image Classes="ImgStandard" Source="avares://Client/Assets/ImageDb/HardDrive.png" Width="55" />
+                        <PathIcon Data="{DynamicResource ImportRegular}" VerticalAlignment="Bottom"  HorizontalAlignment="Left">
+                            <PathIcon.Effect>
+                                <DropShadowEffect />
+                            </PathIcon.Effect>
+                        </PathIcon>
+                    </Grid>
+                </Button>
+                <TextBlock Text="Import DB" Classes="TxtNavBtn" />
             </StackPanel>
         </WrapPanel>
     </Border>
