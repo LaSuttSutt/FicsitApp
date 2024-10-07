@@ -12,10 +12,11 @@ public class CalculationLogic
     public ObservableCollection<CalculationEntryViewModel> SubItems { get; } = [];
     private Dictionary<CalculationEntryViewModel, List<CalculationEntryViewModel>> UsageMapping { get; } = [];
 
-    public void InitialCalculation(CalculationEntryViewModel mainItem)
+    public void InitialCalculation(ObservableCollection<CalculationEntryViewModel> mainItems)
     {
         SubItems.Clear();
-        FindIngredientsForItem(mainItem);
+        foreach (var mainItem in mainItems)
+            FindIngredientsForItem(mainItem); 
         RecalculateRequiredItems();
     }
 

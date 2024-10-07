@@ -22,4 +22,12 @@
         </Setter>
     </Style>
     
+    <!-- Image smallest with shadow -->
+    <Style Selector="Image.ImgSmallest">
+        <Setter Property="Width" Value="24" />
+        <Setter Property="Effect">
+            <DropShadowEffect OffsetX="0" BlurRadius="5" OffsetY="3" Color="DimGray"></DropShadowEffect>
+        </Setter>
+    </Style>
+    
 </Styles>

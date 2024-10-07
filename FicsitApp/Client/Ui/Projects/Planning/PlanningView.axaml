@@ -8,17 +8,56 @@
              x:Class="Client.Ui.Projects.Planning.PlanningView"
              x:DataType="vm:PlanningViewModel"
              Background="{DynamicResource BrushBackground}">
-    <Border Classes="BorderGroup">
-        <StackPanel>
-            <vm:CalculationEntryView DataContext="{Binding MainItemViewModel}" />
-            <Border BorderThickness="1" BorderBrush="Black" />
-            <ItemsControl ItemsSource="{Binding NeededParts, FallbackValue=xxx}">
-                <ItemsControl.ItemTemplate>
+    <Grid RowDefinitions="Auto, *">
+        <Border Grid.Row="0" Classes="BorderGroup" Margin="0 0 0 4">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal" Spacing="10">
+                    <Label Classes="LblInput" Margin="10 7 5 0" Padding="0">New items</Label>
+                    <Border Width="580" />
+                    <Label Classes="TableHeader" Content="Amount" />
+                    <Border BorderThickness="1 0 0 0" BorderBrush="Black" Margin="0 8 0 3" />
+                </StackPanel>
+                <ItemsControl Classes="Items" ItemsSource="{Binding MainItems, FallbackValue=xxx}" />
+                <Button Margin="5 3 5 5" 
+                        FontFamily="{DynamicResource Poppins}" 
+                        Padding="5 3" Content="+ Add new item"
+                        Command="{Binding AddMainItemCommand}"/>
+            </StackPanel>
+        </Border>
+        <Border Grid.Row="1" Classes="BorderGroup">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal" Spacing="10">
+                    <Label Classes="LblInput" Margin="10 7 5 0" Padding="0">Needed parts</Label>
+                    <Border Width="556" />
+                    <Label Classes="TableHeader" Content="Amount /min" />
+                    <Border BorderThickness="1 0 0 0" BorderBrush="Black" Margin="0 8 0 3" />
+                    <Label Classes="TableHeader" Content="Required /min" />
+                    <Border BorderThickness="1 0 0 0" BorderBrush="Black" Margin="0 8 0 3" />
+                    <Label Classes="TableHeader" Content="Diff /min" />
+                </StackPanel>
+                <ItemsControl Classes="Items" ItemsSource="{Binding NeededParts, FallbackValue=xxx}" />
+            </StackPanel>
+        </Border>
+    </Grid>
+    
+    <UserControl.Styles>
+        <Style Selector="ItemsControl.Items">
+            <Setter Property="ItemTemplate">
+                <Setter.Value>
                     <DataTemplate>
                         <vm:CalculationEntryView />
                     </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </StackPanel>
-    </Border>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <Style Selector="Label.TableHeader">
+            <Setter Property="Width" Value="70" />
+            <Setter Property="Margin" Value="0 11 0 0" />
+            <Setter Property="Padding" Value="0"></Setter>
+            <Setter Property="FontFamily" Value="{DynamicResource Poppins}" />
+            <Setter Property="FontSize" Value="9" />
+            <Setter Property="HorizontalContentAlignment" Value="Right" />
+        </Style>
+    </UserControl.Styles>
 </UserControl>

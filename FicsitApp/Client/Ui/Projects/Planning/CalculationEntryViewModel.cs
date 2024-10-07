@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive;
 using Client.Shared.DomainModel;
 using Client.Shared.View;
 using Client.Ui.Shared.Binding;
@@ -23,11 +24,13 @@ public class CalculationEntryViewModel : ViewModelBase
     public event EventHandler? SelectedItemChanged;
     public event EventHandler<CalculationEntryViewModel>? SelectedRecipeChanged;
     public event EventHandler<CalculationEntryViewModel>? RecalculationNeeded;
+    public event EventHandler<CalculationEntryViewModel>? DeleteMainItemClicked;
+    public ReactiveCommand<CalculationEntryViewModel, Unit> OnDeleteMainItem { get; }
 
     public List<ItemListModel> Items { get; }
     public List<RecipeListModel> Recipes { get; set; }
     public decimal Amount { get; set; }
-    private decimal Requirement { get; set; }
+    public decimal Requirement { get; set; }
     public decimal Difference { get; set; }
     public bool IsPrimaryItem { get; }
     public bool Overproduction => Difference > 0;
@@ -86,6 +89,7 @@ public class CalculationEntryViewModel : ViewModelBase
         Items = DataAccess.GetEntities<Item>(i => !i.IsResource).OrderBy(i => i.ShortNameOrName).ToList().ToItemList();
         SelectedItem = Items.First();
         IsPrimaryItem = true;
+        OnDeleteMainItem = ReactiveCommand.Create<CalculationEntryViewModel>(RaiseDeleteMainItemClicked);
 
         Recipes = DataAccess.GetEntities<Recipe>(r => r.ItemId == SelectedItem.Item.Id).OrderByDescending(r => r.Name)
             .ToList().ToRecipeList();
@@ -97,6 +101,7 @@ public class CalculationEntryViewModel : ViewModelBase
         Items = [];
         SelectedItem = item.ToItemListModel();
         IsPrimaryItem = false;
+        OnDeleteMainItem = ReactiveCommand.Create<CalculationEntryViewModel>(RaiseDeleteMainItemClicked);
 
         Recipes = DataAccess.GetEntities<Recipe>(r => r.ItemId == item.Id).OrderByDescending(r => r.Name).ToList()
             .ToRecipeList();
@@ -110,10 +115,11 @@ public class CalculationEntryViewModel : ViewModelBase
     public void SetRequirement(decimal requirement)
     {
         Requirement = requirement;
-        Difference = Amount - Requirement;
+        Difference = Math.Round(Amount - Requirement, 2, MidpointRounding.AwayFromZero);
         this.RaisePropertyChanged(nameof(Overproduction));
         this.RaisePropertyChanged(nameof(Underproduction));
         this.RaisePropertyChanged(nameof(Difference));
+        this.RaisePropertyChanged(nameof(Requirement));
     }
 
     #endregion
@@ -138,7 +144,7 @@ public class CalculationEntryViewModel : ViewModelBase
         _machineCount = 1;
         _workload = 100;
         Amount = SelectedRecipe.Recipe.Amount;
-        Difference = Amount - Requirement;
+        Difference = Math.Round(Amount - Requirement, 2, MidpointRounding.AwayFromZero);
 
         this.RaisePropertyChanged(nameof(MachineCount));
         this.RaisePropertyChanged(nameof(Workload));
@@ -155,6 +161,11 @@ public class CalculationEntryViewModel : ViewModelBase
         Amount = Math.Round(MachineCount * SelectedRecipe.Recipe.Amount * Workload / 100.0m, 2,
             MidpointRounding.AwayFromZero);
         this.RaisePropertyChanged(nameof(Amount));
+    }
+
+    private void RaiseDeleteMainItemClicked(CalculationEntryViewModel item)
+    {
+        DeleteMainItemClicked?.Invoke(this, item);
     }
 
     #endregion

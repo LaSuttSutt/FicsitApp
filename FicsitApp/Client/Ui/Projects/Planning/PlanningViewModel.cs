@@ -1,5 +1,7 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows.Input;
 using Client.Shared.View;
+using ReactiveUI;
 
 namespace Client.Ui.Projects.Planning;
 
@@ -8,9 +10,9 @@ public class PlanningViewModel : ViewModelBase
     #region Declarations
 
     private CalculationLogic CalculationLogic { get; } = new();
-
-    public CalculationEntryViewModel MainItemViewModel { get; } = new();
+    public ObservableCollection<CalculationEntryViewModel> MainItems { get; } = [];
     public ObservableCollection<CalculationEntryViewModel> NeededParts => CalculationLogic.SubItems;
+    public ICommand AddMainItemCommand { get; }
 
     #endregion
 
@@ -18,14 +20,27 @@ public class PlanningViewModel : ViewModelBase
 
     public PlanningViewModel()
     {
-        CalculationLogic.InitialCalculation(MainItemViewModel);
-        MainItemViewModel.SelectedItemChanged += (s, item) => 
-            CalculationLogic.InitialCalculation(MainItemViewModel);
-        MainItemViewModel.SelectedRecipeChanged += (s, item) => 
-            CalculationLogic.SubItemRecipeChanged(item);
-        MainItemViewModel.RecalculationNeeded += (s, item) =>
-            CalculationLogic.RecalculateRequiredItems();
+        AddMainItemCommand = ReactiveCommand.Create(AddMainItem);
     }
 
+    #endregion
+    
+    #region Methods
+
+    private void AddMainItem()
+    {
+        var newItem = new CalculationEntryViewModel();
+        newItem.SelectedItemChanged += (s, item) => CalculationLogic.InitialCalculation(MainItems);
+        newItem.SelectedRecipeChanged += (s, item) => CalculationLogic.SubItemRecipeChanged(item);
+        newItem.RecalculationNeeded += (s, item) => CalculationLogic.RecalculateRequiredItems();
+        newItem.DeleteMainItemClicked += (s, item) =>
+        {
+            MainItems.Remove(item);
+            CalculationLogic.InitialCalculation(MainItems);
+        };
+        MainItems.Add(newItem);
+        CalculationLogic.InitialCalculation(MainItems);
+    }
+    
     #endregion
 }

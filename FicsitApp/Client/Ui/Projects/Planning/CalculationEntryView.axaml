@@ -12,48 +12,52 @@
                   IsVisible="{Binding IsPrimaryItem, FallbackValue=true}"
                   ItemsSource="{Binding Items}"
                   SelectedValue="{Binding SelectedItem}" />
-        
+
         <!-- otherwise not -->
-        <Image Classes="ImgSmall"
+        <Image Classes="ImgSmallest"
                IsVisible="{Binding !IsPrimaryItem, FallbackValue=false}"
                Source="{Binding SelectedItem.Image, 
                FallbackValue={x:Static helper:ImageHelper.DefaultItem}}" />
-        <Label Classes="ItemLabel" 
+        <Label Classes="ItemLabel"
                IsVisible="{Binding !IsPrimaryItem, FallbackValue=false}"
                Content="{Binding SelectedItem.Item.ShortNameOrName, 
                FallbackValue=Iron Ingot}" />
-        
+
         <ComboBox Classes="Recipe"
                   IsEnabled="{Binding !SelectedItem.Item.IsResource}"
                   ItemsSource="{Binding Recipes}"
                   SelectedValue="{Binding SelectedRecipe}" />
-        <NumericUpDown Width="120" FormatString="0.00" InnerRightContent="" Increment="1"
+        <NumericUpDown Width="130" FormatString="0.00" InnerRightContent="" Increment="1"
                        Value="{Binding MachineCount,
                        Converter={x:Static vm:CalculationEntryViewModel.NumericUpDownConverter}}" />
-        <NumericUpDown Width="160" FormatString="0.00" InnerRightContent="%" Increment="10"
+        <NumericUpDown Width="150" FormatString="0.00" InnerRightContent="%" Increment="10"
                        Value="{Binding Workload,
-                       Converter={x:Static vm:CalculationEntryViewModel.NumericUpDownConverter}}"/>
-        <NumericUpDown Width="100" ShowButtonSpinner="False" FormatString="0.00" IsEnabled="false"
-                       InnerRightContent="/min" Increment="1"
-                       Value="{Binding Amount}"/>
-        <StackPanel Orientation="Horizontal" IsVisible="{Binding !IsPrimaryItem}">
-            <Label Classes="LblInput" 
-                   Classes.Over="{Binding Overproduction}"
-                   Classes.Under="{Binding Underproduction}"
-                   VerticalAlignment="Center" 
-                   Content="{Binding Difference, FallbackValue=12}" />
-            <Label Classes="LblInput" 
-                   Classes.Over="{Binding Overproduction}"
-                   Classes.Under="{Binding Underproduction}"
-                   VerticalAlignment="Center"
-                   Content="/min" />
-        </StackPanel>
+                       Converter={x:Static vm:CalculationEntryViewModel.NumericUpDownConverter}}" />
+        <Label Classes="Amount"
+               Content="{Binding Amount, FallbackValue=13, StringFormat='N2'}" />
+        <Border BorderThickness="1 0 0 0" BorderBrush="Black" />
+        <Button Classes="BtnDialog" Content="X" Height="25" Width="26" 
+                Command="{Binding OnDeleteMainItem}"
+                CommandParameter="{Binding}"
+                VerticalContentAlignment="Center" Padding="5 0"
+                HorizontalContentAlignment="Center"
+                IsVisible="{Binding IsPrimaryItem, FallbackValue=False}"/>
+        <Label Classes="Amount"
+               IsVisible="{Binding !IsPrimaryItem}"
+               Content="{Binding Requirement, FallbackValue=13, StringFormat='N2'}" />
+        <Border BorderThickness="1 0 0 0" BorderBrush="Black"
+                IsVisible="{Binding !IsPrimaryItem}" />
+        <Label Classes="Amount"
+               IsVisible="{Binding !IsPrimaryItem}"
+               Classes.Over="{Binding Overproduction}"
+               Classes.Under="{Binding Underproduction}"
+               Content="{Binding Difference, FallbackValue=12, StringFormat='N2'}" />
     </StackPanel>
-    
+
     <UserControl.Styles>
         <!-- ComboBox.Item -->
         <Style Selector="ComboBox.Item">
-            <Setter Property="Width" Value="200" />
+            <Setter Property="Width" Value="190" />
             <Setter Property="Height" Value="25" />
             <Setter Property="Padding" Value="5 0" />
             <Setter Property="ItemTemplate">
@@ -69,10 +73,10 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
         <!-- ComboBox.Recipe -->
         <Style Selector="ComboBox.Recipe">
-            <Setter Property="Width" Value="200" />
+            <Setter Property="Width" Value="180" />
             <Setter Property="Height" Value="25" />
             <Setter Property="Padding" Value="5 0" />
             <Setter Property="ItemTemplate">
@@ -88,15 +92,25 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
         <!-- Label.ItemLabel -->
         <Style Selector="Label.ItemLabel">
             <Setter Property="FontFamily" Value="{DynamicResource Poppins}" />
-            <Setter Property="FontSize" Value="16" />
+            <Setter Property="FontSize" Value="15" />
             <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="Width" Value="158" />
+            <Setter Property="Width" Value="156" />
         </Style>
-        
+
+        <!-- Label.Amount -->
+        <Style Selector="Label.Amount">
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="FontFamily" Value="{DynamicResource Poppins}" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="Width" Value="70" />
+            <Setter Property="HorizontalContentAlignment" Value="Right" />
+        </Style>
+
+        <!-- Lable.Over & Label.Under Styles -->
         <Style Selector="Label.Over">
             <Setter Property="Foreground" Value="ForestGreen" />
         </Style>
