@@ -30,10 +30,10 @@ public class PlanningViewModel : ViewModelBase
     private void AddMainItem()
     {
         var newItem = new CalculationEntryViewModel();
-        newItem.SelectedItemChanged += (s, item) => CalculationLogic.InitialCalculation(MainItems);
-        newItem.SelectedRecipeChanged += (s, item) => CalculationLogic.SubItemRecipeChanged(item);
-        newItem.RecalculationNeeded += (s, item) => CalculationLogic.RecalculateRequiredItems();
-        newItem.DeleteMainItemClicked += (s, item) =>
+        newItem.SelectedItemChanged += (_, _) => CalculationLogic.InitialCalculation(MainItems);
+        newItem.SelectedRecipeChanged += (_, item) => CalculationLogic.SubItemRecipeChanged(item);
+        newItem.RecalculationNeeded += (_, _) => CalculationLogic.RecalculateRequiredItems();
+        newItem.DeleteMainItemClicked += (_, item) =>
         {
             MainItems.Remove(item);
             CalculationLogic.InitialCalculation(MainItems);
