@@ -10,8 +10,9 @@ public class PlanningViewModel : ViewModelBase
     #region Declarations
 
     private CalculationLogic CalculationLogic { get; } = new();
-    public ObservableCollection<CalculationEntryViewModel> MainItems { get; } = [];
-    public ObservableCollection<CalculationEntryViewModel> NeededParts => CalculationLogic.SubItems;
+    public ObservableCollection<ItemEntryViewModel> MainItems { get; } = [];
+    public ObservableCollection<ItemEntryViewModel> NeededParts => CalculationLogic.SubItems;
+    public ObservableCollection<ResourceEntryViewModel> Resources => CalculationLogic.Resources;
     public ICommand AddMainItemCommand { get; }
 
     #endregion
@@ -29,7 +30,7 @@ public class PlanningViewModel : ViewModelBase
 
     private void AddMainItem()
     {
-        var newItem = new CalculationEntryViewModel();
+        var newItem = new ItemEntryViewModel();
         newItem.SelectedItemChanged += (_, _) => CalculationLogic.InitialCalculation(MainItems);
         newItem.SelectedRecipeChanged += (_, item) => CalculationLogic.SubItemRecipeChanged(item);
         newItem.RecalculationNeeded += (_, _) => CalculationLogic.RecalculateRequiredItems();

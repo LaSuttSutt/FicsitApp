@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Client.Shared.DomainModel;
 using Shared.DataAccess;
 using Shared.DomainModel;
 
@@ -9,18 +10,23 @@ namespace Client.Ui.Projects.Planning;
 
 public class CalculationLogic
 {
-    public ObservableCollection<CalculationEntryViewModel> SubItems { get; } = [];
-    private Dictionary<CalculationEntryViewModel, List<CalculationEntryViewModel>> UsageMapping { get; } = [];
+    public ObservableCollection<ItemEntryViewModel> SubItems { get; } = [];
+    public ObservableCollection<ResourceEntryViewModel> Resources { get; } = [];
+    private Dictionary<ItemEntryViewModel, List<ItemEntryViewModel>> UsageMapping { get; } = [];
+    private Dictionary<ResourceEntryViewModel, List<ItemEntryViewModel>> ResourceMapping { get; } = [];
 
-    public void InitialCalculation(ObservableCollection<CalculationEntryViewModel> mainItems)
+    public void InitialCalculation(ObservableCollection<ItemEntryViewModel> mainItems)
     {
         SubItems.Clear();
+        Resources.Clear();
+        UsageMapping.Clear();
+        ResourceMapping.Clear();
         foreach (var mainItem in mainItems)
             FindIngredientsForItem(mainItem); 
         RecalculateRequiredItems();
     }
 
-    public void SubItemRecipeChanged(CalculationEntryViewModel subItem)
+    public void SubItemRecipeChanged(ItemEntryViewModel subItem)
     {
         if (subItem.SelectedRecipe == null) return;
         RemoveUsage(subItem);
@@ -54,13 +60,31 @@ public class CalculationLogic
             
             item.SetRequirement(neededAmount);
         }
+
+        foreach (var item in ResourceMapping.Keys)
+        {
+            var neededAmount = 0m;
+            
+            foreach (var masterItem in ResourceMapping[item])
+            {
+                if (masterItem.SelectedRecipe == null) continue;
+                var ingredient = DataAccess.GetEntity<Ingredient>(i =>
+                    i.RecipeId == masterItem.SelectedRecipe.Recipe.Id && i.ItemId == item.ResourceItem.Item.Id);
+
+                var amount = Math.Round(ingredient.Amount * masterItem.MachineCount * masterItem.Workload / 100, 2,
+                    MidpointRounding.AwayFromZero);
+                neededAmount += amount;
+            }
+            
+            item.SetRequired(neededAmount);
+        }
     }
 
-    private void FindIngredientsForItem(CalculationEntryViewModel item)
+    private void FindIngredientsForItem(ItemEntryViewModel item)
     {
         if (item.SelectedRecipe == null) return;
         var ingredients = DataAccess.GetEntities<Ingredient>(i => i.RecipeId == item.SelectedRecipe.Recipe.Id);
-        var newEntrees = new List<CalculationEntryViewModel>();
+        var newEntrees = new List<ItemEntryViewModel>();
 
         // First add the sub items
         foreach (var ingredient in ingredients)
@@ -73,12 +97,20 @@ public class CalculationLogic
             }
 
             var subItem = DataAccess.GetEntity<Item>(ingredient.ItemId);
-            if (subItem == null || subItem.IsResource)
+            if (subItem == null)
                 continue;
 
-            var newItem = new CalculationEntryViewModel(subItem);
-            newItem.SelectedRecipeChanged += (s, entry) => SubItemRecipeChanged(entry);
-            newItem.RecalculationNeeded += (s, entry) => RecalculateRequiredItems();
+            if (subItem.IsResource)
+            {
+                var newResource = new ResourceEntryViewModel(subItem.ToItemListModel());
+                Resources.Add(newResource);
+                ResourceMapping.Add(newResource, [item]);
+                continue;
+            }
+
+            var newItem = new ItemEntryViewModel(subItem);
+            newItem.SelectedRecipeChanged += (_, entry) => SubItemRecipeChanged(entry);
+            newItem.RecalculationNeeded += (_, _) => RecalculateRequiredItems();
             UsageMapping.Add(newItem, [item]);
             newEntrees.Add(newItem);
             SubItems.Add(newItem);
@@ -88,14 +120,18 @@ public class CalculationLogic
         newEntrees.ForEach(FindIngredientsForItem);
     }
 
-    private void RemoveUsage(CalculationEntryViewModel item)
+    private void RemoveUsage(ItemEntryViewModel item)
     {
-        List<CalculationEntryViewModel> itemsToCheck = [];
+        List<ItemEntryViewModel> itemsToCheck = [];
+        
         foreach (var keyValuePair in UsageMapping)
         {
             if (keyValuePair.Value.Remove(item))
                 itemsToCheck.Add(keyValuePair.Key);
         }
+
+        foreach (var keyValuePair in ResourceMapping)
+            keyValuePair.Value.Remove(item);
 
         foreach (var itemToCheck in itemsToCheck)
         {

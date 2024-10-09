@@ -4,9 +4,9 @@ using Avalonia.Markup.Xaml;
 
 namespace Client.Ui.Projects.Planning;
 
-public partial class CalculationEntryView : UserControl
+public partial class ResourceEntryView : UserControl
 {
-    public CalculationEntryView()
+    public ResourceEntryView()
     {
         InitializeComponent();
     }

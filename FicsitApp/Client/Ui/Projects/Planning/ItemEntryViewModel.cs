@@ -11,7 +11,7 @@ using Shared.DomainModel;
 
 namespace Client.Ui.Projects.Planning;
 
-public class CalculationEntryViewModel : ViewModelBase
+public class ItemEntryViewModel : ViewModelBase
 {
     #region Declarations
 
@@ -22,10 +22,10 @@ public class CalculationEntryViewModel : ViewModelBase
 
     public static NullBlockerConverter NumericUpDownConverter { get; } = new();
     public event EventHandler? SelectedItemChanged;
-    public event EventHandler<CalculationEntryViewModel>? SelectedRecipeChanged;
-    public event EventHandler<CalculationEntryViewModel>? RecalculationNeeded;
-    public event EventHandler<CalculationEntryViewModel>? DeleteMainItemClicked;
-    public ReactiveCommand<CalculationEntryViewModel, Unit> OnDeleteMainItem { get; }
+    public event EventHandler<ItemEntryViewModel>? SelectedRecipeChanged;
+    public event EventHandler<ItemEntryViewModel>? RecalculationNeeded;
+    public event EventHandler<ItemEntryViewModel>? DeleteMainItemClicked;
+    public ReactiveCommand<ItemEntryViewModel, Unit> OnDeleteMainItem { get; }
 
     public List<ItemListModel> Items { get; }
     public List<RecipeListModel> Recipes { get; set; }
@@ -33,6 +33,8 @@ public class CalculationEntryViewModel : ViewModelBase
     public decimal Requirement { get; set; }
     public decimal Difference { get; set; }
     public bool IsPrimaryItem { get; }
+    public bool IsNeededItem { get; }
+    public bool IsMiner { get; }
     public bool Overproduction => Difference > 0;
     public bool Underproduction => Difference < 0;
 
@@ -84,24 +86,34 @@ public class CalculationEntryViewModel : ViewModelBase
 
     #region C'tor
 
-    public CalculationEntryViewModel()
+    public ItemEntryViewModel(bool isMiner = false)
     {
+        if (isMiner)
+        {
+            Items = [];
+            IsMiner = true;
+            OnDeleteMainItem = ReactiveCommand.Create<ItemEntryViewModel>(RaiseDeleteMainItemClicked);
+            Recipes = [];
+            return;
+        }
+        
         Items = DataAccess.GetEntities<Item>(i => !i.IsResource).OrderBy(i => i.ShortNameOrName).ToList().ToItemList();
         SelectedItem = Items.First();
         IsPrimaryItem = true;
-        OnDeleteMainItem = ReactiveCommand.Create<CalculationEntryViewModel>(RaiseDeleteMainItemClicked);
+        OnDeleteMainItem = ReactiveCommand.Create<ItemEntryViewModel>(RaiseDeleteMainItemClicked);
 
         Recipes = DataAccess.GetEntities<Recipe>(r => r.ItemId == SelectedItem.Item.Id).OrderByDescending(r => r.Name)
             .ToList().ToRecipeList();
         SelectedRecipe = Recipes[0];
     }
 
-    public CalculationEntryViewModel(Item item)
+    public ItemEntryViewModel(Item item)
     {
         Items = [];
         SelectedItem = item.ToItemListModel();
-        IsPrimaryItem = false;
-        OnDeleteMainItem = ReactiveCommand.Create<CalculationEntryViewModel>(RaiseDeleteMainItemClicked);
+        IsNeededItem = true;
+        
+        OnDeleteMainItem = ReactiveCommand.Create<ItemEntryViewModel>(RaiseDeleteMainItemClicked);
 
         Recipes = DataAccess.GetEntities<Recipe>(r => r.ItemId == item.Id).OrderByDescending(r => r.Name).ToList()
             .ToRecipeList();
@@ -163,7 +175,7 @@ public class CalculationEntryViewModel : ViewModelBase
         this.RaisePropertyChanged(nameof(Amount));
     }
 
-    private void RaiseDeleteMainItemClicked(CalculationEntryViewModel item)
+    private void RaiseDeleteMainItemClicked(ItemEntryViewModel item)
     {
         DeleteMainItemClicked?.Invoke(this, item);
     }

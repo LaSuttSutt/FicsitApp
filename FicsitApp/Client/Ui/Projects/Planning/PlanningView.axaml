@@ -3,19 +3,20 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:Client.Ui.Projects.Planning"
-             xmlns:shared="clr-namespace:Client.Shared.DomainModel"
-             mc:Ignorable="d" d:DesignWidth="1024" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="1024"
              x:Class="Client.Ui.Projects.Planning.PlanningView"
              x:DataType="vm:PlanningViewModel"
              Background="{DynamicResource BrushBackground}">
-    <Grid RowDefinitions="Auto, *">
-        <Border Grid.Row="0" Classes="BorderGroup" Margin="0 0 0 4">
+    
+    <StackPanel>
+        
+        <!-- New items -->
+        <Border Classes="BorderGroup" Margin="0 0 0 4">
             <StackPanel>
                 <StackPanel Orientation="Horizontal" Spacing="10">
-                    <Label Classes="LblInput" Margin="10 7 5 0" Padding="0">New items</Label>
-                    <Border Width="580" />
+                    <Label Classes="LblInput" Margin="10 7 5 0" Padding="0" Width="670">New items</Label>
                     <Label Classes="TableHeader" Content="Amount" />
-                    <Border BorderThickness="1 0 0 0" BorderBrush="Black" Margin="0 8 0 3" />
+                    <Border BorderThickness="1 0 0 0" BorderBrush="Black" Margin="0 8 0 0" />
                 </StackPanel>
                 <ItemsControl Classes="Items" ItemsSource="{Binding MainItems, FallbackValue=xxx}" />
                 <Button Margin="5 3 5 5" 
@@ -24,28 +25,59 @@
                         Command="{Binding AddMainItemCommand}"/>
             </StackPanel>
         </Border>
-        <Border Grid.Row="1" Classes="BorderGroup">
+        
+        <!-- Needed parts -->
+        <Border Classes="BorderGroup" Margin="0 0 0 4">
             <StackPanel>
                 <StackPanel Orientation="Horizontal" Spacing="10">
-                    <Label Classes="LblInput" Margin="10 7 5 0" Padding="0">Needed parts</Label>
-                    <Border Width="556" />
+                    <Label Classes="LblInput" Margin="10 7 5 0" Padding="0" Width="670">Needed parts</Label>
                     <Label Classes="TableHeader" Content="Amount /min" />
-                    <Border BorderThickness="1 0 0 0" BorderBrush="Black" Margin="0 8 0 3" />
+                    <Border BorderThickness="1 0 0 0" BorderBrush="Black" Margin="0 8 0 0" />
                     <Label Classes="TableHeader" Content="Required /min" />
-                    <Border BorderThickness="1 0 0 0" BorderBrush="Black" Margin="0 8 0 3" />
+                    <Border BorderThickness="1 0 0 0" BorderBrush="Black" Margin="0 8 0 0" />
                     <Label Classes="TableHeader" Content="Diff /min" />
                 </StackPanel>
-                <ItemsControl Classes="Items" ItemsSource="{Binding NeededParts, FallbackValue=xxx}" />
+                <ItemsControl Classes="Items" 
+                              ItemsSource="{Binding NeededParts, FallbackValue=xxx}"
+                              Margin="0 0 0 3"/>
             </StackPanel>
         </Border>
-    </Grid>
+        
+        <!-- Resources -->
+        <Border Classes="BorderGroup">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal" Spacing="10">
+                    <Label Classes="LblInput" Margin="10 7 5 0" Padding="0" Width="670">Resources</Label>
+                    <Label Classes="TableHeader" Content="Amount /min" />
+                    <Border BorderThickness="1 0 0 0" BorderBrush="Black" Margin="0 8 0 0" />
+                    <Label Classes="TableHeader" Content="Required /min" />
+                    <Border BorderThickness="1 0 0 0" BorderBrush="Black" Margin="0 8 0 0" />
+                    <Label Classes="TableHeader" Content="Diff /min" />
+                </StackPanel>
+                <ItemsControl Classes="Resources" 
+                              ItemsSource="{Binding Resources, FallbackValue=xxx}"
+                              Margin="0 0 0 3"/>
+            </StackPanel>
+        </Border>
+    </StackPanel>
     
+    <!-- Styles -->
     <UserControl.Styles>
         <Style Selector="ItemsControl.Items">
             <Setter Property="ItemTemplate">
                 <Setter.Value>
                     <DataTemplate>
-                        <vm:CalculationEntryView />
+                        <vm:ItemEntryView />
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <Style Selector="ItemsControl.Resources">
+            <Setter Property="ItemTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <vm:ResourceEntryView />
                     </DataTemplate>
                 </Setter.Value>
             </Setter>
@@ -53,10 +85,12 @@
         
         <Style Selector="Label.TableHeader">
             <Setter Property="Width" Value="70" />
+            <Setter Property="FontStyle" Value="Italic" />
             <Setter Property="Margin" Value="0 11 0 0" />
             <Setter Property="Padding" Value="0"></Setter>
             <Setter Property="FontFamily" Value="{DynamicResource Poppins}" />
             <Setter Property="FontSize" Value="9" />
+            <Setter Property="FontWeight" Value="SemiBold" />
             <Setter Property="HorizontalContentAlignment" Value="Right" />
         </Style>
     </UserControl.Styles>

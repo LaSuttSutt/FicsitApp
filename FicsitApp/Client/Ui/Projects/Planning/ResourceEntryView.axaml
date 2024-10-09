@@ -1,0 +1,80 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Client.Ui.Projects.Planning"
+             xmlns:helper="clr-namespace:Client.Helper"
+             mc:Ignorable="d"
+             x:Class="Client.Ui.Projects.Planning.ResourceEntryView"
+             x:DataType="vm:ResourceEntryViewModel">
+
+    <StackPanel>
+        <StackPanel Orientation="Horizontal" Spacing="10" Margin="5">
+            <Image Classes="ImgSmallest"
+                   Source="{Binding ResourceItem.Image, 
+                   FallbackValue={x:Static helper:ImageHelper.DefaultItem}}" />
+            <Label Classes="ItemLabel" Width="650"
+                   Content="{Binding ResourceItem.Item.ShortNameOrName, 
+                   FallbackValue=Iron Ingot}" />
+            <Label Classes="Amount"
+                   Content="{Binding Amount, FallbackValue=13, StringFormat='N2'}" />
+            <Border BorderThickness="1 0 0 0" BorderBrush="Black" Margin="-4 -5 5 -5" />
+            <Label Classes="Amount"
+                   Content="{Binding Required, FallbackValue=13, StringFormat='N2'}" />
+            <Border BorderThickness="1 0 0 0" BorderBrush="Black" Margin="-5 -5 0 -5" />
+            <Label Classes="Amount"
+                   Classes.Over="{Binding Overproduction}"
+                   Classes.Under="{Binding Underproduction}"
+                   Content="{Binding Difference, FallbackValue=12, StringFormat='N2'}" />
+        </StackPanel>
+        <ItemsControl Classes="Items" ItemsSource="{Binding Miner, FallbackValue=xx}" />
+        <StackPanel Orientation="Horizontal">
+            <Button Margin="5 0 671 5" 
+                            FontFamily="{DynamicResource Poppins}" 
+                            Padding="5 3" Content="+ Add miner"
+                            Command="{Binding AddMinerCommand}"/>
+            <Border BorderThickness="1 0 0 0" BorderBrush="Black" Margin="0 0 90 0" />
+            <Border BorderThickness="1 0 0 0" BorderBrush="Black" Margin="0 0 0 0" />
+        </StackPanel>
+        <Border BorderThickness="0 0 0 1" BorderBrush="DimGray"></Border>
+    </StackPanel>
+
+    <!-- Styles -->
+    <UserControl.Styles>
+        <!-- ItemsControl.Items -->
+        <Style Selector="ItemsControl.Items">
+            <Setter Property="ItemTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <vm:ItemEntryView />
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!-- Label.ItemLabel -->
+        <Style Selector="Label.ItemLabel">
+            <Setter Property="FontFamily" Value="{DynamicResource Poppins}" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Width" Value="156" />
+        </Style>
+
+        <!-- Label.Amount -->
+        <Style Selector="Label.Amount">
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="FontFamily" Value="{DynamicResource Poppins}" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="Width" Value="70" />
+            <Setter Property="HorizontalContentAlignment" Value="Right" />
+        </Style>
+
+        <!-- Lable.Over & Label.Under Styles -->
+        <Style Selector="Label.Over">
+            <Setter Property="Foreground" Value="ForestGreen" />
+        </Style>
+        <Style Selector="Label.Under">
+            <Setter Property="Foreground" Value="Firebrick" />
+        </Style>
+    </UserControl.Styles>
+</UserControl>

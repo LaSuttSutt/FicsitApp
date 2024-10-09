@@ -11,6 +11,9 @@ public class FicsitDbContext : DbContext
     public DbSet<Recipe> Recipes { get; set; }
     public DbSet<Ingredient> Ingredients { get; set; }
     public DbSet<Project> Projects { get; set; }
+    public DbSet<Factory> Factories { get; set; }
+    public DbSet<ItemProduction> ItemProductions { get; set; }
+    public DbSet<ResourceProduction> ResourceProductions { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

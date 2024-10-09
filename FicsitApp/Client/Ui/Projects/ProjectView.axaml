@@ -11,5 +11,7 @@
              Height="697"
              Background="Transparent">
 
-    <plan:PlanningView DataContext="{Binding PlanningViewModel}"></plan:PlanningView>
+    <ScrollViewer>
+        <plan:PlanningView DataContext="{Binding PlanningViewModel}"></plan:PlanningView>
+    </ScrollViewer>
 </UserControl>

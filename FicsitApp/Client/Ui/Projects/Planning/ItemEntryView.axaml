@@ -3,17 +3,78 @@
              xmlns:vm="clr-namespace:Client.Ui.Projects.Planning"
              xmlns:helper="clr-namespace:Client.Helper"
              xmlns:shared="clr-namespace:Client.Shared.DomainModel"
-             x:Class="Client.Ui.Projects.Planning.CalculationEntryView"
-             x:DataType="vm:CalculationEntryViewModel">
+             x:Class="Client.Ui.Projects.Planning.ItemEntryView"
+             x:DataType="vm:ItemEntryViewModel">
 
+    <Grid ColumnDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto" Margin="5">
+
+        <!-- MainItem specific -->
+        <ComboBox Grid.Column="0" Classes="Item" IsTextSearchEnabled="True"
+                  IsVisible="{Binding IsPrimaryItem, FallbackValue=false}"
+                  ItemsSource="{Binding Items}"
+                  SelectedValue="{Binding SelectedItem}" />
+        <Button Grid.Column="6" Classes="BtnDialog" Margin="10 0 0 0" Content="X" Height="25" Width="26" 
+                Command="{Binding OnDeleteMainItem}"
+                CommandParameter="{Binding}"
+                VerticalContentAlignment="Center" Padding="5 0"
+                HorizontalContentAlignment="Center"
+                IsVisible="{Binding IsPrimaryItem, FallbackValue=false}"/>
+
+        <!-- NeededPart specific -->
+        <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="10"
+                    IsVisible="{Binding IsNeededItem, FallbackValue=true}">
+            <Image Classes="ImgSmallest"
+                   Source="{Binding SelectedItem.Image,
+                   FallbackValue={x:Static helper:ImageHelper.DefaultItem}}" />
+            <Label Classes="ItemLabel"
+                   Content="{Binding SelectedItem.Item.ShortNameOrName, 
+                   FallbackValue=Iron Ingot}" />
+        </StackPanel>
+        <Label Grid.Column="6" Classes="Amount" Margin="10 0 0 0"
+               IsVisible="{Binding IsNeededItem}"
+               Content="{Binding Requirement, FallbackValue=13, StringFormat='N2'}" />
+        <Border Grid.Column="7" Margin="5 -5 0 -5"
+                BorderThickness="1 0 0 0" BorderBrush="Black" 
+                IsVisible="{Binding IsNeededItem}" />
+        <Label Grid.Column="8" Classes="Amount" Margin="10 0 0 0"
+               IsVisible="{Binding IsNeededItem}"
+               Classes.Over="{Binding Overproduction}"
+               Classes.Under="{Binding Underproduction}"
+               Content="{Binding Difference, FallbackValue=12, StringFormat='N2'}" />
+
+        <!-- MainItem & NeededPart specific -->
+        <ComboBox Grid.Column="1" Classes="Recipe" Margin="10 0 0 0"
+                  IsVisible="{Binding !IsMiner}"
+                  ItemsSource="{Binding Recipes}"
+                  SelectedValue="{Binding SelectedRecipe}" />
+        <NumericUpDown Grid.Column="2" Margin="10 0 0 0" 
+                       IsVisible="{Binding !IsMiner}"
+                       Width="130" FormatString="0.00" InnerRightContent="" Increment="1"
+                       Value="{Binding MachineCount,
+                       Converter={x:Static vm:ItemEntryViewModel.NumericUpDownConverter}}" />
+        <NumericUpDown Grid.Column="3" Margin="10 0 0 0" 
+                       IsVisible="{Binding !IsMiner}"
+                       Width="150" FormatString="0.00" InnerRightContent="%" Increment="10"
+                       Value="{Binding Workload,
+                       Converter={x:Static vm:ItemEntryViewModel.NumericUpDownConverter}}" />
+        <Label Grid.Column="4" Classes="Amount" Margin="10 0 0 0"
+               IsVisible="{Binding !IsMiner}"
+               Content="{Binding Amount, FallbackValue=13, StringFormat='N2'}" />
+        <Border Grid.Column="5" Margin="5 -5 3 -5"
+                IsVisible="{Binding !IsMiner}"
+                BorderThickness="1 0 0 0" BorderBrush="Black" />
+        
+    </Grid>
+
+    <!--
     <StackPanel Orientation="Horizontal" Margin="5" Spacing="10">
-        <!-- If it is a primary Item, you can change the item -->
-        <ComboBox Classes="Item"
+        
+        <ComboBox Classes="Item" IsTextSearchEnabled="True"
                   IsVisible="{Binding IsPrimaryItem, FallbackValue=true}"
                   ItemsSource="{Binding Items}"
                   SelectedValue="{Binding SelectedItem}" />
 
-        <!-- otherwise not -->
+        
         <Image Classes="ImgSmallest"
                IsVisible="{Binding !IsPrimaryItem, FallbackValue=false}"
                Source="{Binding SelectedItem.Image, 
@@ -24,18 +85,17 @@
                FallbackValue=Iron Ingot}" />
 
         <ComboBox Classes="Recipe"
-                  IsEnabled="{Binding !SelectedItem.Item.IsResource}"
                   ItemsSource="{Binding Recipes}"
                   SelectedValue="{Binding SelectedRecipe}" />
         <NumericUpDown Width="130" FormatString="0.00" InnerRightContent="" Increment="1"
                        Value="{Binding MachineCount,
-                       Converter={x:Static vm:CalculationEntryViewModel.NumericUpDownConverter}}" />
+                       Converter={x:Static vm:ItemEntryViewModel.NumericUpDownConverter}}" />
         <NumericUpDown Width="150" FormatString="0.00" InnerRightContent="%" Increment="10"
                        Value="{Binding Workload,
-                       Converter={x:Static vm:CalculationEntryViewModel.NumericUpDownConverter}}" />
+                       Converter={x:Static vm:ItemEntryViewModel.NumericUpDownConverter}}" />
         <Label Classes="Amount"
                Content="{Binding Amount, FallbackValue=13, StringFormat='N2'}" />
-        <Border BorderThickness="1 0 0 0" BorderBrush="Black" />
+        <Border BorderThickness="1 0 0 0" BorderBrush="Black" Margin="0 -5" />
         <Button Classes="BtnDialog" Content="X" Height="25" Width="26" 
                 Command="{Binding OnDeleteMainItem}"
                 CommandParameter="{Binding}"
@@ -45,14 +105,14 @@
         <Label Classes="Amount"
                IsVisible="{Binding !IsPrimaryItem}"
                Content="{Binding Requirement, FallbackValue=13, StringFormat='N2'}" />
-        <Border BorderThickness="1 0 0 0" BorderBrush="Black"
+        <Border BorderThickness="1 0 0 0" BorderBrush="Black" Margin="0 -5"
                 IsVisible="{Binding !IsPrimaryItem}" />
         <Label Classes="Amount"
                IsVisible="{Binding !IsPrimaryItem}"
                Classes.Over="{Binding Overproduction}"
                Classes.Under="{Binding Underproduction}"
                Content="{Binding Difference, FallbackValue=12, StringFormat='N2'}" />
-    </StackPanel>
+    </StackPanel>-->
 
     <UserControl.Styles>
         <!-- ComboBox.Item -->
@@ -72,6 +132,14 @@
                     </DataTemplate>
                 </Setter.Value>
             </Setter>
+        </Style>
+
+        <Style Selector="ComboBoxItem:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource BrushStandardOrange}" />
+        </Style>
+
+        <Style Selector="NumericUpDown TextBox">
+            <Setter Property="SelectionBrush" Value="{DynamicResource BrushStandardOrange}" />
         </Style>
 
         <!-- ComboBox.Recipe -->
