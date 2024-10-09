@@ -68,7 +68,7 @@
             <StackPanel Margin="10 5 10 10"
                         IsVisible="{Binding HasMachineSelection}">
                 <Label Classes="LblInput">Ingredients</Label>
-                <StackPanel Classes="List">
+                <StackPanel Classes="List" IsVisible="{Binding HasIngredient1}">
                     <Label Classes="Counter" Content="1" />
                     <ComboBox Classes="Ingredient" ItemsSource="{Binding Items}"
                               SelectedValue="{Binding SelectedIngredient1}" />

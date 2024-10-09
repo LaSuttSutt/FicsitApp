@@ -36,6 +36,7 @@ public class CreateRecipeViewModel : ViewModelBase, ISaveCancelViewModel
     }
 
     public bool HasMachineSelection => SelectedMachine != null;
+    public bool HasIngredient1 { get; set; }
     public bool HasIngredient2 { get; set; }
     public bool HasIngredient3 { get; set; }
     public bool HasIngredient4 { get; set; }
@@ -123,7 +124,8 @@ public class CreateRecipeViewModel : ViewModelBase, ISaveCancelViewModel
         var ingredients = DataAccess.GetEntities<Ingredient>(i => i.RecipeId == Recipe.Id);
         DataAccess.DeleteEntities(ingredients);
 
-        SaveIngredient(1);
+        if (SelectedMachine.Item1.ItemInputs > 0)
+            SaveIngredient(1);
         if (SelectedMachine.Item1.ItemInputs > 1)
             SaveIngredient(2);
         if (SelectedMachine.Item1.ItemInputs > 2)
@@ -141,6 +143,7 @@ public class CreateRecipeViewModel : ViewModelBase, ISaveCancelViewModel
 
     private void OnMachineSelectionChanged(Machine? machine)
     {
+        HasIngredient1 = machine?.ItemInputs >= 1;
         HasIngredient2 = machine?.ItemInputs >= 2;
         HasIngredient3 = machine?.ItemInputs >= 3;
         HasIngredient4 = machine?.ItemInputs >= 4;
@@ -148,6 +151,7 @@ public class CreateRecipeViewModel : ViewModelBase, ISaveCancelViewModel
         HasByProduct2 = machine?.ByProducts >= 2;
 
         this.RaisePropertyChanged(nameof(HasMachineSelection));
+        this.RaisePropertyChanged(nameof(HasIngredient1));
         this.RaisePropertyChanged(nameof(HasIngredient2));
         this.RaisePropertyChanged(nameof(HasIngredient3));
         this.RaisePropertyChanged(nameof(HasIngredient4));

@@ -26,5 +26,5 @@ public enum Extractor
     MinerMk2,
     MinerMk3,
     OilExtractor,
-    WellPressurizer
+    WellExtractor
 }

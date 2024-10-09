@@ -24,6 +24,7 @@ public class RecipeDetailViewModel : ViewModelBase
     public ObservableCollection<RecipeDetailViewEntry> ByProducts { get; set; } = [];
     
     public bool HasByProducts => ByProducts.Count > 0;
+    public bool HasIngredients => Ingredients.Count > 0;
     
     public RecipeDetailViewModel(Guid recipeId)
     {
