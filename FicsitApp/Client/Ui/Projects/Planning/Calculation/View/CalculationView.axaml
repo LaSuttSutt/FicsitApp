@@ -1,0 +1,43 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Client.Ui.Projects.Planning.Calculation.View"
+             mc:Ignorable="d" d:DesignWidth="1024"
+             x:Class="Client.Ui.Projects.Planning.Calculation.View.CalculationView"
+             x:DataType="vm:CalculationViewModel">
+
+    <StackPanel>
+        <!-- New items -->
+        <Border Classes="BorderGroup" Height="200">
+            <Grid Name="TestGrid" ColumnDefinitions="Auto, *, Auto, Auto, Auto, 70, 70, 70" RowDefinitions="Auto, Auto, Auto">
+                <Label Grid.Row="0" Grid.Column="0" Classes="LblInput" Grid.ColumnSpan="2" Margin="3 0">New items</Label>
+                <Label Grid.Row="0" Grid.Column="5" Classes="TableHeader">Amount</Label>
+                
+                <ItemsControl Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="8" 
+                              ItemsSource="{Binding NewItems}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid ColumnDefinitions="Auto, *, Auto, Auto, Auto, 70, 70, 70">
+                                
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                
+            </Grid>
+        </Border>
+    </StackPanel>
+    
+    <UserControl.Styles>
+        <Style Selector="Label.TableHeader">
+            <Setter Property="FontStyle" Value="Italic" />
+            <Setter Property="Margin" Value="0 11 0 0" />
+            <Setter Property="Padding" Value="0"></Setter>
+            <Setter Property="FontFamily" Value="{DynamicResource Poppins}" />
+            <Setter Property="FontSize" Value="9" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="HorizontalContentAlignment" Value="Right" />
+        </Style>
+    </UserControl.Styles>
+</UserControl>
